@@ -2,7 +2,7 @@
 import EmployeeModel from "../models/EmployeeModel.js";
 
 //**Metodos para el CRUD */
-export const getEmployeeList = async  (req, res)=> {
+export const getEmployees = async  (req, res)=> {
     console.log("entre a companies");
     try {
         const employees = await  EmployeeModel.findAll();

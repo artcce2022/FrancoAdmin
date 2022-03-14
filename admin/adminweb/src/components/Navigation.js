@@ -4,6 +4,7 @@ import {NavLink, BrowserRouter, Route, Routes  } from 'react-router-dom'
   
 import CompaniesList from '../catalogs/configuration/Companies.js'
 import LocationsList from '../catalogs/configuration/Locations.js'
+import EmployeesList from '../catalogs/configuration/Employees.js'
 import Content from './Content.js';
 
 export default class Navigation extends Component { 
@@ -76,7 +77,11 @@ export default class Navigation extends Component {
                                  <li className="nav-item">
                                     <Link to="/locations/" className='nav-link'> <i className="far fa-circle nav-icon" />
                                         <p>Patios</p></Link>                                   
-                                </li>                          
+                                </li>                                    
+                                 <li className="nav-item">
+                                    <Link to="/employees/" className='nav-link'> <i className="far fa-circle nav-icon" />
+                                        <p>Mecanicos</p></Link>                                   
+                                </li>                             
                             </ul>
                         </li>
                         <li className="nav-header">Seguridad</li>
@@ -95,7 +100,8 @@ export default class Navigation extends Component {
         </aside>
    <Routes >
    <Route path='/companies/' element={<Content title={"Empresa"} body={<CompaniesList></CompaniesList>}></Content> } />
-   <Route path='/locations/' element={<Content title={"Patios"} body={<LocationsList></LocationsList>}></Content> }  />
+   <Route path='/locations/' element={<Content title={"Patios"} body={<LocationsList></LocationsList>}></Content> }  />   
+   <Route path='/employees/' element={<Content title={"Mecanicos"} body={<EmployeesList></EmployeesList>}></Content> }  />
 </Routes > 
 </BrowserRouter>
     )

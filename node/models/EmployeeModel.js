@@ -2,7 +2,7 @@
 import db from "../database/db.js";
 import { DataTypes } from "sequelize";
 
-const EmployeeModel =  db.define('employee',{
+const EmployeeModel=  db.define('employee',{
     idemployee:{ type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true  },
@@ -21,7 +21,7 @@ const EmployeeModel =  db.define('employee',{
     ismechanic:{ type: DataTypes.BOOLEAN},
    
 },{
-    timestamps: false
+    timestamps: false,freezeTableName: true
 });
 
 export default EmployeeModel;

@@ -4,6 +4,7 @@ import {  useEffect, useState} from 'react'
 import MyModal from '../../shared/Modal';
 import DataTable from 'datatables.net';
 import EditCompany from './_EditCompany';
+import EditEmployee from './_EditEmployee';
 
 const URI = 'http://localhost:3001/employees/'
 const EmployeesList =() =>{
@@ -51,7 +52,7 @@ const EmployeesList =() =>{
                     <div >
                         <button onClick={()=> {setIdEmployee(0); setOpenModal(true);}} className='btn btn-primary'>Crear</button>
                     </div>
-                    <table  id="table-companies" className="table table-bordered table-hover">
+                    <table  id="table-employee" className="table table-bordered table-hover">
                         <thead className='table-primary'>
                             <tr>
                                 <th>FirstName</th>
@@ -65,10 +66,10 @@ const EmployeesList =() =>{
                             employees.map((employee)=> (
                                     <tr key={employee.idEmployee}>
                                         <td>
-                                            {employee.firstName}
+                                            {employee.firstname}
                                         </td>
                                         <td>
-                                            {employee.lastName}
+                                            {employee.lastname}
                                         </td>
                                         <td>
                                             {employee.email}
@@ -83,7 +84,7 @@ const EmployeesList =() =>{
                             }
                         </tbody>
                     </table>
-                   { openModal && <MyModal id="id_myModal" title={idEmployee>0 ?  "Editar Empleado"  :"Agregar Empleado" }  modalContent={<EditCompany idCompany={idEmployee} closeModal={handleClose}/> } openModal={openModal}  closeModal={handleClose} ></MyModal> } 
+                   { openModal && <MyModal id="id_myModal" title={idEmployee>0 ?  "Editar Empleado"  :"Agregar Empleado" }  modalContent={<EditEmployee idEmployee={idEmployee} closeModal={handleClose}/> } openModal={openModal}  closeModal={handleClose} ></MyModal> } 
                 </div>
                
             </div> 
