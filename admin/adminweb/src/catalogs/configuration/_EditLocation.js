@@ -38,6 +38,12 @@ export default function EditLocation({idLocation, closeModal }) {
     }
   }); 
 
+  const handleChange = (e) => {
+    console.log("entr e y");
+    this.setState({ value: e.target.value });
+  }
+
+  
   const fields = ['idLocation', 'idCompany', 'locationName','address', 'phone', 'schedule','manager'];
   fields.forEach(field => setValue(field, location[field])); 
     
@@ -87,27 +93,27 @@ export default function EditLocation({idLocation, closeModal }) {
            <div className='card-body'>
                <div className="form-group">
                  <label>Nombre de Patio:</label>
-                 <input className='form-control' type="text" name="locationName"  {...register('locationName', {required:"* Dato Requerido"})}  /*ref={register({required: "Dato Requerido"})} */ placeholder="Nombre de Empresa"  />
+                 <input className='form-control' type="text" name="locationName"  {...register('locationName', {required:"* Dato Requerido"})} onChange={(e) => handleChange} placeholder="Nombre de Empresa"  />
                 <span className="badge badge-light"> {errors.locationName?.message}</span>
                   </div>
                <div className="form-group">
                  <label>Telefono:</label>
-                 <input className='form-control'  type="text" name="address" {...register('address', {required:"* Dato Requerido"})} /*ref={register({required: "Dato Requerido"})}*/   placeholder="Agregar Telefono" />
+                 <input className='form-control'  type="text" name="address" {...register('address', {required:"* Dato Requerido"})} onChange={(e) => handleChange}  placeholder="Agregar Telefono" />
                  <span className="badge badge-light"> {errors.address?.message}</span>
                </div>
                <div className="form-group">
                  <label>Email:</label>
-                 <input className='form-control'  type="text" name="phone"  {...register('phone', {required:"* Dato Requerido"})} /* ref={register({required: "Dato Requerido"})}*/ placeholder="Agregar Email"  />
+                 <input className='form-control'  type="text" name="phone"  {...register('phone', {required:"* Dato Requerido"})} onChange={(e) => handleChange} placeholder="Agregar Email"  />
                  <span className="badge badge-light"> {errors.phone?.message}</span>
                </div>
                <div className="form-group">
                  <label>Horario:</label>
-                 <input className='form-control'  type="text" name="schedule"  {...register('schedule', {required:"* Dato Requerido"})} /* ref={register({required: "Dato Requerido"})}*/ placeholder="Agregar Email"  />
+                 <input className='form-control'  type="text" name="schedule"  {...register('schedule', {required:"* Dato Requerido"})} onChange={(e) => handleChange} placeholder="Agregar Email"  />
                  <span className="badge badge-light"> {errors.schedule?.message}</span>
                </div>
                <div className="form-group">
                  <label>Gerente:</label>
-                 <input className='form-control'  type="text" name="manager"  {...register('manager', {required:"* Dato Requerido"})} /* ref={register({required: "Dato Requerido"})}*/ placeholder="Agregar Email"  />
+                 <input className='form-control'  type="text" name="manager"  {...register('manager', {required:"* Dato Requerido"})} onChange={(e) => handleChange}placeholder="Agregar Email"  />
                  <span className="badge badge-light"> {errors.manager?.message}</span>
                </div>
                <div className="col-md-offset-2 col-md-10">

@@ -2,33 +2,32 @@ import axios from 'axios'
 import {  useEffect, useState} from 'react' 
  import $ from 'jquery';
 import MyModal from '../../shared/Modal';
-import DataTable from 'datatables.net';
-import EditCompany from './_EditCompany';
-import EditEmployee from './_EditEmployee';
+import DataTable from 'datatables.net'; 
+import EditWarehouse from './_EditWarehouse'
 
-const URI = 'http://localhost:3001/employees/'
-const EmployeesList =() =>{
-    const [employees, setemployee] = useState([]);
+const URI = 'http://localhost:3001/warehouse/'
+const WarehousesList =() =>{
+    const [warehouses, setWarehouses] = useState([]);
     const [openModal,setOpenModal] = useState(false);
-    let  [idEmployee, setIdEmployee] = useState(0); 
+    let  [idWarehouses, setIdWarehouses] = useState(0); 
     const handleClose = () =>{ 
         setOpenModal(false);
-        getEmployeeList();
+        getWarehouses();
     };
      
     useEffect(()=>{
-        getEmployeeList()
+        getWarehouses()
     },[])
 
     //mostrar companies
-    const getEmployeeList= async () =>{
+    const getWarehouses= async () =>{
         const res = await axios.get(URI);
-        setemployee(res.data);
+        setWarehouses(res.data);
     }
  
     useEffect(() => {
         setTimeout(()=>{
-          $("#table-employee").DataTable({
+          $("#table-warehouses").DataTable({
             destroy: true,
             dom: "rBftlip",
             buttons: [
@@ -50,44 +49,44 @@ const EmployeesList =() =>{
        <div className='row'>
                 <div className='col'>
                     <div >
-                        <button onClick={()=> {setIdEmployee(0); setOpenModal(true);}} className='btn btn-primary'>Crear</button>
+                        <button onClick={()=> {setIdWarehouses(0); setOpenModal(true);}} className='btn btn-primary'>Crear</button>
                     </div>
-                    <table  id="table-employee" className="table table-bordered table-hover">
+                    <table  id="table-warehouses" className="table table-bordered table-hover">
                         <thead className='table-primary'>
                             <tr>
-                                <th>FirstName</th>
-                                <th>LastName</th>
-                                <th>Email</th>
+                                <th>Almacen</th>
+                                <th>Direccion</th>
+                                <th>Gerente</th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
                             {
-                            employees.map((employee)=> (
-                                    <tr key={employee.idemployee}>
+                            warehouses.map((warehouse)=> (
+                                    <tr key={warehouse.idwarehouse}>
                                         <td>
-                                            {employee.firstname}
+                                            {warehouse.warehousename}
                                         </td>
                                         <td>
-                                            {employee.lastname}
+                                            {warehouse.address}
                                         </td>
                                         <td>
-                                            {employee.email}
+                                            {warehouse.manager}
                                         </td>
                                         <td>
                                              {/* <Link to={`/${company.idCompany}`} className="btn btn-info">Editar </Link>  */}
                                               
-                                            <button className='btn btn-danger' onClick={()=> {setIdEmployee(employee.idemployee); setOpenModal(true);} } >Editar</button>
+                                            <button className='btn btn-danger' onClick={()=> {setIdWarehouses(warehouse.idwarehouse); setOpenModal(true);} } >Editar</button>
                                         </td>
                                     </tr>
                                 ))  
                             }
                         </tbody>
                     </table>
-                   { openModal && <MyModal id="id_myModal" title={idEmployee>0 ?  "Editar Empleado"  :"Agregar Empleado" }  modalContent={<EditEmployee idEmployee={idEmployee} closeModal={handleClose}/> } openModal={openModal}  closeModal={handleClose} ></MyModal> } 
+                   { openModal && <MyModal id="id_myModal" title={idWarehouses>0 ?  "Editar Almacen"  :"Agregar Almacen" }  modalContent={<EditWarehouse idWarehouse={idWarehouses} closeModal={handleClose}/> } openModal={openModal}  closeModal={handleClose} ></MyModal> } 
                 </div>
                
             </div> 
     )
 }
-export default EmployeesList
+export default WarehousesList

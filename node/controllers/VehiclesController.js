@@ -16,7 +16,7 @@ export const getAllVehicles = async  (req, res)=> {
 export const getVehicles = async  (req, res)=> {
     console.log("entre a vehicles");
     try {
-        const vehicles = await  VehiclesModel.findAll({where:{idCustomer : req.params.id}});
+        const vehicles = await  VehiclesModel.findAll({where:{idCustomer : req.params.id}, include:{all: true}});
         res.json(vehicles);
     } catch (error) {
         console.log(error.message);
@@ -28,7 +28,7 @@ export const getVehicles = async  (req, res)=> {
 export const getVehicle =async (req, res)=>{
     try {
         const vehicle =await VehiclesModel.findAll({where:{idVehicle:req.params.id}});
-        res.json(customer[0]);
+        res.json(vehicle[0]);
     } catch (error) {
         res.json({message: error.message});
     }

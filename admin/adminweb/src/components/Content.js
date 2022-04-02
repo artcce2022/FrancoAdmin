@@ -1,6 +1,8 @@
 import React  from 'react'
 
 const  Content = ({body, title})=> {
+
+    
     return (
         <div className="content-wrapper">
             {/* Content Header (Page header) */}
