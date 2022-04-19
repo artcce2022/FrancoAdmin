@@ -192,7 +192,8 @@ const [commonFailure, setCommonFailure] = useState([]);
                </div> 
                <div className="form-group">
                  <label>Categoria:</label>
-                 <Select name='idsymptomcategory'   getOptionLabel={(option) => option.label}  getOptionValue={(option) => option.value}     onChange={(selectedOption) => {  setIdsymptomcategory(selectedOption.value); console.log(selectedOption); }}   options={categoriesFailure} />
+                 <Select name='idsymptomcategory'    getOptionLabel={(option) => option.label}  getOptionValue={(option) => option.value}    
+                  onChange={(selectedOption) => {  setIdsymptomcategory(`${selectedOption.value}` ); console.log(selectedOption); }}   options={categoriesFailure} />
                  {/* <SelectSymptomCategory defaultValue={{value: '7', label: 'Engine Mechanical'}} idsymptomcategory={commonFailure.idsymptomcategory} setIdsymptomcategory={setIdsymptomcategory}  ></SelectSymptomCategory> */}
                  <span className="badge badge-light"> {errors.idsymptomcategory?.message}</span>
                </div>

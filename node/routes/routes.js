@@ -5,10 +5,14 @@ import { deleteCustomerContact, getAllContacts, getCustomerContact, getCustomerC
 import { deleteCustomer, getCustomer, getCustomers, insertCustomer, updateCustomer } from '../controllers/CustomersController.js'
 import { deleteEmployee, getEmployee, getEmployees, insertEmployee, updateEmployee } from '../controllers/EmployeesController.js'
 import { deleteLocation, getLocation, getLocations, insertLocation, updateLocation } from '../controllers/LocationsController.js'
+import { getMovementType, getMovementTypes } from '../controllers/MovementTypesController.js'
+import { deletePartCategory, getPartcategory, getPartsCategories, insertPartCategory, updatePartCategory } from '../controllers/PartsCategoryController.js'
+import { deleteParts, getPart, getParts, insertPart, updatePart } from '../controllers/PartsController.js'
 import { deleteSymptomCategory, getSymptomCategory, getSymptomsCategories, insertSymptomCategory, updateSymptomCategory } from '../controllers/SymptomsCategoriesController.js'
 import { deleteVehicle, getAllVehicles, getVehicle, getVehicles, insertVehicle, updateVehicle } from '../controllers/VehiclesController.js'
+import { deleteVendor, getVendor, getVendors, insertVendor, updateVendor } from '../controllers/VendorController.js'
 import { deleteWarehouse, getWarehouse, getWarehouses, insertWarehouse, updateWarehouse } from '../controllers/WarehouseController.js'
-import { deleteZipCode, getPaginatedZipCodes, getZipCode, getZipCodes, insertZipCode, updateZipCode } from '../controllers/ZipCodesController.js'
+import { deleteZipCode, getFilterZipCodes, getPaginatedZipCodes, getZipCode, getZipCodes, insertZipCode, updateZipCode } from '../controllers/ZipCodesController.js'
 const router = express.Router()
 
 router.get('/companies/', getCompanies)
@@ -44,7 +48,8 @@ router.delete('/failures/:id', deleteCommonFailure )
 
 router.get('/zipcodesall/', getZipCodes)
 router.get('/zipcodes/', getPaginatedZipCodes)
-router.get('/zipcodes/:id',getZipCode)
+router.get('/zipcodes/:id',getZipCode) 
+router.get('/zipcodessearch/:filterStr',getFilterZipCodes) 
 router.post('/zipcodes/', insertZipCode )
 router.put('/zipcodes/:id', updateZipCode )
 router.delete('/zipcodes/:id', deleteZipCode )
@@ -74,4 +79,25 @@ router.get('/customercontact/:id',getCustomerContact)
 router.post('/customercontacts/', insertCustomerContact )
 router.put('/customercontacts/:id', updateCustomerContact )
 router.delete('/customercontacts/:id', deleteCustomerContact )
+
+router.get('/movementtypes/', getMovementTypes)
+router.get('/movementtypes/:id', getMovementType)
+
+router.get('/partscategories/', getPartsCategories) 
+router.get('/partscategories/:id',getPartcategory)
+router.post('/partscategories/', insertPartCategory )
+router.put('/partscategories/:id', updatePartCategory )
+router.delete('/partscategories/:id', deletePartCategory )
+
+router.get('/vendors/', getVendors) 
+router.get('/vendors/:id',getVendor)
+router.post('/vendors/', insertVendor )
+router.put('/vendors/:id', updateVendor )
+router.delete('/vendors/:id', deleteVendor )
+
+router.get('/parts/', getParts) 
+router.get('/parts/:id',getPart)
+router.post('/parts/', insertPart )
+router.put('/parts/:id', updatePart )
+router.delete('/parts/:id', deleteParts )
 export default router

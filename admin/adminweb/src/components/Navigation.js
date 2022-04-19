@@ -12,8 +12,11 @@ import ZipCodesList from '../catalogs/configuration/ZipCodes.js';
 import CustomersList from '../catalogs/administration/Customers.js';
 import WarehousesList from '../catalogs/configuration/Warehouses.js';
 import DetailCustomer from '../catalogs/administration/DetailCustomer.js'
+import PartsCategoriesList from '../catalogs/configuration/PartsCategories.js';
+import { withTranslation } from 'react-i18next';
 
-export default class Navigation extends Component {
+ class Navigation extends Component {
+  
     render() {
         return (
 
@@ -54,19 +57,20 @@ export default class Navigation extends Component {
                                     <Link to="#" className="nav-link">
                                         <i className="nav-icon fas fa-edit" />
                                         <p>
-                                            Administracion
+                                        {this.props.t('Administracion')}
                                             <i className="fas fa-angle-left right" />
                                         </p>
                                     </Link>
                                     <ul className="nav nav-treeview">
                                         <li className="nav-item">
                                             <Link to="/CommonFailures/" className='nav-link'> <i className="far fa-circle nav-icon" />
-                                                <p>Fallas Comunes</p></Link>
+                                                <p>
+                                                {this.props.t('FallasComunes')}</p></Link>
                                         </li>
                                         <li className="nav-item">
                                             <Link to="/Customers/" className='nav-link'> <i className="far fa-circle nav-icon" />
                                                 <p>
-                                                    Clientes
+                                                {this.props.t('Clientes')}
                                                 </p>
                                             </Link>
                                         </li>
@@ -75,13 +79,16 @@ export default class Navigation extends Component {
                                 <li className="nav-item">
                                     <Link to="#" className="nav-link">   <i className="nav-icon fas fa-table" />
                                         <p>
-                                            Configuracion
+                                        {this.props.t('Configuracion')}
                                             <i className="fas fa-angle-left right" />
                                         </p></Link>
                                     <ul className="nav nav-treeview">
                                         <li className="nav-item">
                                             <Link to="/companies/" className='nav-link'> <i className="far fa-circle nav-icon" />
-                                                <p>Empresa</p></Link>
+                                                <p>
+                                                {this.props.t('Empresa')}
+                                                    </p>
+                                                    </Link>
                                         </li>
                                         <li className="nav-item">
                                             <Link to="/locations/" className='nav-link'> <i className="far fa-circle nav-icon" />
@@ -93,7 +100,7 @@ export default class Navigation extends Component {
                                         </li>
                                         <li className="nav-item">
                                             <Link to="/sCategories/" className='nav-link'> <i className="far fa-circle nav-icon" />
-                                                <p>Categorias de Fallas</p></Link>
+                                                <p> Categorias de Fallas</p></Link>
                                         </li>
                                         <li className="nav-item">
                                             <Link to="/ZipCodes/" className='nav-link'> <i className="far fa-circle nav-icon" />
@@ -102,6 +109,11 @@ export default class Navigation extends Component {
                                         <li className="nav-item">
                                             <Link to="/Warehouse/" className='nav-link'> <i className="far fa-circle nav-icon" />
                                                 <p>Almacen</p></Link>
+                                        </li>
+                                        <li className="nav-item">
+                                            <Link to="/partcategories/" className='nav-link'> <i className="far fa-circle nav-icon" />
+                                                <p>Categorias de Refacciones</p>
+                                            </Link>
                                         </li>
                                     </ul>
                                 </li>
@@ -120,6 +132,7 @@ export default class Navigation extends Component {
                     {/* /.sidebar */}
                 </aside>
                 <Routes >
+                    < Route path='/'  element={<Content title={"Empresa"} body={<CompaniesList></CompaniesList>}></Content>} exact /> 
                     <Route path='/companies/' element={<Content title={"Empresa"} body={<CompaniesList></CompaniesList>}></Content>} />
                     <Route path='/locations/' element={<Content title={"Patios"} body={<LocationsList></LocationsList>}></Content>} />
                     <Route path='/employees/' element={<Content title={"Mecanicos"} body={<EmployeesList></EmployeesList>}></Content>} />
@@ -129,8 +142,11 @@ export default class Navigation extends Component {
                     <Route path='/Customers/' element={<Content title={"Customers"} body={<CustomersList></CustomersList>}></Content>} />
                     <Route path='/Warehouse/' element={<Content title={"Warehouses"} body={<WarehousesList></WarehousesList>}></Content>} />
                     <Route path='/CustomerDetail/:id' element={<Content title={"Detalle de Cliente"} body={<DetailCustomer ></DetailCustomer>}></Content>} />
+                    <Route path='/partcategories/' element={<Content title={"Categoria de Refacciones"} body={<PartsCategoriesList ></PartsCategoriesList>}></Content>} />
                 </Routes >
             </BrowserRouter>
         )
     }
 }
+
+export default withTranslation()(Navigation);

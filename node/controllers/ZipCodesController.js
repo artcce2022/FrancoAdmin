@@ -1,6 +1,6 @@
 //Importamos el model
 import ZipCodesModel from "../models/ZipCodesModel.js";
-
+import Sequelize from "sequelize";
 //**Metodos para el CRUD */
 export const getZipCodes = async  (req, res)=> {
     console.log("entre a zipcodes");
@@ -25,6 +25,25 @@ export const getPaginatedZipCodes = async  (req, res)=> {
         res.json({message: error.message});
     }
 };
+
+
+
+export const getFilterZipCodes = async  (req, res)=> {
+    try { 
+        const Op = Sequelize.Op;
+        console.log(req.params.filterStr);
+        if(req.params.filterStr ==='') return '';
+        const zips =await ZipCodesModel.findAndCountAll({
+            where: {zip: {[Op.like]: `${req.params.filterStr}%`}},
+            limit: parseInt(20)});
+      
+        res.json(zips);
+    } catch (error) {
+        console.log(error.message);
+        res.json({message: error.message});
+    }
+};
+
 
 /* Get Record*/
 export const getZipCode =async (req, res)=>{

@@ -11,10 +11,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@material-ui/core": "^4.12.4",
+    "@material-ui/icons": "^4.11.3",
+    "@tabler/icons": "^1.63.0",
     "admin-lte": "3.2",
     "cors": "^2.8.5",
     "express": "^4.17.3",
     "mysql2": "^2.3.3",
+    "react-device-detect": "^2.1.2",
     "react-hook-form": "^7.27.1",
     "sequelize": "^6.16.2"
   },
