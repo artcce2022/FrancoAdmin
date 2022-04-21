@@ -4,6 +4,7 @@ import MyModal from '../shared/Modal';
 import EditVehicle from '../catalogs/administration/_EditVehicles.js'; 
 import { useParams} from 'react-router-dom'
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button , CardHeader, IconButton, Typography, Divider } from '@mui/material';
+import { IconPlus } from '@tabler/icons';
 
 const URI = 'http://localhost:3001/customervehicles/'
 const CustomerVehicleList =() =>{
@@ -34,7 +35,7 @@ const CustomerVehicleList =() =>{
 
     return (
         <Paper>
-              <CardHeader title={<CardHeader action={<Button variant="contained"  onClick={() => { setIdVehicle(0); setOpenModal(true); }}  className='btn btn-primary'>Agregar</Button>} title="Vehiculos" />} >     
+              <CardHeader title={<CardHeader action={<Button variant="contained" startIcon={<IconPlus />}  onClick={() => { setIdVehicle(0); setOpenModal(true); }}  className='btn btn-primary'>Agregar</Button>} title="Vehiculos" />} >     
                         </CardHeader>
              <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} size="small" aria-label="Patios">

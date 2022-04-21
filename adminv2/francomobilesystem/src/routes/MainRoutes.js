@@ -15,6 +15,7 @@ const Warehouses = Loadable(lazy(() => import('./../catalogs/configuration/Wareh
 const Customers = Loadable(lazy(() => import('./../catalogs/administration/Customers.js')));
 const DetailCustomer = Loadable(lazy(() => import('./../catalogs/administration/DetailCustomer.js'))); 
 const CommonFailures = Loadable(lazy(() => import('./../catalogs/administration/CommonFailures.js')));
+const Vendors = Loadable(lazy(() => import('./../catalogs/warehouse/Vendors.js')));
 
 
 
@@ -61,6 +62,9 @@ const MainRoutes = {
         },{
             path:'CommonFailures',
             element: <CommonFailures/>
+        },{
+            path:'Vendors',
+            element: <Vendors/>
         }
     ]
 };

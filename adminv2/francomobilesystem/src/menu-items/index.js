@@ -3,11 +3,12 @@ import configurationPages from './configurationMenu';
 import administrationPages from './administrationMenu';
 import utilities from './utilities';
 import other from './other';
+import warehousePages from './vendorsMenu';
 
 // ==============================|| MENU ITEMS ||============================== //
 
 const menuItems = {
-    items: [dashboard, configurationPages, administrationPages]
+    items: [ configurationPages, administrationPages, warehousePages]
 };
 
 export default menuItems;

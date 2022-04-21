@@ -5,12 +5,16 @@ import MainCard from '../../ui-component/cards/MainCard';
 import CustomerContactsList from '../../Components/CustomerContactsList.js';
 import VehicleList from '../../Components/CustomerVehicleList.js';
 import EditCustomer from './_EditCustomer.js';
-import MyModal from '../../shared/Modal'; 
-import { Paper, Button, CardHeader, IconButton, Grid, Typography, Divider, List, ListItem, ListItemText } from '@mui/material';
+import MyModal from '../../shared/Modal';
+import {
+    Paper, Button, CardHeader, IconButton, Grid, Typography, Divider, List, ListItem, ListItemText, Table,
+    TableBody, TableCell, TableContainer, TableRow
+} from '@mui/material';
+import { IconPencil } from '@tabler/icons';
 
 const CustomerDetail = () => {
     const [Customer, setCustomer] = useState([]);
-    const [openModal,setOpenModal] = useState(false);
+    const [openModal, setOpenModal] = useState(false);
     const [idCustomer, setIdCustomer] = useState(0);
     let { id } = useParams();
     const URI = 'http://localhost:3001/customers/';
@@ -19,70 +23,71 @@ const CustomerDetail = () => {
         setIdCustomer(id);
     }, []);
 
-    const handleClose = () =>{ 
+    const handleClose = () => {
         setOpenModal(false);
         getCustomer();
     };
-     
-     //mostrar companies
-   
+
+    //mostrar companies
+
     useEffect(() => {
         getCustomer();
     }, []);
- 
 
-    const getCustomer= async () =>{
+
+    const getCustomer = async () => {
         axios.get(URI + id).then((response) => {
             setCustomer(response.data);
             // setIdsymptomcategory(response.data.idsymptomcategory);
         });
     }
-    
+
 
 
     return (
         <Grid container>
             <Grid item md={6}>
-                <MainCard title={<CardHeader action={<Button variant="contained" onClick={() => { setOpenModal(true); }} className='btn btn-primary'>Editar</Button>} title={Customer.company} />} >
-                    <Paper>                      
-                        <List>
-                            <ListItem>
-                                <ListItemText primary="Alias" />
-                                <ListItemText primary="" secondary={Customer.shortname} />
-                            </ListItem>
-                            <ListItem>
-                                <ListItemText primary="Empresa" />
-                                <ListItemText primary="" secondary={Customer.company} />
-                            </ListItem>
-                            <ListItem>
-                                <ListItemText primary="Nombre" />
-                                <ListItemText primary="" secondary={Customer.firstname + " " + Customer.lastname} />
-                            </ListItem>
-                            <ListItem>
-                                <ListItemText primary="Direccion" />
-                                <ListItemText primary="" secondary={Customer.address} />
-                            </ListItem>
-                            <ListItem>
-                                <ListItemText primary="zipcode" />
-                                <ListItemText primary="" secondary={Customer.zipcode} />
-                            </ListItem>
-                            <ListItem>
-                                <ListItemText primary="city" />
-                                <ListItemText primary="" secondary={Customer.city} />
-                            </ListItem>
-                            <ListItem>
-                                <ListItemText primary="state" />
-                                <ListItemText primary="" secondary={Customer.state} />
-                            </ListItem>
-                            <ListItem>
-                                <ListItemText primary="phone" />
-                                <ListItemText primary="" secondary={Customer.phone} />
-                            </ListItem>
-                            <ListItem>
-                                <ListItemText primary="mobilephone" />
-                                <ListItemText primary="" secondary={Customer.mobilephone} />
-                            </ListItem>
-                        </List>
+                <MainCard   color="primary"  title={<CardHeader action={<IconButton  onClick={() => { setOpenModal(true); }}   aria-label="edit"><IconPencil /></IconButton>} title={Customer.company} />} >
+                    <Paper>
+                        <TableContainer component={Paper}>
+                            <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+                                <TableBody>
+                                    <TableRow key="Alias" sx={{ '&:last-child td, &:last-child th': { border: 0 } }} >
+                                        <TableCell component="th" scope="row"><Typography  variant="h4" component="div" gutterBottom>Alias</Typography>  </TableCell>
+                                        <TableCell align="left">{Customer.shortname}</TableCell>
+                                        <TableCell sx={{ typography: 'h4' }} align="left">Empresa</TableCell>
+                                        <TableCell align="left">{Customer.company}</TableCell>
+                                    </TableRow>
+                                    <TableRow key="Nombre" sx={{ '&:last-child td, &:last-child th': { border: 0 } }} >
+                                        <TableCell sx={{ typography: 'h4' }}  scope="row">Contacto </TableCell>
+                                        <TableCell align="left" colSpan={3}>{Customer.firstname + " " + Customer.lastname}</TableCell>
+                                    </TableRow>
+                                    <TableRow key="Direccion" sx={{ '&:last-child td, &:last-child th': { border: 0 } }} >
+                                        <TableCell  sx={{ typography: 'h4' }} >Direccion</TableCell>
+                                        <TableCell  colSpan={3} align="left">{Customer.address}</TableCell>
+                                    </TableRow>
+                                    <TableRow key="zipcode" sx={{ '&:last-child td, &:last-child th': { border: 0 } }} >
+                                        <TableCell sx={{ typography: 'h4' }}  scope="row">zipcode </TableCell>
+                                        <TableCell align="left">{Customer.zipcode}</TableCell>
+                                        <TableCell sx={{ typography: 'h4' }}  align="left">City</TableCell>
+                                        <TableCell align="left">{Customer.city}</TableCell>
+                                    </TableRow>
+                                    <TableRow key="state" sx={{ '&:last-child td, &:last-child th': { border: 0 } }} >
+                                        <TableCell sx={{ typography: 'h4' }}  scope="row">state </TableCell>
+                                        <TableCell align="left">{Customer.state}</TableCell>
+                                        <TableCell sx={{ typography: 'h4' }}  align="left">Phone</TableCell>
+                                        <TableCell align="left">{Customer.phone}</TableCell>
+                                    </TableRow>
+                                    <TableRow key="mobilephone" sx={{ '&:last-child td, &:last-child th': { border: 0 } }} >
+                                        <TableCell sx={{ typography: 'h4' }}  scope="row">mobilephone </TableCell>
+                                        <TableCell align="left">{Customer.mobilephone}</TableCell>
+                                        <TableCell sx={{ typography: 'h4' }}  align="left">Phone</TableCell>
+                                        <TableCell align="left">{Customer.phone}</TableCell>
+                                    </TableRow>
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+
                     </Paper>
                 </MainCard>
             </Grid>

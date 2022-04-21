@@ -1,9 +1,9 @@
 import { useEffect, useState, useMemo } from 'react'
 import { useForm } from 'react-hook-form';
 import axios from 'axios'
-import { Grid, Divider, Button, Paper, Autocomplete, InputMask } from '@mui/material';
+import { Grid, Divider, Button, Paper, Autocomplete, InputMask, Stack } from '@mui/material';
 import { FormInputText } from '../../form-components/FormInputText.js';
-import { FormAutoCompleteText } from '../../form-components/FormAutoCompleteText.js';
+import { FormAutoCompleteText } from '../../form-components/FormAutoCompleteText_V2.js';
 import InputEmailField from '../../form-components/InputEmailField.js';
 
 const URI = 'http://localhost:3001/customers/';
@@ -47,8 +47,9 @@ export default function EditCustomer({ idCustomer, closeModal, idsymptomcategory
         const zipsList =[];
         zipsList.push({value: `${response.data['zipcode']}`, name: response.data['zipcode']});
         setOptions(zipsList);
+        console.log(zipsList);
         console.log(response.data['zipcode']);
-        setSelectedZipCode(`${response.data['zipcode']}`);
+         setSelectedZipCode(`${response.data['zipcode']}`);
       });
     } else{
       setOptions([]);
@@ -83,7 +84,6 @@ export default function EditCustomer({ idCustomer, closeModal, idsymptomcategory
 
 
   useEffect(() => {
-    console.log("open " + open);
     if (!open) {
       setOptions([]);
     }
@@ -187,21 +187,24 @@ export default function EditCustomer({ idCustomer, closeModal, idsymptomcategory
           </Grid>
           <Grid item xs={6}>
             {/* <FormInputText control={control} label={"Email"} name={"email"} > </FormInputText> */}
-            <InputEmailField name={"email1"}  control={control} helperText="(Required)" label="Email" fieldName="email1" handleChange={(value, isValid) =>{setEmail(value)}}></InputEmailField>
+            <InputEmailField name={"email1"}  control={control} helperText="(Required)" value={"aaa.aaaa.com"} label="Email" fieldName="email1" handleChange={(value, isValid) =>{setEmail(value)}}></InputEmailField>
           </Grid>
           <Grid item xs={6}>
           </Grid>
           <Grid item xs={12}>
             <Divider variant="inset" />
           </Grid>
-          <Grid item xs={12} alignContent="right">
+          <Grid item xs={12}>
+          <Stack item xs={12} alignContent="right" direction="row" spacing={2}>
             <Button onClick={handleSubmit(onSubmit)} variant="contained" >
               Guardar
             </Button>
             <Button variant="contained" color='secondary' onClick={closeModal} >
               Cancel
             </Button>
+          </Stack>
           </Grid>
+         
         </Grid>
       </form>
     </Paper>

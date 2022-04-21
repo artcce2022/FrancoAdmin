@@ -1,13 +1,18 @@
-import React, { useState } from 'react'
+import React, {useEffect, useState } from 'react'
 import { FormControl, TextField } from '@mui/material';
 import isEmail from 'validator/lib/isEmail';
 import { Controller } from "react-hook-form";
 
-export default function InputEmailField( props) {   
+export default function InputEmailField( props) {       
     const [value, setValue] = useState('');
     const [isValid, setIsValid] = useState(false);
     const [dirty, setDirty] = useState(false);
-    
+    // useEffect(() => {
+    //     console.log(props.value);
+    //        setValue(props.value);
+    //        props.handleChange(props.value, true);
+    //   }, []);
+
     const handleChange = event => {
         const val = event.target.value;                
         
@@ -24,10 +29,10 @@ export default function InputEmailField( props) {
     return (
         <Controller
             name={props.name}
-            control={props.control}
+            control={props.control}            
             render={({
                 field: { onChange, value },
-                fieldState: { error },
+                fieldState: { error },                
             }) => ( 
                 <TextField         
                     error={dirty && isValid === false}                                        
