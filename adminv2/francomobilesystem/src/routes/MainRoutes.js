@@ -16,6 +16,7 @@ const Customers = Loadable(lazy(() => import('./../catalogs/administration/Custo
 const DetailCustomer = Loadable(lazy(() => import('./../catalogs/administration/DetailCustomer.js'))); 
 const CommonFailures = Loadable(lazy(() => import('./../catalogs/administration/CommonFailures.js')));
 const Vendors = Loadable(lazy(() => import('./../catalogs/warehouse/Vendors.js')));
+const NewService = Loadable(lazy(() => import('./../catalogs/services/_NewService.js')));
 
 
 
@@ -65,6 +66,9 @@ const MainRoutes = {
         },{
             path:'Vendors',
             element: <Vendors/>
+        },{
+            path:'NewService',
+            element: <NewService/>
         }
     ]
 };

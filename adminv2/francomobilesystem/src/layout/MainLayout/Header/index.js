@@ -8,14 +8,21 @@ import { Avatar, Box, ButtonBase } from '@mui/material';
 import LogoSection from '../LogoSection'; 
 import ProfileSection from './ProfileSection'; 
 
+import {useState} from 'react' 
 // assets
 import { IconMenu2 } from '@tabler/icons';
 
+import i18n from '../../../../src/utils/locales/i18n.js'
 // ==============================|| MAIN NAVBAR / HEADER ||============================== //
 
 const Header = ({ handleLeftDrawerToggle }) => {
-    const theme = useTheme();
+    const theme = useTheme();  
+    
+    const handleOnclick=(e)=>{
+        e.preventDefault(); 
+        i18n.changeLanguage(e.target.value);
 
+      }
     return (
         <>
             {/* logo & toggler button */}
@@ -49,6 +56,7 @@ const Header = ({ handleLeftDrawerToggle }) => {
                         color="inherit"
                     >
                         <IconMenu2 stroke={1.5} size="1.3rem" />
+                       
                     </Avatar>
                 </ButtonBase>
             </Box>
@@ -56,7 +64,12 @@ const Header = ({ handleLeftDrawerToggle }) => {
             {/* header search */} 
             <Box sx={{ flexGrow: 1 }} />
             <Box sx={{ flexGrow: 1 }} />
- 
+  <button value='es' onClick={handleOnclick}>
+                Español
+            </button>
+            <button value='en' onClick={handleOnclick}>
+                English
+            </button>
             <ProfileSection />
         </>
     );

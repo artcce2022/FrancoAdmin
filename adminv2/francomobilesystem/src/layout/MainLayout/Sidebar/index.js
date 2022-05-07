@@ -6,20 +6,18 @@ import { Box, Drawer, useMediaQuery } from '@mui/material';
 
 // third-party
 import PerfectScrollbar from 'react-perfect-scrollbar';
-import { BrowserView, MobileView } from 'react-device-detect';
-
+import { BrowserView, MobileView } from 'react-device-detect'; 
 // project imports
 import MenuList from './MenuList';
 import LogoSection from '../LogoSection';
 import MenuCard from './MenuCard';
 import { drawerWidth } from './../../../store/constant';
-
 // ==============================|| SIDEBAR DRAWER ||============================== //
 
 const Sidebar = ({ drawerOpen, drawerToggle, window }) => {
     const theme = useTheme();
     const matchUpMd = useMediaQuery(theme.breakpoints.up('md'));
-
+   
     const drawer = (
         <>
             <Box sx={{ display: { xs: 'block', md: 'none' } }}>

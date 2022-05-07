@@ -2,8 +2,7 @@ import React from "react";
 //import "./index.css";
 import App from "./App.js";
 
-import ReactDOM from 'react-dom';
-
+import ReactDOM from 'react-dom'; 
 // third party
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
@@ -14,15 +13,18 @@ import { store } from './store';
 
 // style + assets
 import './assets/scss/style.scss';
-import ErrorBoundary from './ErrorBoundary.js'
+import ErrorBoundary from './ErrorBoundary.js' 
+import '../src/utils/locales/i18n.js';
 
 // ==============================|| REACT DOM RENDER  ||============================== //
+//const container =document.getElementById('root');
+//const root=createRoot(container);
 
 ReactDOM.render(
     <Provider store={store}>
         <BrowserRouter>        
         <ErrorBoundary>
-            <App />
+            <App />            
         </ErrorBoundary>
         </BrowserRouter>
     </Provider>,

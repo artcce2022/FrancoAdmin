@@ -17,10 +17,15 @@
     "admin-lte": "3.2",
     "cors": "^2.8.5",
     "express": "^4.17.3",
+    "i18next": "^21.6.16",
     "mysql2": "^2.3.3",
+    "nodemon": "^2.0.16",
     "react-device-detect": "^2.1.2",
     "react-hook-form": "^7.27.1",
-    "sequelize": "^6.16.2"
+    "react-i18next": "^11.16.7",
+    "react-intl": "^5.25.1",
+    "sequelize": "^6.16.2",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "eslint-plugin-react-hooks": "^4.3.0",
