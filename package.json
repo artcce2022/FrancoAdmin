@@ -20,6 +20,7 @@
     "i18next": "^21.6.16",
     "mysql2": "^2.3.3",
     "nodemon": "^2.0.16",
+    "query-string": "^7.1.1",
     "react-device-detect": "^2.1.2",
     "react-hook-form": "^7.27.1",
     "react-i18next": "^11.16.7",

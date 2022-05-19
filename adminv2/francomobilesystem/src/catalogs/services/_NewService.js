@@ -1,29 +1,57 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react'
-import { useForm, Controller } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import axios from 'axios'
-import { Grid, Card, Button, Paper, Select, CardHeader, IconButton, Stepper, StepContent, Step, Box, Typography, StepLabel, Container } from '@mui/material';
-import { FormInputText } from '../../form-components/FormInputText';
-import { IconPlus } from '@tabler/icons';
-import MyModal from '../../shared/Modal';
+import { CardHeader, Stepper, Step, Typography, StepLabel, Grid, CardContent } from '@mui/material';
+import { useLocation } from 'react-router';
 import MainCard from '../../ui-component/cards/MainCard';
-import EditVehicle from '../../catalogs/administration/_EditVehicles.js';
 import EditGeneralInfoService from './_GeneralInfoService';
+import EditVehicleInfoService from './_EditVehicleService.js'
 import ServiceCommonFailuresList from './_ServiceFailuresDetailList.js';
-const steps = ['Selecciona Cliente', 'Selecciona Vehiculo', 'Agregar Detalles', 'Datos Generales'];
+import ServiceCommonDetailsList from './_ServiceDetails';
+import queryString from 'query-string';
+import EditCustomerService from './_EditCustomerService';
+const steps = ['Selecciona Cliente', 'Selecciona Vehiculo', 'Fallas Reportadas', 'Detalles Reportados', 'Datos Generales'];
 
 export default function EditCompany({ idCompany, closeModal }) {
-  const [company, setCompany] = useState([]);
-  const [customers, setCustomers] = useState([]);
-  const [locations, setLocation] = useState([]);
-  const [vehicles, setVehicles] = useState([]);
-  let [idCustomer, setIdCustomer] = useState(0);
-  let [idVehicle, setIdVehicle] = useState(0);
-  let [idLocation, setIdLocation] = useState(0);
-  const [openModalVehicle, setOpenModalVehicle] = useState(false);
+  const location = useLocation();
+  let currentId = queryString.parse(location.search)
   const [activeStep, setActiveStep] = useState(0);
   const [completed, setCompleted] = useState({});
   const [failuresList, setFailuresList] = useState([]);
+  const [detailList, setDetailList] = useState([]);
+  const [idCustomer, setIdCustomer] = useState(0);
+  const [idVehicle, setIdVehicle] = useState(0);
+  const [values, setValues] = useState({});
+  //currentId.id
+
+  useEffect(() => {
+    //localStorage.setItem(currentId.id, '')
+    const data = localStorage.getItem(`${currentId.id}`)
+
+    
+    console.log(data);
+    console.log("Data")
+    if (data != null) {
+      setValues(JSON.parse(data) || {});
+      let newIdCustomer =  JSON.parse(data).idCustomer;
+      let newIdVehicle =  JSON.parse(data).idVehicle;
+      setIdCustomer(newIdCustomer || 0);
+      setIdVehicle(newIdVehicle || 0); 
+
+      const newFailureList = JSON.parse(data).FailureList;
+      if(newFailureList!=null){
+        setFailuresList(newFailureList);
+      }      
+      const newDetailList = JSON.parse(data).DetailList;
+      if(newDetailList!=null){
+        console.log(newDetailList);
+        console.log("newDetailList")
+        setDetailList(newDetailList);
+      }     
+    }
+  }, []); // empty array makes hook working once
+
   const totalSteps = () => {
     return steps.length;
   };
@@ -40,7 +68,7 @@ export default function EditCompany({ idCompany, closeModal }) {
     return completedSteps() === totalSteps();
   };
 
-  const handleNext = () => {
+  const goToNextStep = () => {
     const newActiveStep =
       isLastStep() && !allStepsCompleted()
         ? // It's the last step, but not all steps have been completed,
@@ -50,75 +78,49 @@ export default function EditCompany({ idCompany, closeModal }) {
     setActiveStep(newActiveStep);
   };
 
-  const handleBack = () => {
+
+  const handleBack = (form) => {
+    // let newId = "step_" + activeStep;
+    // setValues(prev => ({ ...prev, [newId]: form }));
+    // localStorage.setItem(`${currentId.id}`, JSON.stringify(values))
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const handleStep = (step) => () => {
-    setActiveStep(step);
-  };
+  const handleNext = (form) => {
+    console.log("activeStep");
+    console.log(form);
+    console.log(activeStep);
 
-  const handleComplete = () => {
-    const newCompleted = completed;
-    newCompleted[activeStep] = true;
-    setCompleted(newCompleted);
-    handleNext();
-  };
-
-
-  const URI = 'http://localhost:3001/companies/';
-  const { register, handleSubmit, control, setValue, formState: { errors } } = useForm({
-    mode: 'onBlur',
-    defaultValues: {
-      idLocation: "0",
-      idCustomer: "0",
-      idVehicle: "0",
-      comments: "",
-      recibe: ""
+    let newId = "activeStep_" + activeStep; 
+    if (activeStep===0 || activeStep===1 ){
+      //Do nothing
+    }    
+    else if(activeStep===2){
+       newId = "FailureList"; 
+      setValues(prev => ({ ...prev, [newId]: failuresList }));
+      localStorage.setItem(`${currentId.id}`, JSON.stringify(values))     
     }
-  });
-
-  const handleClose = () => {
-    setOpenModalVehicle(false);
-    getVehicles();
+    else if(activeStep===3){
+      newId = "DetailList"; 
+      setValues(prev => ({ ...prev, [newId]: form }));
+      localStorage.setItem(`${currentId.id}`, JSON.stringify(values))     
+    }
+  goToNextStep();
   };
 
-  useEffect(() => {
-    getCustomers();
-    getLocationsList();
-  }, [])
+  const preSaveData = (form) => { 
+    let newId = "step_" + activeStep;
+    setValues(prev => ({ ...prev, [newId]: form }));
+    localStorage.setItem(`${currentId.id}`, JSON.stringify(values))
+  };
 
+  useEffect(() => { 
+    setValues(prev => ({ ...prev, "idCustomer": idCustomer }));
+  }, [idCustomer]); //run when idcustomer change
 
-  useEffect(() => {
-    console.log("idCustomer");
-    console.log(idCustomer);
-    getVehicles();
-  }, [idCustomer])
-
-  //mostrar companies
-  const getVehicles = async () => {
-    const UriVehicles = 'http://localhost:3001/customervehicles/'
-    const res = await axios.get(UriVehicles + idCustomer);
-    setVehicles(res.data);
-    console.log(res.data);
-  }
-
-
-
-  //mostrar customers
-  const getCustomers = async () => {
-    const URICustomers = 'http://localhost:3001/customers/'
-    const res = await axios.get(URICustomers);
-    setCustomers(res.data);
-    console.log(res.data);
-  }
-
-  //mostrar locations
-  const getLocationsList = async () => {
-    const UriLocations = 'http://localhost:3001/locations/'
-    const res = await axios.get(UriLocations);
-    setLocation(res.data);
-  }
+  useEffect(() => { 
+    setValues(prev => ({ ...prev, "idVehicle": idVehicle }));
+  }, [idVehicle]); //run when idvehicle change
 
   const onSubmit = async data => {
     console.log(data);
@@ -154,69 +156,45 @@ export default function EditCompany({ idCompany, closeModal }) {
 
   };
 
+
   return (
     <MainCard title={<CardHeader title="Nuevo Servicio" />} >
-      <Stepper nonLinear activeStep={activeStep}>
-        <Step key={steps[0]} >
-          <StepLabel  >{steps[0]}</StepLabel>
-        </Step>
-        <Step key={steps[1]} >
-          <StepLabel  >{steps[1]}</StepLabel>
-        </Step>
-        <Step key={steps[2]} >
-          <StepLabel  >{steps[2]}</StepLabel>
-        </Step>
-        <Step key={steps[3]} >
-          <StepLabel  >{steps[3]}</StepLabel>
-        </Step>
-      </Stepper>
-      {(() => {
-        switch (activeStep) {
-          case 0:
-            return <React.Fragment>
-              <MainCard>
-                <CardHeader title={"Datos de Cliente"} ></CardHeader>
-                <EditGeneralInfoService></EditGeneralInfoService>
-              </MainCard>
-            </React.Fragment>
-          case 1:
-            return <React.Fragment>
-              <MainCard>
-                <CardHeader title={"Datos de Fallas"} ></CardHeader>
-                <ServiceCommonFailuresList failuresList={failuresList} setFailuresList={setFailuresList}></ServiceCommonFailuresList>
-              </MainCard>
+      <CardContent>
+        <Stepper nonLinear activeStep={activeStep}>
+          <Step key={steps[0]} >
+            <StepLabel  >{steps[0]}</StepLabel>
+          </Step>
+          <Step key={steps[1]} >
+            <StepLabel  >{steps[1]}</StepLabel>
+          </Step>
+          <Step key={steps[2]} >
+            <StepLabel  >{steps[2]}</StepLabel>
+          </Step>
+          <Step key={steps[3]} >
+            <StepLabel  >{steps[3]}</StepLabel>
+          </Step>
+        </Stepper>        
+        {(() => {
+          const props = { handleBack, handleNext, isFirstStep: activeStep === 0, isLastStep: activeStep === steps.length - 1 }
+          switch (activeStep) {
+            case 0:
+              return <EditCustomerService currentId={currentId.id}  formValues={values} {...props} action={setIdCustomer} idCustomerSelected={idCustomer} > </EditCustomerService>
+            case 1:
+              return <EditVehicleInfoService  currentId={currentId.id}  formValues={values} {...props} action={setIdVehicle} idCustomer={idCustomer} selectedIdVehicle={idVehicle} ></EditVehicleInfoService>
+            case 2: //EditVehicleInfoService
+              return <ServiceCommonFailuresList preSaveData={preSaveData} failuresList={failuresList} setFailuresList={setFailuresList} handleBack={handleBack} handleNext={handleNext} isFirstStep={activeStep === 0} isLastStep={activeStep === steps.length - 1} ></ServiceCommonFailuresList>
+            case 3:
+              return <ServiceCommonDetailsList preSaveData={preSaveData} detailList={detailList} setDetailList={setDetailList} handleBack={handleBack} handleNext={handleNext} isFirstStep={activeStep === 0} isLastStep={activeStep === steps.length - 1} ></ServiceCommonDetailsList>
+            case 4:
+              return <EditGeneralInfoService formValues={values} {...props} idCustomer={idCustomer} > </EditGeneralInfoService>
+            case activeStep === steps.length: //case steps.length :
+              return <Typography sx={{ mt: 2, mb: 1 }}>All steps completed - you&apos;re finished</Typography>
+            default:
+              return <Typography sx={{ mt: 2, mb: 1 }}>steps</Typography>
+          }
+        })()}
+      </CardContent>
 
-            </React.Fragment>
-          case activeStep === steps.length: //case steps.length :
-            return <React.Fragment>
-              <Typography sx={{ mt: 2, mb: 1 }}>
-                All steps completed - you&apos;re finished
-              </Typography>
-            </React.Fragment>
-          default:
-            return <React.Fragment>
-              <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography>
-            </React.Fragment>
-        }
-
-      })()}
-      <React.Fragment>
-        <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-          <Button
-            color="inherit"
-            disabled={activeStep === 0}
-            onClick={handleBack}
-            sx={{ mr: 1 }}
-          >
-            Back
-          </Button>
-          <Box sx={{ flex: '1 1 auto' }} />
-
-          <Button onClick={handleNext}>
-            {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-          </Button>
-        </Box>
-      </React.Fragment>
     </MainCard>
   )
 }

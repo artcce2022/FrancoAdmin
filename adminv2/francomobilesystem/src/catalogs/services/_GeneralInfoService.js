@@ -2,183 +2,90 @@ import * as React from 'react';
 import { useEffect, useState } from 'react'
 import { useForm, Controller } from 'react-hook-form';
 import axios from 'axios'
-import { Grid, Divider, Button, Paper, Select, MenuItem, InputLabel, IconButton } from '@mui/material';
-import { FormInputText } from '../../form-components/FormInputText';
-import { IconPlus } from '@tabler/icons';
-import MyModal from '../../shared/Modal';
-import EditVehicle from '../../catalogs/administration/_EditVehicles.js'; 
+import MainCard from '../../ui-component/cards/MainCard';
+import { CardHeader, Grid, Divider, Button, Paper, Select, MenuItem, InputLabel, IconButton, Box, CardContent } from '@mui/material';
+import { FormInputText } from '../../form-components/FormInputTextV2';
+import StepButtons from '../../form-components/Steps/StepButtons';
 
 const steps = ['Selecciona Cliente', 'Selecciona Vehiculo', 'Agregar Detalles', 'Datos Generales'];
 
-export default function EditGeneralInfoService({ idCompany, closeModal }) {
-  const [company, setCompany] = useState([]);
-  const [customers, setCustomers] = useState([]);
-  const [locations, setLocation] = useState([]);
-  const [vehicles, setVehicles] = useState([]);
-  let  [idCustomer, setIdCustomer] = useState(0);
-  let  [idVehicle, setIdVehicle] = useState(0);
-  let  [idLocation, setIdLocation] = useState(0);  
-  const [openModalVehicle,setOpenModalVehicle] = useState(false);
-
-  const URI = 'http://localhost:3001/companies/';
-  const { register, handleSubmit, control, setValue, formState: { errors } } = useForm({
-    mode: 'onBlur',
-    defaultValues: {
-      idLocation: "0",
-      idCustomer: "0",
-      idVehicle: "0", 
-      comments: "",
-      recibe: ""
-    }
+export default function EditGeneralInfoService({ handleBack, handleNext, isLastStep, isFirstStep, formValues }) {
+  const [locations, setLocation] = useState([]); 
+  let [idLocation, setIdLocation] = useState(0);
+  const [values, setValues] = useState({
+    idLocation: "0",
+    idCustomer: "0",
+    idVehicle: "0",
+    comments: "",
+    recibe: ""
   });
+  const URI = 'http://localhost:3001/companies/';
 
-  const handleClose = () =>{ 
-    setOpenModalVehicle(false);
-    getVehicles();
-};
-    
-  useEffect(()=>{
-    getCustomers();    
-    getLocationsList();
-},[])
-
-
-useEffect(()=>{
-    console.log("idCustomer");
-    console.log(idCustomer);
-    getVehicles();
-},[idCustomer])
-
- //mostrar companies
- const getVehicles= async () =>{    
-    const UriVehicles = 'http://localhost:3001/customervehicles/'
-    const res = await axios.get(UriVehicles + idCustomer);
-    setVehicles(res.data);
-    console.log(res.data);
-}
-
-
-
-//mostrar customers
-const getCustomers= async () =>{
-    const URICustomers = 'http://localhost:3001/customers/'
-    const res = await axios.get(URICustomers);
-    setCustomers(res.data);
-    console.log(res.data);
-} 
-
-//mostrar locations
-const getLocationsList= async () =>{
-    const UriLocations = 'http://localhost:3001/locations/'
-   const res = await axios.get(UriLocations);
-    setLocation(res.data);
-} 
+  const { handleSubmit, control, setValue, formState: { errors } } = useForm({
+    mode: 'onBlur'
+  });
  
-  const onSubmit = async data => {
-    console.log(data);
-    if (idCompany > 0) {
-      const URI = 'http://localhost:3001/companies/' + idCompany;
-      axios.put(URI, {
-        companyName: data.companyName,
-        phone: data.phone,
-        email: data.email
-      })
-        .then(function (response) {
-          console.log(response);
-          closeModal();
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    } else {
-      const URI = 'http://localhost:3001/companies/';
-      axios.post(URI, {
-        companyName: data.companyName,
-        phone: data.phone,
-        email: data.email
-      })
-        .then(function (response) {
-          console.log(response);
-          closeModal();
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    }
 
+  useEffect(() => { 
+    getLocationsList();
+    if(formValues.length>0){
+      const newData =JSON.parse(formValues).step_0; 
+      console.log("newData")
+      console.log(newData)
+      setValues(newData);     
+    }    
+  }, [])
+
+ 
+
+  //mostrar locations
+  const getLocationsList = async () => {
+    const UriLocations = 'http://localhost:3001/locations/'
+    const res = await axios.get(UriLocations);
+    setLocation(res.data);
+  }
+
+  const onChange = (event) => {
+    console.log(`${event.target.name}`+ ":" + `${event.target.value}`)
+    setValues((prev) => ({
+      ...prev,
+      [event.target.name]: event.target.value
+    }));
   };
 
   return (
-    <Paper variant="elevation">
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Grid container spacing={3}>
-          <Grid item xs={12}>
-          <InputLabel variant="standard" htmlFor="uncontrolled-native">
-            Cliente
-        </InputLabel>
-            <Select style={{ width: "150px" }}
-                value={idCustomer}
-                name='idCustomer'   getOptionLabel={(option) => option.label}  getOptionValue={(option) => option.value}    
-                onChange={(selectedOption) => { setIdCustomer(`${selectedOption.target.value}`); console.log(`${selectedOption.target.value}`); }}
-                >
-                {!!customers?.length &&
-                customers.map((customer) => (
-                    <MenuItem key={customer.idcustomer} value={customer.idcustomer}>
-                    {customer.shortname}
-                    </MenuItem>
-                ))}
-            </Select>
-           </Grid>
-           <Grid item xs={12}>
-           <InputLabel variant="standard" htmlFor="uncontrolled-native">
-            Vehiculo
-        </InputLabel>
-         <Select style={{ width: "150px" }}
-                value={idVehicle}
-                name='idVehicle'   getOptionLabel={(option) => option.label}  getOptionValue={(option) => option.value}    
-                onChange={(selectedOption) => { setIdVehicle(`${selectedOption.target.value}`); console.log(`${selectedOption.target.value}`); }}
-                >
-                {!!vehicles?.length &&
-                vehicles.map((vehicle) => (
-                    <MenuItem key={vehicle.idVehicle} value={vehicle.idVehicle}>
-                    {vehicle.vin}
-                    </MenuItem>
-                ))}
-            </Select>
-            <IconButton aria-label="Agregar Nuevo" onClick={() => { setIdVehicle(0); setOpenModalVehicle(true); }}>
-              <IconPlus />
-            </IconButton>
-           </Grid>
-           <Grid item xs={12}>
-           <InputLabel variant="standard" htmlFor="uncontrolled-native">
-            Patio
-        </InputLabel>
-            <Select style={{ width: "150px" }}
-                value={idLocation}
-                name='idLocation'   getOptionLabel={(option) => option.label}  getOptionValue={(option) => option.value}    
-                onChange={(selectedOption) => { setIdLocation(`${selectedOption.target.value}`); console.log(`${selectedOption.target.value}`); }}
-                >
+    <>
+      <MainCard>
+        <CardHeader title={"Datos de Cliente"} ></CardHeader>
+        <CardContent >
+          <form  > 
+            <Grid item xs={12}>
+              <InputLabel variant="standard" htmlFor="uncontrolled-native">
+                Patio
+              </InputLabel>
+              <Select style={{ minWidth: "250px" }}
+                value={values.idLocation}
+                name='idLocation' getOptionValue={(option) => option.value}
+                onChange={(selectedOption) => { setIdLocation(`${selectedOption.target.value}`); console.log(`${selectedOption.target.value}`); onChange(selectedOption); }}
+              >
                 {!!locations?.length &&
-                locations.map((location) => (
+                  locations.map((location) => (
                     <MenuItem key={location.idLocation} value={location.idLocation}>
-                    {location.locationName}
+                      {location.locationName}
                     </MenuItem>
-                ))}
-            </Select>
-           </Grid>
-          <Grid item xs={12}>
-              <FormInputText control={control} label={"Recibe"} name={"recibe"} ></FormInputText>
-          </Grid>
-          <Grid item xs={12}>
-            <FormInputText control={control} label={"Comments"} name={"comments"} ></FormInputText>
-          </Grid>
-          <Grid item xs={6}>
-          </Grid>
-        </Grid>
-      </form>
-      {openModalVehicle && <MyModal id="id_myModal" title={idCustomer > 0 ? "Editar Vehiculo" : "Agregar Vehiculo"} openModal={openModalVehicle} closeModal={handleClose} >
-                    <EditVehicle  idCustomer={idCustomer} idVehicle={idVehicle} closeModal={handleClose}/> 
-            </MyModal>}   
-    </Paper>
+                  ))}
+              </Select>
+            </Grid>
+            <Grid item xs={12}>
+              <FormInputText newValue={values.recibe} control={control} label={"Recibe"} name={"recibe"} changeHandler={onChange} ></FormInputText>
+            </Grid>
+            <Grid item xs={12}>
+              <FormInputText newValue={values.comments} control={control} label={"Comments"} name={"comments"} changeHandler={onChange} ></FormInputText>
+            </Grid>
+          </form> 
+        </CardContent>
+        <StepButtons handleBack={() => { handleBack(values) }} handleNext={() => { handleNext(values) }} isFirstStep={isFirstStep} isLastStep={isLastStep}></StepButtons>
+      </MainCard>
+    </>
   )
 }
