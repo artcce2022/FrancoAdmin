@@ -9,6 +9,7 @@ import { IconPlus } from '@tabler/icons';
 import MyModal from '../../shared/Modal';
 import EditVehicle from '../../catalogs/administration/_EditVehicles.js';
 import StepButtons from '../../form-components/Steps/StepButtons';
+import i18next from 'i18next';
 
 const steps = ['Selecciona Cliente', 'Selecciona Vehiculo', 'Agregar Detalles', 'Datos Generales'];
 
@@ -81,12 +82,12 @@ export default function EditGeneralInfoService({ handleBack, handleNext, isLastS
   return (
     <>
       <MainCard>
-        <CardHeader title={"Datos de Cliente"} ></CardHeader>
+        <CardHeader title= {i18next.t('label.CustomerData')} ></CardHeader>
         <CardContent >
           <form  >
             <Grid item xs={12}>
               <InputLabel variant="standard" htmlFor="uncontrolled-native">
-                Vehiculo
+              {i18next.t('label.Vehicle')}
               </InputLabel>
               <Select style={{ minWidth: "250px" }}
                 value={values.idVehicle}
@@ -100,13 +101,13 @@ export default function EditGeneralInfoService({ handleBack, handleNext, isLastS
                     </MenuItem>
                   ))}
               </Select>
-              <IconButton aria-label="Agregar Nuevo" onClick={() => { setIdVehicle(0); setOpenModalVehicle(true); }}>
+              <IconButton aria-label={i18next.t('label.Add')} onClick={() => { setIdVehicle(0); setOpenModalVehicle(true); }}>
                 <IconPlus />
               </IconButton>
             </Grid>
             <Grid item xs={12}>
               <InputLabel variant="standard" htmlFor="uncontrolled-native">
-                Patio
+              {i18next.t('label.Location')}
               </InputLabel>
               <Select style={{ minWidth: "250px" }}
                 value={values.idLocation}

@@ -6,6 +6,7 @@ import { FormInputText } from '../../form-components/FormInputText.js';
 import { FormSimpleAutoCompleteText } from '../../form-components/FormAutoCompleteText.js';
 import { v4 as uuidv4 } from 'uuid';
 import { AlertNotification } from '../../form-components/NotifyAlert.js';
+import i18next from 'i18next';
 
 const URI = 'http://localhost:3001/scategories/';
 const URIFailures = 'http://localhost:3001/failures/';
@@ -90,13 +91,12 @@ export default function EditFailureService({ action, closeModal, idsymptomcatego
             failureList.push(newData);
             setSelectedFailureStr("");
             reset();
-
             
-            setAlertMessage("Registro agregado Exitosamente");
+            setAlertMessage(i18next.t('SuccessfulRecord'));
             setTypeAlert("success");
             setOpenAlert(true);
         }else{
-            setAlertMessage("Debe seleccionar un registro valido");
+            setAlertMessage(i18next.t('label.ErrorSelectValid')); 
             setTypeAlert("warning");
             setOpenAlert(true);
         }
@@ -112,9 +112,10 @@ export default function EditFailureService({ action, closeModal, idsymptomcatego
             // }
             failureList.push(newData);
             // action(newData);
+            setAlertMessage(i18next.t('SuccessfulRecord'));
             closeModal();
         } else {
-            setAlertMessage("Debe seleccionar un registro valido");
+            setAlertMessage(i18next.t('label.ErrorSelectValid'));
             setTypeAlert("warning");
             setOpenAlert(true);
         }
@@ -127,23 +128,23 @@ export default function EditFailureService({ action, closeModal, idsymptomcatego
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <Grid container spacing={3}>
                         <Grid item xs={12}>
-                            <FormSimpleAutoCompleteText isDisable={true} control={control} setSelected={setSelectedFailureStr} defaultValue={selectedFailureStr} name={"failure"} setFilter={(data) => { setFilterStr(data) }} setLoading={setLoading} label={"Falla"} options={options}  ></FormSimpleAutoCompleteText>
+                            <FormSimpleAutoCompleteText isDisable={true} control={control} setSelected={setSelectedFailureStr} defaultValue={selectedFailureStr} name={"failure"} setFilter={(data) => { setFilterStr(data) }} setLoading={setLoading} label={i18next.t('label.Failure')} options={options}  ></FormSimpleAutoCompleteText>
                         </Grid>
                         <Grid item xs={12}>
-                            <FormInputText isDisable={true} control={control} label={"Descripcion"} name={"symtomdescription"} ></FormInputText>
+                            <FormInputText isDisable={true} control={control} label={i18next.t('label.Description')} name={"symtomdescription"} ></FormInputText>
                         </Grid>
                         <Grid item xs={6}>
-                            <FormInputText isDisable={true} control={control} label={"Trabajos Requeridos"} name={"workrequested"} ></FormInputText>
+                            <FormInputText isDisable={true} control={control} label={i18next.t('label.RequiredWorks')}  name={"workrequested"} ></FormInputText>
                         </Grid>
                         <Grid item xs={6}>
-                            <FormInputText isDisable={true} control={control} label={"Tiempo Aproximado"} name={"hours"} ></FormInputText>
+                            <FormInputText isDisable={true} control={control} label={i18next.t('label.TimeAprox')} name={"hours"} ></FormInputText>
                         </Grid>
                         <Grid item xs={12}>
-                            <FormInputText isDisable={true} control={control} label={"Precio"} name={"price"} ></FormInputText>
+                            <FormInputText isDisable={true} control={control} label={i18next.t('label.Price')}  name={"price"} ></FormInputText>
                         </Grid>
                         <Grid item xs={6}>
                             <InputLabel variant="standard" htmlFor="uncontrolled-native">
-                                Categoria
+                            {i18next.t('label.Category')}
                             </InputLabel>
                             {/* <Select name='idsymptomcategory' getOptionLabel={(option) => option.label} getOptionValue={(option) => option.value} onChange={(selectedOption) => { setIdsymptomcategory(selectedOption.value); console.log(selectedOption); }} options={categoriesFailure} /> */}
                             <Select disabled
@@ -169,13 +170,13 @@ export default function EditFailureService({ action, closeModal, idsymptomcatego
                         <Grid item xs={12} alignContent="right">
                             <Stack spacing={2} direction="row">
                                 <Button onClick={handleSubmit(onSubmit)} variant="contained" >
-                                    Agregar
+                                {i18next.t('label.Add')}
                                 </Button>
                                 <Button onClick={handleSubmit(onSubmitAndClose)} variant="contained" >
-                                    Agregar y Cerrar
+                                {i18next.t('label.AddAndClose')}
                                 </Button>
                                 <Button variant="contained" color='secondary' onClick={closeModal} >
-                                    Cancel
+                                {i18next.t('label.Cancel')}
                                 </Button>
 
                             </Stack>
@@ -183,8 +184,6 @@ export default function EditFailureService({ action, closeModal, idsymptomcatego
                         </Grid>
                     </Grid>
                     {openAlert &&  <AlertNotification open={openAlert} handleClose={handleCloseAlert} type={typeAlert} message={alertMessage} />}
-        
-                   
                 </form>
             </Paper>
         </div>

@@ -34,7 +34,7 @@ const ServiceCommonFailuresList =({failuresList,setFailuresList, handleBack, han
     
     return ( 
             <>
-            <MainCard title={<CardHeader action={<Button  variant="contained"  onClick={()=> {setIdFailure(0); setOpenModalFailure(true);}} className='btn btn-primary'>Agregar</Button>} title="Fallas Reportadas"/>} >
+            <MainCard title={<CardHeader action={<Button  variant="contained"  onClick={()=> {setIdFailure(0); setOpenModalFailure(true);}} className='btn btn-primary'>Agregar</Button>} title= {i18next.t('label.ReportedFailures')}/>} >
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} size="small" aria-label="Patios">
                     <TableHead>
@@ -73,7 +73,7 @@ const ServiceCommonFailuresList =({failuresList,setFailuresList, handleBack, han
                     </TableBody>
                 </Table>
             </TableContainer>
-            {openModalFailure && <MyModal id="id_myModal" title={idFailure > 0 ? "Editar Falla" : "Agregar Falla"} openModal={openModalFailure} closeModal={handleClose} >
+            {openModalFailure && <MyModal id="id_myModal" title={idFailure > 0 ? (i18next.t('label.Edit') + " " + i18next.t('label.CommnonFailure')): (i18next.t('label.Add') + " " + i18next.t('label.CommnonFailure'))} openModal={openModalFailure} closeModal={handleClose} >
                 <EditFailureService    idFailure={idFailure} closeModal={handleClose} failureList={failuresList} action={setFailure} />
             </MyModal>}
         </MainCard> 

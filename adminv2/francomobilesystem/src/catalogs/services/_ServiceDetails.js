@@ -35,7 +35,7 @@ const ServiceCommonDetailsList = ({ detailList, setDetailList, handleBack, handl
 
     return (
         <>
-            <MainCard title={<CardHeader action={<Button variant="contained" onClick={() => { setOpenModalDetail(true); }} className='btn btn-primary'>Agregar</Button>} title="Detalles Reportados" />} >
+            <MainCard title={<CardHeader action={<Button variant="contained" onClick={() => { setOpenModalDetail(true); }} className='btn btn-primary'>Agregar</Button>} title={i18next.t('label.DetailsReported')} />} >
                 <TableContainer component={Paper}>
                     <Table sx={{ minWidth: 650 }} size="small" aria-label="Patios">
                         <TableHead>
@@ -63,7 +63,7 @@ const ServiceCommonDetailsList = ({ detailList, setDetailList, handleBack, handl
                         </TableBody>
                     </Table>
                 </TableContainer>
-                {openModalDetail && <MyModal id="id_myModal" title={"Agregar Detalle Reportado"} openModal={openModalDetail} closeModal={handleClose} >
+                {openModalDetail && <MyModal id="id_myModal" title={i18next.t('label.ReportedDetail')} openModal={openModalDetail} closeModal={handleClose} >
                     <EditServiceDetail closeModal={handleClose} detailList={detailList} action={setDetail} />
                 </MyModal>}
             </MainCard>

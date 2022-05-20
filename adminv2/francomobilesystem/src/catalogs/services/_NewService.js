@@ -11,8 +11,10 @@ import ServiceCommonFailuresList from './_ServiceFailuresDetailList.js';
 import ServiceCommonDetailsList from './_ServiceDetails';
 import queryString from 'query-string';
 import EditCustomerService from './_EditCustomerService';
-const steps = ['Selecciona Cliente', 'Selecciona Vehiculo', 'Fallas Reportadas', 'Detalles Reportados', 'Datos Generales'];
-
+import i18next from 'i18next';
+const steps = [`${i18next.t('label.SelectCustomer')}`, `${i18next.t('label.SelectVehicle')}`, `${i18next.t('label.FailureReported')}`
+ ,  `${i18next.t('label.DetailsReported')}`,  `${i18next.t('label.GeneralData')}`];
+//i18next.t('label.Edit')
 export default function EditCompany({ idCompany, closeModal }) {
   const location = useLocation();
   let currentId = queryString.parse(location.search)
@@ -158,7 +160,7 @@ export default function EditCompany({ idCompany, closeModal }) {
 
 
   return (
-    <MainCard title={<CardHeader title="Nuevo Servicio" />} >
+    <MainCard title={<CardHeader title={i18next.t('label.newService')} />} >
       <CardContent>
         <Stepper nonLinear activeStep={activeStep}>
           <Step key={steps[0]} >

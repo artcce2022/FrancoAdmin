@@ -10,6 +10,7 @@ import MyModal from '../../shared/Modal';
 import EditVehicle from '../../catalogs/administration/_EditVehicles.js';
 import StepButtons from '../../form-components/Steps/StepButtons';
 import VehicleDetail from '../../Components/SelectVehicle';
+import i18next from 'i18next';
 
 export default function EditVehicleInfoService({ handleBack, handleNext, isLastStep, isFirstStep, formValues, action, idCustomer, currentId }) {
   const [vehicles, setVehicles] = useState([]);
@@ -87,7 +88,7 @@ export default function EditVehicleInfoService({ handleBack, handleNext, isLastS
           <form  >
             <Grid item xs={12}>
               <InputLabel variant="standard" htmlFor="uncontrolled-native">
-                Vehiculo
+                {i18next.t('label.Vehicle')}
               </InputLabel>
               <Select style={{ minWidth: "250px" }}
                 value={idVehicle}
@@ -101,7 +102,7 @@ export default function EditVehicleInfoService({ handleBack, handleNext, isLastS
                     </MenuItem>
                   ))}
               </Select>
-              <IconButton aria-label="Agregar Nuevo" onClick={() => { setIdVehicle(0); setOpenModalVehicle(true); }}>
+              <IconButton aria-label={i18next.t('label.Add')} onClick={() => { setIdVehicle(0); setOpenModalVehicle(true); }}>
                 <IconPlus />
               </IconButton>
             </Grid>                  
@@ -109,7 +110,7 @@ export default function EditVehicleInfoService({ handleBack, handleNext, isLastS
                 {refreshData &&  <VehicleDetail idVehicle={idVehicle}></VehicleDetail>}
             </Grid>      
           </form>
-          {openModalVehicle && <MyModal id="id_myModal" title={idCustomer > 0 ? "Editar Vehiculo" : "Agregar Vehiculo"} openModal={openModalVehicle} closeModal={handleClose} >
+          {openModalVehicle && <MyModal id="id_myModal"  title={idVehicle > 0 ? (i18next.t('label.Edit') + " " + i18next.t('label.Vehicle')): (i18next.t('label.Add') + " " + i18next.t('label.Vehicle'))} openModal={openModalVehicle} closeModal={handleClose} >
             <EditVehicle idCustomer={idCustomer} idVehicle={idVehicle} closeModal={handleClose} />
           </MyModal>}
         </CardContent>

@@ -4,33 +4,66 @@ import axios from 'axios'
 import { Grid, Divider, Button, Paper, Select, MenuItem, InputLabel, Stack } from '@mui/material';
 import { FormInputText } from '../../form-components/FormInputText.js';
 import { v4 as uuidv4 } from 'uuid';
+import { AlertNotification } from '../../form-components/NotifyAlert.js';
+import i18next from 'i18next';
 
 
-export default function EditServiceDetail({ action, closeModal,  detailList }) {
+export default function EditServiceDetail({ action, closeModal, detailList }) {
+    const [alertMessage, setAlertMessage] = useState("");
+    const [openAlert, setOpenAlert] = useState(false);
+    const [typeAlert, setTypeAlert] = useState("success");
     const { register, control, handleSubmit, reset, setValue, formState: { errors } } = useForm({
         mode: 'onBlur',
         defaultValues: {
             description: ""
         }
-    }); 
+    });
 
-    
+    const handleCloseAlert = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpenAlert(false);
+    };
+
+
+
 
     const onSubmit = async (data, e) => {
         e.preventDefault();
-        let newData = data;
-        newData.rowId = uuidv4();
-        detailList.push(newData);
-        reset();
+        if (data.description) {
+            let newData = data;
+            newData.rowId = uuidv4();
+            detailList.push(newData);
+            reset();
+
+            setAlertMessage(i18next.t('SuccessfulRecord'));
+            setTypeAlert("success");
+            setOpenAlert(true);
+        } else {
+            setAlertMessage(i18next.t('label.ErrorSelectValid')); 
+           setTypeAlert("warning");
+            setOpenAlert(true);
+        }
+
+
+
         //action(newData);
     };
     const onSubmitAndClose = async (data, e) => {
         e.preventDefault();
-        let newData = data;
-        newData.rowId = uuidv4();
-        detailList.push(newData);
-        // action(newData);
-        closeModal();
+        if (data.description) {
+            let newData = data;
+            newData.rowId = uuidv4();
+            detailList.push(newData);
+            // action(newData);
+            closeModal();  
+            setAlertMessage(i18next.t('SuccessfulRecord'));          
+        } else {
+            setAlertMessage(i18next.t('label.ErrorSelectValid')); 
+            setTypeAlert("warning");
+            setOpenAlert(true);
+        }
     };
     return (
         <div>
@@ -38,7 +71,7 @@ export default function EditServiceDetail({ action, closeModal,  detailList }) {
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <Grid container spacing={3}>
                         <Grid item xs={12}>
-                            <FormInputText control={control} label={"Descripcion"} name={"description"} ></FormInputText>
+                            <FormInputText control={control} label={i18next.t('label.Description')} name={"description"} ></FormInputText>
                         </Grid>
                         <Grid item xs={12}>
                             <Divider variant="inset" />
@@ -46,17 +79,18 @@ export default function EditServiceDetail({ action, closeModal,  detailList }) {
                         <Grid item xs={12} alignContent="right">
                             <Stack spacing={2} direction="row">
                                 <Button onClick={handleSubmit(onSubmit)} variant="contained" >
-                                    Agregar
+                                {i18next.t('label.Add')}
                                 </Button>
                                 <Button onClick={handleSubmit(onSubmitAndClose)} variant="contained" >
-                                    Agregar y Cerrar
+                                {i18next.t('label.AddAndClose')}
                                 </Button>
                                 <Button variant="contained" color='secondary' onClick={closeModal} >
-                                    Cancel
+                                {i18next.t('label.Cancel')}
                                 </Button>
                             </Stack>
                         </Grid>
                     </Grid>
+                    {openAlert && <AlertNotification open={openAlert} handleClose={handleCloseAlert} type={typeAlert} message={alertMessage} />}
                 </form>
             </Paper>
         </div>
