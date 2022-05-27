@@ -2,6 +2,7 @@ export const TRANSLATIONS_EN = {
     "menu.NewService" : "New Service" ,
     "Company" : "Company" ,
     "Employees": "Employees",
+    "label.NomEmpresa":"Company Name",
     "label.Description":"Description",
     "label.Categoria":"Category",
     "label.Detalle":"Detail",
@@ -45,4 +46,13 @@ export const TRANSLATIONS_EN = {
     'label.SelectVehicle':'Select Vehicle',
     'label.FailureReported':'Failure Reported',
     'label.GeneralData':'General Data',
+    'label.Name':'Name',
+    'label.Lastname': 'Lastname',
+    'label.Email': 'Email',
+    'label.Save': 'Save',
+    'label.shortDescription': 'Short Description',
+    'label.Required':'Required',
+    'label.faultCommons': 'Fault Commons',
+    'label.FailuresEdit': 'Edit Failures',
+    'label.EditCustomer' : 'Edit Customer'
    }
