@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form';
 import axios from 'axios'
-import { Grid, Divider, Button, Paper } from '@mui/material';
+import { Grid, Divider, Button, Paper, Stack } from '@mui/material';
 import { FormInputText } from '../../form-components/FormInputText.js';
 import { FormDateText } from '../../form-components/FormDateText.js';
+import i18next from 'i18next';
 const URI = 'http://localhost:3001/employees/';
+
 
 
 
@@ -108,46 +110,48 @@ export default function EditEmployee({ idEmployee, closeModal }) {
     <Paper variant="elevation">
       <form onSubmit={handleSubmit(onSubmit)}>
         <Grid container spacing={3}>
-          <Grid item xs={12}>
+          {/* <Grid item xs={12}>
             <hr></hr>
-          </Grid>
+          </Grid> */}
             <Grid item xs={6}>
-              <FormInputText control={control} label={"Nombre"} name={"firstname"} ></FormInputText>
+              <FormInputText control={control} label={i18next.t('label.Name')} name={"firstname"} ></FormInputText>
             </Grid>
             <Grid item md={6}>
-              <FormInputText control={control} label={"Apellido"} name={"lastname"} ></FormInputText>
+              <FormInputText control={control} label={i18next.t('label.Lastname')} name={"lastname"} ></FormInputText>
             </Grid>
           <Grid item xs={6}>
-            <FormInputText control={control} label={"Apellido"} name={"lastname"} ></FormInputText>
+            <FormInputText control={control} label={i18next.t('label.Lastname')} name={"lastname"} ></FormInputText>
           </Grid>
           <Grid item xs={6}>
-            <FormDateText control={control} label={"birthdate"} name={"birthdate"} ></FormDateText>
+            <FormDateText control={control} label={i18next.t('label.birthdate')} name={"birthdate"} ></FormDateText>
           </Grid>
           <Grid item xs={6}>
-            <FormInputText control={control} label={"ssn"} name={"ssn"} ></FormInputText>
+            <FormInputText control={control} label={i18next.t('label.ssn')} name={"ssn"} ></FormInputText>
           </Grid>
           <Grid item xs={12}>
-            <FormInputText control={control} label={"address"} name={"address"} ></FormInputText>
+            <FormInputText control={control} label={i18next.t('label.Address')} name={"address"} ></FormInputText>
           </Grid>
           <Grid item xs={6}>
-            <FormInputText control={control} label={"city"} name={"city"} ></FormInputText>
+            <FormInputText control={control} label={i18next.t('label.City')} name={"city"} ></FormInputText>
           </Grid>
           <Grid item xs={6}>
-            <FormInputText control={control} label={"phone"} name={"phone"} ></FormInputText>
+            <FormInputText control={control} label={i18next.t('label.Phone')} name={"phone"} ></FormInputText>
           </Grid>
           <Grid item xs={12}>
-            <FormInputText control={control} label={"Email"} name={"email"} ></FormInputText>
+            <FormInputText control={control} label={i18next.t('label.Email')} name={"email"} ></FormInputText>
           </Grid> 
           <Grid item xs={6}>
-            <FormDateText control={control} label={"hiredate"} name={"hiredate"} ></FormDateText>
+            <FormDateText control={control} label={i18next.t('label.hiredate')} name={"hiredate"} ></FormDateText>
           </Grid>
-          <Grid item xs={12} alignContent="right">
+           <Grid item xs={12}>
+           <Stack item xs={12} alignContent="right" direction="row" spacing={2}>
             <Button onClick={handleSubmit(onSubmit)} variant="contained" >
               Guardar
             </Button>
             <Button variant="contained" color='secondary' onClick={closeModal} >
               Cancel
             </Button>
+            </Stack>
           </Grid>
         </Grid>
       </form>
