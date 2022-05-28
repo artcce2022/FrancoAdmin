@@ -5,6 +5,7 @@ import EditCustomer from './_EditCustomer.js';
 import { useNavigate } from "react-router-dom"; 
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button , CardHeader, IconButton } from '@mui/material';
 import MainCard from '../../ui-component/cards/MainCard';
+import i18next from 'i18next';
 
 
 const URI = 'http://localhost:3001/customers/'
@@ -36,16 +37,16 @@ const CustomersList =() =>{
     }
 
     return (<div>
-        <MainCard title={<CardHeader action={<Button  variant="contained"  onClick={()=> {setIdCustomer(0); setOpenModal(true);}} className='btn btn-primary'>Agregar</Button>} title="Cliente"/>} >
+        <MainCard title={<CardHeader action={<Button  variant="contained"  onClick={()=> {setIdCustomer(0); setOpenModal(true);}} className='btn btn-primary'>{i18next.t('label.Add')}</Button>} title={i18next.t('label.Customer')}/>} >
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} size="small" aria-label="Patios">
                     <TableHead>
                         <TableRow>
-                            <TableCell>Cliente</TableCell>
-                            <TableCell>Company</TableCell>
-                            <TableCell>City</TableCell>
-                            <TableCell>Phone</TableCell>
-                            <TableCell>Acciones</TableCell>
+                            <TableCell>{i18next.t('label.Customer')}</TableCell>
+                            <TableCell>{i18next.t('label.Company')}</TableCell>
+                            <TableCell>{i18next.t('label.City')}</TableCell>
+                            <TableCell>{i18next.t('label.Phone')}</TableCell>
+                            <TableCell>{i18next.t('label.Actions')}</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -61,8 +62,8 @@ const CustomersList =() =>{
                                 <TableCell>{customer.city}</TableCell>
                                 <TableCell>{customer.phone}</TableCell>
                                 <TableCell>
-                                    <Button  variant="outlined"  onClick={() => { setIdCustomer(customer.idcustomer); setOpenModal(true); }} >Editar</Button> 
-                                    <Button  variant="outlined"  onClick={() => { setIdCustomer(customer.idcustomer);  routeChange(customer.idcustomer); }} >Detalle</Button> 
+                                    <Button  variant="outlined"  onClick={() => { setIdCustomer(customer.idcustomer); setOpenModal(true); }} >{i18next.t('label.Edit')}</Button> 
+                                    <Button  variant="outlined"  onClick={() => { setIdCustomer(customer.idcustomer);  routeChange(customer.idcustomer); }} >{i18next.t('label.Detalle')}</Button> 
                                 </TableCell>                              
                             </TableRow>
                         ))}
