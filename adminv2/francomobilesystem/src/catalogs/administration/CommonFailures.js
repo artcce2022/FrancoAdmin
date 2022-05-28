@@ -2,8 +2,9 @@ import axios from 'axios'
 import {  useEffect, useState} from 'react'  
 import MyModal from '../../shared/Modal'; 
 import EditCommonFailure from './_EditCommonFailure.js'
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button , CardHeader, IconButton } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button , CardHeader, IconButton, Stack } from '@mui/material';
 import MainCard from '../../ui-component/cards/MainCard';
+import i18next from 'i18next';
 
 
 
@@ -31,14 +32,14 @@ const CommonFailuresList =() =>{
 
 
     return ( 
-            <MainCard title={<CardHeader action={<Button  variant="contained"  onClick={()=> {setIdCommonFailure(0); setOpenModal(true);}} className='btn btn-primary'>Agregar</Button>} title="Fallas Comunes"/>} >
+            <MainCard title={<CardHeader action={<Button  variant="contained"  onClick={()=> {setIdCommonFailure(0); setOpenModal(true);}} className='btn btn-primary'>{i18next.t('label.Add')}</Button>} title={i18next.t('label.faultCommons')}/>} >
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} size="small" aria-label="Patios">
                     <TableHead>
                         <TableRow>
-                            <TableCell>Descripcion</TableCell>
-                            <TableCell>Categoria</TableCell> 
-                            <TableCell>Acciones</TableCell>
+                            <TableCell>{i18next.t('label.Description')}</TableCell>
+                            <TableCell>{i18next.t('label.Categoria')}</TableCell> 
+                            <TableCell>{i18next.t('label.Actions')}</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -51,13 +52,13 @@ const CommonFailuresList =() =>{
                                     {failure.shortdescription}
                                 </TableCell>
                                 <TableCell>{failure.symptomscategory.category}</TableCell> 
-                                <TableCell><Button  variant="outlined"  onClick={() => { setIdCommonFailure(failure.idcommonfailures); setOpenModal(true); }} >Editar</Button> </TableCell>
+                                <TableCell><Button  variant="outlined"  onClick={() => { setIdCommonFailure(failure.idcommonfailures); setOpenModal(true); }} >{i18next.t('label.Edit')}</Button> </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
                 </Table>
             </TableContainer>
-            {openModal && <MyModal id="id_myModal" title={idCommonFailure > 0 ? "Editar Falla" : "Agregar Falla"} openModal={openModal} closeModal={handleClose} >
+            {openModal && <MyModal id="id_myModal" title={idCommonFailure > 0 ? `${i18next.t('label.FailuresEdit')}` : `${i18next.t('label.Addfailure')}` } openModal={openModal} closeModal={handleClose} >
                 <EditCommonFailure  idsymptomcategorydefault={idsymptomcategorydefault}  idCommonFailure={idCommonFailure} closeModal={handleClose} />
             </MyModal>}
         </MainCard> 

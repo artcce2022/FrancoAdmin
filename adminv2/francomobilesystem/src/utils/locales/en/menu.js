@@ -54,5 +54,6 @@ export const TRANSLATIONS_EN = {
     'label.Required':'Required',
     'label.faultCommons': 'Fault Commons',
     'label.FailuresEdit': 'Edit Failures',
-    'label.EditCustomer' : 'Edit Customer'
+    'label.EditCustomer' : 'Edit Customer',
+    'label.Addfailure' : 'Add Failure'
    }

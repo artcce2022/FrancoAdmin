@@ -6,6 +6,7 @@ import CustomerContactsList from '../../Components/CustomerContactsList.js';
 import VehicleList from '../../Components/CustomerVehicleList.js';
 import EditCustomer from './_EditCustomer.js';
 import MyModal from '../../shared/Modal';
+import i18next from 'i18next';
 import {
     Paper, Button, CardHeader, IconButton, Grid, Typography, Divider, List, ListItem, ListItemText, Table,
     TableBody, TableCell, TableContainer, TableRow
@@ -55,33 +56,33 @@ const CustomerDetail = () => {
                                     <TableRow key="Alias" sx={{ '&:last-child td, &:last-child th': { border: 0 } }} >
                                         <TableCell component="th" scope="row"><Typography  variant="h4" component="div" gutterBottom>Alias</Typography>  </TableCell>
                                         <TableCell align="left">{Customer.shortname}</TableCell>
-                                        <TableCell sx={{ typography: 'h4' }} align="left">Empresa</TableCell>
+                                        <TableCell sx={{ typography: 'h4' }} align="left">{i18next.t('label.Company')}</TableCell>
                                         <TableCell align="left">{Customer.company}</TableCell>
                                     </TableRow>
                                     <TableRow key="Nombre" sx={{ '&:last-child td, &:last-child th': { border: 0 } }} >
-                                        <TableCell sx={{ typography: 'h4' }}  scope="row">Contacto </TableCell>
+                                        <TableCell sx={{ typography: 'h4' }}  scope="row">{i18next.t('label.Contact')}</TableCell>
                                         <TableCell align="left" colSpan={3}>{Customer.firstname + " " + Customer.lastname}</TableCell>
                                     </TableRow>
                                     <TableRow key="Direccion" sx={{ '&:last-child td, &:last-child th': { border: 0 } }} >
-                                        <TableCell  sx={{ typography: 'h4' }} >Direccion</TableCell>
+                                        <TableCell  sx={{ typography: 'h4' }} >{i18next.t('label.Address')}</TableCell>
                                         <TableCell  colSpan={3} align="left">{Customer.address}</TableCell>
                                     </TableRow>
                                     <TableRow key="zipcode" sx={{ '&:last-child td, &:last-child th': { border: 0 } }} >
-                                        <TableCell sx={{ typography: 'h4' }}  scope="row">zipcode </TableCell>
+                                        <TableCell sx={{ typography: 'h4' }}  scope="row">{i18next.t('label.ZipCode')}</TableCell>
                                         <TableCell align="left">{Customer.zipcode}</TableCell>
-                                        <TableCell sx={{ typography: 'h4' }}  align="left">City</TableCell>
+                                        <TableCell sx={{ typography: 'h4' }}  align="left">{i18next.t('label.City')}</TableCell>
                                         <TableCell align="left">{Customer.city}</TableCell>
                                     </TableRow>
                                     <TableRow key="state" sx={{ '&:last-child td, &:last-child th': { border: 0 } }} >
-                                        <TableCell sx={{ typography: 'h4' }}  scope="row">state </TableCell>
+                                        <TableCell sx={{ typography: 'h4' }}  scope="row">{i18next.t('label.State')}</TableCell>
                                         <TableCell align="left">{Customer.state}</TableCell>
-                                        <TableCell sx={{ typography: 'h4' }}  align="left">Phone</TableCell>
+                                        <TableCell sx={{ typography: 'h4' }}  align="left">{i18next.t('label.Phone')}</TableCell>
                                         <TableCell align="left">{Customer.phone}</TableCell>
                                     </TableRow>
                                     <TableRow key="mobilephone" sx={{ '&:last-child td, &:last-child th': { border: 0 } }} >
-                                        <TableCell sx={{ typography: 'h4' }}  scope="row">mobilephone </TableCell>
+                                        <TableCell sx={{ typography: 'h4' }}  scope="row">{i18next.t('label.Mobile')}</TableCell>
                                         <TableCell align="left">{Customer.mobilephone}</TableCell>
-                                        <TableCell sx={{ typography: 'h4' }}  align="left">Phone</TableCell>
+                                        <TableCell sx={{ typography: 'h4' }}  align="left">{i18next.t('label.Phone')}</TableCell>
                                         <TableCell align="left">{Customer.phone}</TableCell>
                                     </TableRow>
                                 </TableBody>
@@ -105,7 +106,7 @@ const CustomerDetail = () => {
                     </Paper>
                 </MainCard>
             </Grid>
-            {openModal && <MyModal id="id_myModal" title={idCustomer > 0 ? "Editar Cliente" : "Agregar Cliente"} openModal={openModal} closeModal={handleClose} >
+            {openModal && <MyModal id="id_myModal" title={idCustomer > 0 ? `${i18next.t('label.EditCustomer')}` : `${i18next.t('label.AddCustomer')}` } openModal={openModal} closeModal={handleClose} >
                 <EditCustomer idCustomer={idCustomer} closeModal={handleClose} />
             </MyModal>}
         </Grid>
