@@ -55,7 +55,7 @@ export const TRANSLATIONS_EN = {
     'label.faultCommons': 'Fault Commons',
     'label.FailuresEdit': 'Edit Failures',
     'label.EditCustomer' : 'Edit Customer',
-    'label.Addfailure' : 'Add Failure',
+    'label.Addfailure' : 'Add Failure'
     'label.birthdate':'Birthdate',
     'label.ssn': 'SSN',
     'label.hiredate':'Hiredate',
