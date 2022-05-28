@@ -58,5 +58,8 @@ export const TRANSLATIONS_EN = {
     'label.Addfailure' : 'Add Failure',
     'label.birthdate':'Birthdate',
     'label.ssn': 'SSN',
-    'label.hiredate':'Hiredate'
+    'label.hiredate':'Hiredate',
+    'label.locationName' : 'Location',
+    'label.schedule': 'Schedule',
+    'label.manager': 'Manager'
    }

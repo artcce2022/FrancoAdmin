@@ -58,5 +58,8 @@ export const TRANSLATIONS_ES = {
     'label.Addfailure' : 'Agregar Falla',
     'label.birthdate':'Fecha de Nacimiento',
     'label.ssn': 'Seguro Social',
-    'label.hiredate':'Fecha Contratación'
+    'label.hiredate':'Fecha Contratación',
+    'label.locationName' : 'Patio',
+    'label.schedule': 'Horario',
+    'label.manager': 'Administrador'
    }
