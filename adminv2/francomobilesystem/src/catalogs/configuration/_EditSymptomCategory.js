@@ -84,8 +84,6 @@ export default function EditSymptomCategory({idSymptomCategory, closeModal }) {
          </Grid>
        </form>
      </Paper> 
-  
-  
    )
   }
    
