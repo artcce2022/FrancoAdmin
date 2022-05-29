@@ -1,8 +1,9 @@
 import {  useEffect, useState} from 'react'
 import { useForm  } from 'react-hook-form';
 import axios from 'axios'
-import {  Grid, Divider, Button, Paper } from '@mui/material';
+import {  Grid, Divider, Button, Paper, Stack } from '@mui/material';
 import { FormInputText } from '../../form-components/FormInputText';
+import i18next from 'i18next';
 const URI = 'http://localhost:3001/scategories/';
    
 
@@ -65,18 +66,20 @@ export default function EditSymptomCategory({idSymptomCategory, closeModal }) {
        <form onSubmit={handleSubmit(onSubmit)}>
          <Grid container spacing={3}>
            <Grid item xs={12}>
-               <FormInputText   control={control} label={"Categoria"} name={"category"} ></FormInputText>
+               <FormInputText   control={control} label={i18next.t('label.Categoria')} name={"category"} ></FormInputText>
             </Grid>
            <Grid item xs={12}>
              <Divider variant="inset" />
            </Grid>
-           <Grid item xs={12}  alignContent="right">
+           <Grid item xs={12}>
+           <Stack item xs={12} alignContent="right" direction="row" spacing={2}>
              <Button onClick={handleSubmit(onSubmit)}  variant="contained" >
                Guardar
              </Button>
              <Button variant="contained" color='secondary' onClick={closeModal} >
                Cancel
              </Button>
+             </Stack>
            </Grid>
          </Grid>
        </form>

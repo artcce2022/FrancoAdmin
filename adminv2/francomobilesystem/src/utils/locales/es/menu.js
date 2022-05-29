@@ -4,7 +4,7 @@ export const TRANSLATIONS_ES = {
     "Employees": "Empleados",
     "label.NomEmpresa":"Nombre de Empresa",
     "label.Description":"Descripción",
-    "label.Categoria":"Categoráa",
+    "label.Categoria":"Categoría",
     "label.Detalle":"Detalle",
     "label.Actions":"Acciones",
     "label.Add":"Agregar",    
