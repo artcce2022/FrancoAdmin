@@ -1,4 +1,6 @@
 import React,{ lazy } from 'react';
+import ServiceDetail from '../catalogs/services/DetailService';
+import ServicesList from '../catalogs/services/ListServices';
 
 // project imports
 import MainLayout from './../layout/MainLayout';
@@ -69,6 +71,13 @@ const MainRoutes = {
         },{
             path:'NewService',
             element: <NewService/>
+        },{
+            path:'Services',
+            element: <ServicesList/>
+        },
+        {
+            path: 'ServiceDetail/:id',
+            element: <ServiceDetail />
         }
     ]
 };

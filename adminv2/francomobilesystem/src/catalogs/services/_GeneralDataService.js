@@ -13,7 +13,7 @@ import i18next from 'i18next';
 
 const steps = ['Selecciona Cliente', 'Selecciona Vehiculo', 'Agregar Detalles', 'Datos Generales'];
 
-export default function EditGeneralInfoService({ handleBack, handleNext, isLastStep, isFirstStep, formValues, idCustomer }) {
+export default function EditGeneralInfoService({ handleBack, handleNext, isLastStep, isFirstStep, formValues, idCustomer  }) {
   const [customers, setCustomers] = useState([]);
   const [locations, setLocation] = useState([]);
   const [vehicles, setVehicles] = useState([]);

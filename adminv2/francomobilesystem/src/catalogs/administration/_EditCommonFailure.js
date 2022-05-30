@@ -96,8 +96,7 @@ export default function EditCommonFailure({ idCommonFailure, closeModal, idsympt
                 });
         }
 
-    };
-    return (
+    };  return (
         <div>
             <Paper variant="elevation">
                 <form onSubmit={handleSubmit(onSubmit)}>
@@ -106,7 +105,11 @@ export default function EditCommonFailure({ idCommonFailure, closeModal, idsympt
                             <FormInputText control={control} label={i18next.t('label.shortDescription')} name={"shortdescription"} ></FormInputText>
                         </Grid>
                         <Grid item xs={12}>
+<<<<<<< HEAD
+                            <FormInputText control={control} label={i18next.t('label.Descripcion')} name={"symtomdescription"} ></FormInputText>
+=======
                             <FormInputText control={control} label={i18next.t('label.Description')} name={"symtomdescription"} ></FormInputText>
+>>>>>>> 7a13000a93c0b8b85709334dcd2a8e32b6b2c55e
                         </Grid>
                         <Grid item xs={6}>
                             <FormInputText control={control} label={i18next.t('label.RequiredWorks')} name={"workrequested"} ></FormInputText>

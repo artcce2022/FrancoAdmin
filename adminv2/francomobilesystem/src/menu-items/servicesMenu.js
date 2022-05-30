@@ -25,6 +25,13 @@ const servicesPages = {
                     type: 'item',
                     url: 'NewService/?id=' + uuidv4() ,
                     target: false
+                },
+                {
+                    id:'Services' ,
+                    title:`${i18n.t(`menu.Services`)}`,
+                    type: 'item',
+                    url: 'Services' ,
+                    target: false
                 }
            ] 
 };

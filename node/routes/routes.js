@@ -8,11 +8,14 @@ import { deleteLocation, getLocation, getLocations, insertLocation, updateLocati
 import { getMovementType, getMovementTypes } from '../controllers/MovementTypesController.js'
 import { deletePartCategory, getPartcategory, getPartsCategories, insertPartCategory, updatePartCategory } from '../controllers/PartsCategoryController.js'
 import { deleteParts, getPart, getParts, insertPart, updatePart } from '../controllers/PartsController.js'
+import { getAllServices, getService, getServiceDetails, getServiceFailures, getServiceFiles, insertService, saveService, saveServiceFile, updateService } from '../controllers/ServicesController.js'
+import { getAllServiceStatus, getServiceStatus } from '../controllers/ServiceStatusController.js'
 import { deleteSymptomCategory, getSymptomCategory, getSymptomsCategories, insertSymptomCategory, updateSymptomCategory } from '../controllers/SymptomsCategoriesController.js'
 import { deleteVehicle, getAllVehicles, getVehicle, getVehicles, insertVehicle, updateVehicle } from '../controllers/VehiclesController.js'
 import { deleteVendor, getVendor, getVendors, insertVendor, updateVendor } from '../controllers/VendorController.js'
 import { deleteWarehouse, getWarehouse, getWarehouses, insertWarehouse, updateWarehouse } from '../controllers/WarehouseController.js'
 import { deleteZipCode, getFilterZipCodes, getPaginatedZipCodes, getZipCode, getZipCodes, insertZipCode, updateZipCode } from '../controllers/ZipCodesController.js'
+import uploadfile from './uploadfile.js'
 const router = express.Router()
 
 router.get('/companies/', getCompanies)
@@ -100,4 +103,17 @@ router.get('/parts/:id',getPart)
 router.post('/parts/', insertPart )
 router.put('/parts/:id', updatePart )
 router.delete('/parts/:id', deleteParts )
+
+router.get('/servicestatus/', getAllServiceStatus   ) 
+router.get('/servicestatus/:id',getServiceStatus) 
+
+router.get('/services/', getAllServices) 
+router.get('/services/:id',getService)
+router.get('/services/failures/:id',getServiceFailures)
+router.get('/services/details/:id',getServiceDetails)
+router.get('/services/files/:id',getServiceFiles)
+router.post('/service/savefile/',uploadfile, saveServiceFile )
+router.post('/services/', insertService )
+router.post('/service/save/:id', saveService )
+router.put('/services/:id', updateService ) 
 export default router
