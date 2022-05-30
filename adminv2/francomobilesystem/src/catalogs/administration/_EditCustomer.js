@@ -5,6 +5,7 @@ import { Grid, Divider, Button, Paper, Autocomplete, InputMask, Stack } from '@m
 import { FormInputText } from '../../form-components/FormInputText.js';
 import { FormAutoCompleteText } from '../../form-components/FormAutoCompleteText_V2.js';
 import InputEmailField from '../../form-components/InputEmailField.js';
+import i18next from 'i18next';
 
 const URI = 'http://localhost:3001/customers/';
 const URIZipCodesFilter = 'http://localhost:3001/zipcodessearch/'
@@ -155,39 +156,39 @@ export default function EditCustomer({ idCustomer, closeModal, idsymptomcategory
       <form onSubmit={handleSubmit(onSubmit)}>
         <Grid container spacing={3}>
           <Grid item xs={12}>
-            <FormInputText control={control} label={"Nombre de Empresa"} name={"shortname"} ></FormInputText>
+            <FormInputText control={control} label={i18next.t('label.NomEmpresa')} name={"shortname"} ></FormInputText>
           </Grid>
           <Grid item xs={12}>
-            <FormInputText control={control} label={"Company"} name={"company"} ></FormInputText>
+            <FormInputText control={control} label={i18next.t('label.Company')} name={"company"} ></FormInputText>
           </Grid>
           <Grid item xs={6}>
-            <FormInputText control={control} label={"Name"} name={"firstname"} ></FormInputText>
+            <FormInputText control={control} label={i18next.t('label.Name')} name={"firstname"} ></FormInputText>
           </Grid>
           <Grid item xs={6}>
-            <FormInputText control={control} label={"Lastname"} name={"lastname"} ></FormInputText>
+            <FormInputText control={control} label={i18next.t('label.Lastname')} name={"lastname"} ></FormInputText>
           </Grid>
           <Grid item xs={12}>
-            <FormInputText control={control} label={"Address"} name={"address"} ></FormInputText>
+            <FormInputText control={control} label={i18next.t('label.Address')} name={"address"} ></FormInputText>
           </Grid>
           <Grid item xs={6}>
             {/* <FormInputText control={control} label={"zipcode"} name={"zipcode"} ></FormInputText> */}
-            <FormAutoCompleteText control={control} setSelected={setSelectedZipCode} defaultValue={selectedZipCode} label={"Zipcode"} name={"zipcode"} setFilter={(data) => { setFilterStr(data) }} setLoading={setLoading} loading={loading} open={open} setOpen={setOpen} options={options}  ></FormAutoCompleteText>
+            <FormAutoCompleteText control={control} setSelected={setSelectedZipCode} defaultValue={selectedZipCode} label={i18next.t('label.Zipcode')} name={"zipcode"} setFilter={(data) => { setFilterStr(data) }} setLoading={setLoading} loading={loading} open={open} setOpen={setOpen} options={options}  ></FormAutoCompleteText>
           </Grid>
           <Grid item xs={6}>
-            <FormInputText control={control} label={"City"} name={"city"} ></FormInputText>
+            <FormInputText control={control} label={i18next.t('label.City')} name={"city"} ></FormInputText>
           </Grid>
           <Grid item xs={6}>
-            <FormInputText control={control} label={"State"} name={"state"} ></FormInputText>
+            <FormInputText control={control} label={i18next.t('label.State')} name={"state"} ></FormInputText>
           </Grid>
           <Grid item xs={6}>
-            <FormInputText control={control} label={"Phone"} name={"phone"} ></FormInputText>
+            <FormInputText control={control} label={i18next.t('label.Phone')} name={"phone"} ></FormInputText>
           </Grid>
           <Grid item xs={6}>
-            <FormInputText control={control} label={"Mobilephone"} name={"mobilephone"} ></FormInputText>
+            <FormInputText control={control} label={i18next.t('label.Mobile')} name={"mobilephone"} ></FormInputText>
           </Grid>
           <Grid item xs={6}>
             {/* <FormInputText control={control} label={"Email"} name={"email"} > </FormInputText> */}
-            <InputEmailField name={"email1"}  control={control} helperText="(Required)" value={"aaa.aaaa.com"} label="Email" fieldName="email1" handleChange={(value, isValid) =>{setEmail(value)}}></InputEmailField>
+            <InputEmailField name={"email1"}  control={control} helperText="(Required)" value={"aaa.aaaa.com"} label={i18next.t("label.Email")} fieldName="email1" handleChange={(value, isValid) =>{setEmail(value)}}></InputEmailField>
           </Grid>
           <Grid item xs={6}>
           </Grid>
@@ -197,10 +198,10 @@ export default function EditCustomer({ idCustomer, closeModal, idsymptomcategory
           <Grid item xs={12}>
           <Stack item xs={12} alignContent="right" direction="row" spacing={2}>
             <Button onClick={handleSubmit(onSubmit)} variant="contained" >
-              Guardar
+              {i18next.t('label.Save')}
             </Button>
             <Button variant="contained" color='secondary' onClick={closeModal} >
-              Cancel
+            {i18next.t('label.Cancel')}
             </Button>
           </Stack>
           </Grid>

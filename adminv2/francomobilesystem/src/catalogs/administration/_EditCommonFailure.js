@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form';
 import axios from 'axios' 
-import { Grid, Divider, Button, Paper, Select, MenuItem, InputLabel } from '@mui/material';
+import { Grid, Divider, Button, Paper, Select, MenuItem, InputLabel, Stack } from '@mui/material';
 import { FormInputText } from '../../form-components/FormInputText.js';
+import i18next from 'i18next';
 
 const URI = 'http://localhost:3001/scategories/';
 const URIFailures = 'http://localhost:3001/failures/';
@@ -95,30 +96,29 @@ export default function EditCommonFailure({ idCommonFailure, closeModal, idsympt
                 });
         }
 
-    };
-    return (
+    };  return (
         <div>
             <Paper variant="elevation">
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <Grid container spacing={3}>
                         <Grid item xs={12}>
-                            <FormInputText control={control} label={"Descripcion Corta"} name={"shortdescription"} ></FormInputText>
+                            <FormInputText control={control} label={i18next.t('label.shortDescription')} name={"shortdescription"} ></FormInputText>
                         </Grid>
                         <Grid item xs={12}>
-                            <FormInputText control={control} label={"Descripcion"} name={"symtomdescription"} ></FormInputText>
+                            <FormInputText control={control} label={i18next.t('label.Descripcion')} name={"symtomdescription"} ></FormInputText>
                         </Grid>
                         <Grid item xs={6}>
-                            <FormInputText control={control} label={"Trabajos Requeridos"} name={"workrequested"} ></FormInputText>
+                            <FormInputText control={control} label={i18next.t('label.RequiredWorks')} name={"workrequested"} ></FormInputText>
                         </Grid>
                         <Grid item xs={6}>
-                            <FormInputText control={control} label={"Tiempo Aproximado"} name={"hours"} ></FormInputText>
+                            <FormInputText control={control} label={i18next.t('label.TimeAprox')} name={"hours"} ></FormInputText>
                         </Grid>
                         <Grid item xs={12}>
-                            <FormInputText control={control} label={"Precio"} name={"price"} ></FormInputText>
+                            <FormInputText control={control} label={i18next.t('label.Price')} name={"price"} ></FormInputText>
                         </Grid>
                         <Grid item xs={6}>
                         <InputLabel variant="standard" htmlFor="uncontrolled-native">
-                                Categoria
+                                {i18next.t('label.Categoria')}
                             </InputLabel>
                              {/* <Select name='idsymptomcategory' getOptionLabel={(option) => option.label} getOptionValue={(option) => option.value} onChange={(selectedOption) => { setIdsymptomcategory(selectedOption.value); console.log(selectedOption); }} options={categoriesFailure} /> */}
                              <Select
@@ -141,13 +141,16 @@ export default function EditCommonFailure({ idCommonFailure, closeModal, idsympt
                             <Divider variant="inset" />
                         </Grid>
                         <Grid item xs={12} alignContent="right">
+                         <Stack item xs={12} alignContent="right" direction="row" spacing={2}>
                             <Button onClick={handleSubmit(onSubmit)} variant="contained" >
-                                Guardar
+                            {i18next.t('label.Save')}
                             </Button>
                             <Button variant="contained" color='secondary' onClick={closeModal} >
-                                Cancel
+                            {i18next.t('label.Cancel')}
                             </Button>
+                          </Stack>
                         </Grid>
+                        
                     </Grid>
                 </form>
             </Paper>

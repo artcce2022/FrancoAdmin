@@ -1,8 +1,9 @@
 import {  useEffect, useState} from 'react'
 import { useForm  } from 'react-hook-form';
 import axios from 'axios' 
-import { Grid, Divider, Button, Paper } from '@mui/material';
+import { Grid, Divider, Button, Paper, Stack } from '@mui/material';
 import { FormInputText } from '../../form-components/FormInputText.js';
+import i18next from 'i18next';
 const URI = 'http://localhost:3001/vehicles/';
 
 export default function EditVehicles({idVehicle, idCustomer, closeModal }) {
@@ -91,28 +92,28 @@ const [vehicle, setVehicle] = useState([]);
      <form onSubmit={handleSubmit(onSubmit)}>
         <Grid container spacing={3}>
           <Grid item xs={2}>
-            <FormInputText control={control} label={"Vin"} name={"vin"} ></FormInputText>
+            <FormInputText control={control} label={i18next.t('label.Vin')} name={"vin"} ></FormInputText>
           </Grid>
           <Grid item xs={4}>
-            <FormInputText control={control} label={"license"} name={"license"} ></FormInputText>
+            <FormInputText control={control} label={i18next.t('label.License')} name={"license"} ></FormInputText>
           </Grid>
           <Grid item xs={4}>
-            <FormInputText control={control} label={"year"} name={"year"} ></FormInputText>
+            <FormInputText control={control} label={i18next.t('label.Year')} name={"year"} ></FormInputText>
           </Grid>         
           <Grid item xs={6}>
-          <FormInputText control={control} label={"make"} name={"make"} ></FormInputText>
+          <FormInputText control={control} label={i18next.t('label.Make')} name={"make"} ></FormInputText>
           </Grid>
           <Grid item xs={6}>
-          <FormInputText control={control} label={"model"} name={"model"} ></FormInputText>
+          <FormInputText control={control} label={i18next.t('label.Model')} name={"model"} ></FormInputText>
           </Grid>
           <Grid item xs={6}>
-          <FormInputText control={control} label={"color"} name={"color"} ></FormInputText>
+          <FormInputText control={control} label={i18next.t('label.Color')} name={"color"} ></FormInputText>
           </Grid>
           <Grid item xs={6}>
-          <FormInputText control={control} label={"unit"} name={"unit"} ></FormInputText>
+          <FormInputText control={control} label={i18next.t('label.Unit')} name={"unit"} ></FormInputText>
           </Grid>
           <Grid item xs={6}>
-          <FormInputText control={control} label={"memo"} name={"memo"} ></FormInputText>
+          <FormInputText control={control} label={i18next.t('label.Memo')} name={"memo"} ></FormInputText>
           </Grid>
           <Grid item xs={6}> 
           </Grid>
@@ -120,12 +121,14 @@ const [vehicle, setVehicle] = useState([]);
             <Divider variant="inset" />
           </Grid>
           <Grid item xs={12}  alignContent="right">
+          <Stack item xs={12} alignContent="right" direction="row" spacing={2}>
             <Button onClick={handleSubmit(onSubmit)}  variant="contained" >
-              Guardar
+              {i18next.t('label.Save')}
             </Button>
             <Button variant="contained" color='secondary' onClick={closeModal} >
-              Cancel
+              {i18next.t('label.Cancel')}
             </Button>
+            </Stack>
           </Grid>
         </Grid>
       </form>

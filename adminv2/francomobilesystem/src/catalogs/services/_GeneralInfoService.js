@@ -9,9 +9,8 @@ import StepButtons from '../../form-components/Steps/StepButtons';
 
 const steps = ['Selecciona Cliente', 'Selecciona Vehiculo', 'Agregar Detalles', 'Datos Generales'];
 
-export default function EditGeneralInfoService({ handleBack, handleNext, isLastStep, isFirstStep, formValues }) {
-  const [locations, setLocation] = useState([]); 
-  let [idLocation, setIdLocation] = useState(0);
+export default function EditGeneralInfoService({ handleBack, handleNext, isLastStep, isFirstStep, formValues, setLocation,  setComments,  setRecibe }) {
+  const [locations, setLocations] = useState([]);  
   const [values, setValues] = useState({
     idLocation: "0",
     idCustomer: "0",
@@ -42,7 +41,7 @@ export default function EditGeneralInfoService({ handleBack, handleNext, isLastS
   const getLocationsList = async () => {
     const UriLocations = 'http://localhost:3001/locations/'
     const res = await axios.get(UriLocations);
-    setLocation(res.data);
+    setLocations(res.data);
   }
 
   const onChange = (event) => {
@@ -65,8 +64,8 @@ export default function EditGeneralInfoService({ handleBack, handleNext, isLastS
               </InputLabel>
               <Select style={{ minWidth: "250px" }}
                 value={values.idLocation}
-                name='idLocation' getOptionValue={(option) => option.value}
-                onChange={(selectedOption) => { setIdLocation(`${selectedOption.target.value}`); console.log(`${selectedOption.target.value}`); onChange(selectedOption); }}
+                name='idLocation'
+                onChange={(selectedOption) => { setLocation(`${selectedOption.target.value}`); console.log(`${selectedOption.target.value}`); onChange(selectedOption); }}
               >
                 {!!locations?.length &&
                   locations.map((location) => (
@@ -77,10 +76,10 @@ export default function EditGeneralInfoService({ handleBack, handleNext, isLastS
               </Select>
             </Grid>
             <Grid item xs={12}>
-              <FormInputText newValue={values.recibe} control={control} label={"Recibe"} name={"recibe"} changeHandler={onChange} ></FormInputText>
+              <FormInputText newValue={values.recibe} control={control} label={"Recibe"} name={"recibe"} changeHandler={(event)=>{setComments(event.target.value); onChange(event); }} ></FormInputText>
             </Grid>
             <Grid item xs={12}>
-              <FormInputText newValue={values.comments} control={control} label={"Comments"} name={"comments"} changeHandler={onChange} ></FormInputText>
+              <FormInputText newValue={values.comments} control={control} label={"Comments"} name={"comments"} changeHandler={(event)=>{setRecibe(event.target.value); onChange(event);}} ></FormInputText>
             </Grid>
           </form> 
         </CardContent>

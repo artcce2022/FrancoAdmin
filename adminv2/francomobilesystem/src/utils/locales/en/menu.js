@@ -1,5 +1,6 @@
 export const TRANSLATIONS_EN = {
     "menu.NewService" : "New Service" ,
+    "menu.Services" : "Services" ,
     "Company" : "Company" ,
     "Employees": "Employees",
     "label.Description":"Description",

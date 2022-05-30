@@ -8,7 +8,7 @@ const CustomersModel=  db.define('customers',{
         autoIncrement: true  },
     shortname:{ type: DataTypes.STRING},
     company:{ type: DataTypes.STRING},
-    firstname:{ type: DataTypes.DATE},
+    firstname:{ type: DataTypes.STRING},
     lastname:{ type: DataTypes.STRING},
     address:{ type: DataTypes.STRING},
     zipcode:{ type: DataTypes.STRING},
