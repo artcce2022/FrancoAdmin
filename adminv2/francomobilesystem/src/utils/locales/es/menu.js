@@ -61,5 +61,6 @@ export const TRANSLATIONS_ES = {
     'label.hiredate':'Fecha Contratación',
     'label.locationName' : 'Patio',
     'label.schedule': 'Horario',
-    'label.manager': 'Administrador'
+    'label.manager': 'Administrador',
+    'label.warehousename': 'Almacén'
    }

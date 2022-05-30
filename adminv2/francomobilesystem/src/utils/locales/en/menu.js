@@ -61,5 +61,6 @@ export const TRANSLATIONS_EN = {
     'label.hiredate':'Hiredate',
     'label.locationName' : 'Location',
     'label.schedule': 'Schedule',
-    'label.manager': 'Manager'
+    'label.manager': 'Manager',
+    'label.warehousename': 'Warehousename'
    }
