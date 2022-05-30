@@ -58,7 +58,7 @@ const CommonFailuresList =() =>{
                     </TableBody>
                 </Table>
             </TableContainer>
-            {openModal && <MyModal id="id_myModal" title={idCommonFailure > 0 ? "Editar Falla" : "Agregar Falla"} openModal={openModal} closeModal={handleClose} >
+            {openModal && <MyModal id="id_myModal" title={idCommonFailure > 0 ? `${i18next.t('label.FailuresEdit')}` : `${i18next.t('label.Addfailure')}` } openModal={openModal} closeModal={handleClose} >
                 <EditCommonFailure  idsymptomcategorydefault={idsymptomcategorydefault}  idCommonFailure={idCommonFailure} closeModal={handleClose} />
             </MyModal>}
         </MainCard> 
