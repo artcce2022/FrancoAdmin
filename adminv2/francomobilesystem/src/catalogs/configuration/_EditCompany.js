@@ -2,9 +2,9 @@ import * as React from 'react';
 import { useEffect, useState } from 'react'
 import { useForm, Controller } from 'react-hook-form';
 import axios from 'axios'
-import {  Grid, Divider, Button, Paper } from '@mui/material';
+import {  Grid, Divider, Button, Paper, Stack } from '@mui/material';
 import { FormInputText } from '../../form-components/FormInputText';
-
+import i18next from 'i18next';
 
 export default function EditCompany({ idCompany, closeModal }) {
   const [company, setCompany] = useState([]);
@@ -67,13 +67,13 @@ export default function EditCompany({ idCompany, closeModal }) {
       <form onSubmit={handleSubmit(onSubmit)}>
         <Grid container spacing={3}>
           <Grid item xs={12}>
-              <FormInputText   control={control} label={"Nombre de Empresa"} name={"companyName"} ></FormInputText>
+              <FormInputText   control={control} label={i18next.t('label.NomEmpresa')} name={"companyName"} ></FormInputText>
            </Grid>
           <Grid item xs={12}>
-          <FormInputText control={control} label={"Email"} name={"email"} ></FormInputText>
+          <FormInputText control={control} label={i18next.t('label.Email')} name={"email"} ></FormInputText>
           </Grid>
           <Grid item xs={12}>
-          <FormInputText control={control} label={"Phone"} name={"phone"} ></FormInputText>
+          <FormInputText control={control} label={i18next.t('label.Phone')} name={"phone"} ></FormInputText>
           </Grid>
           <Grid item xs={6}>
           {/* <FormControl>
@@ -89,13 +89,15 @@ export default function EditCompany({ idCompany, closeModal }) {
           <Grid item xs={12}>
             <Divider variant="inset" />
           </Grid>
-          <Grid item xs={12}  alignContent="right">
+          <Grid item xs={12}>
+          <Stack item xs={12} alignContent="right" direction="row" spacing={2}>
             <Button onClick={handleSubmit(onSubmit)}  variant="contained" >
               Guardar
             </Button>
             <Button variant="contained" color='secondary' onClick={closeModal} >
               Cancel
             </Button>
+            </Stack>
           </Grid>
         </Grid>
       </form>

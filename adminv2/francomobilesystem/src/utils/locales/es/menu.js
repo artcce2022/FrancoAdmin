@@ -5,7 +5,7 @@ export const TRANSLATIONS_ES = {
     "Employees": "Empleados",
     "label.NomEmpresa":"Nombre de Empresa",
     "label.Description":"Descripción",
-    "label.Categoria":"Categoráa",
+    "label.Categoria":"Categoría",
     "label.Detalle":"Detalle",
     "label.Actions":"Acciones",
     "label.Add":"Agregar",    
@@ -56,5 +56,12 @@ export const TRANSLATIONS_ES = {
     'label.faultCommons': 'Fallas Comunes',
     'label.FailuresEdit': 'Editar Fallas',
     'label.EditCustomer' : 'Editar Cliente',
-    'label.Addfailure' : 'Agregar Falla'
+    'label.Addfailure' : 'Agregar Falla',
+    'label.birthdate':'Fecha de Nacimiento',
+    'label.ssn': 'Seguro Social',
+    'label.hiredate':'Fecha Contratación',
+    'label.locationName' : 'Patio',
+    'label.schedule': 'Horario',
+    'label.manager': 'Administrador',
+    'label.warehousename': 'Almacén'
    }

@@ -1,8 +1,9 @@
 import {  useEffect, useState} from 'react'
 import { useForm  } from 'react-hook-form';
 import axios from 'axios'
-import { Grid, Divider, Button, Paper } from '@mui/material';
+import { Grid, Divider, Button, Paper, Stack } from '@mui/material';
 import { FormInputText } from '../../form-components/FormInputText.js';
+import i18next from 'i18next';
 const URI = 'http://localhost:3001/warehouse/';
  
  
@@ -79,29 +80,31 @@ const onSubmit = async data => { console.log(data);
             <hr></hr>
           </Grid>
           <Grid item xs={6}>
-              <FormInputText control={control} label={"Nombre de Almacen"} name={"warehousename"} ></FormInputText>
+              <FormInputText control={control} label={i18next.t('label.warehousename')} name={"warehousename"} ></FormInputText>
             </Grid>
             <Grid item xs={12}>
-              <FormInputText control={control} label={"Address"} name={"address"} ></FormInputText>
+              <FormInputText control={control} label={i18next.t('label.Address')} name={"address"} ></FormInputText>
             </Grid>
             <Grid item xs={6}>
-              <FormInputText control={control} label={"Phone"} name={"phone"} ></FormInputText>
+              <FormInputText control={control} label={i18next.t('label.Phone')} name={"phone"} ></FormInputText>
             </Grid>
             <Grid item xs={6}>
-              <FormInputText control={control} label={"Manager"} name={"manager"} ></FormInputText>
+              <FormInputText control={control} label={i18next.t('label.manager')} name={"manager"} ></FormInputText>
             </Grid>
             <Grid item xs={6}> 
           </Grid>
           <Grid item xs={12}>
             <Divider variant="inset" />
           </Grid>
-          <Grid item xs={12}  alignContent="right">
+          <Grid item xs={12}>
+          <Stack item xs={12} alignContent="right" direction="row" spacing={2}>
             <Button onClick={handleSubmit(onSubmit)}  variant="contained" >
               Guardar
             </Button>
             <Button variant="contained" color='secondary' onClick={closeModal} >
               Cancel
             </Button>
+            </Stack>
           </Grid>
         </Grid>
       </form>
