@@ -106,11 +106,7 @@ const CustomerDetail = () => {
                     </Paper>
                 </MainCard>
             </Grid>
-<<<<<<< HEAD
-            {openModal && <MyModal id="id_myModal" title={idCustomer > 0 ?  "Editar Cliente" : "Agregar Cliente"} openModal={openModal} closeModal={handleClose} >
-=======
             {openModal && <MyModal id="id_myModal" title={idCustomer > 0 ? `${i18next.t('label.EditCustomer')}` : `${i18next.t('label.AddCustomer')}` } openModal={openModal} closeModal={handleClose} >
->>>>>>> 7a13000a93c0b8b85709334dcd2a8e32b6b2c55e
                 <EditCustomer idCustomer={idCustomer} closeModal={handleClose} />
             </MyModal>}
         </Grid>
