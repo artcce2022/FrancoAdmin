@@ -63,5 +63,21 @@ export const TRANSLATIONS_ES = {
     'label.locationName' : 'Patio',
     'label.schedule': 'Horario',
     'label.manager': 'Administrador',
-    'label.warehousename': 'Almacén'
-   }
+    'label.warehousename': 'Almacén',
+    'label.editCompany' : 'Editar Empresa',
+    'label.addCompany' : 'Agregar Compañia',
+    'label.editemployee' : 'Editar Empleado',
+    'label.addemployee' : 'Agregar Empleado',
+    'label.workyard' : 'Patio',
+    'label.manager' : 'Gerente',
+    'label.editworkyard' : 'Editar Patio',
+    'label.addworkyard' : 'Agregar Patio',
+    'label.EditPartCategory' : 'Editar Categoría de Partes',
+    'label.AddPartCategory' : 'Agregar Categoría de Partes',
+    'label.CategoryParts' : 'Categoría de Refacciones',
+    'label.CategoryFailure' : 'Categoría de Fallas',
+    'label.EditCategoryFailures' : 'Editar Categoría de Fallas',
+    'label.AddCategoryFailures' : 'Agregar Categoría de Fallas',
+    'label.Editwarehousename' : 'Editar Patio',
+    'label.Addtwarehousename' : 'Agregar Patio'
+}
