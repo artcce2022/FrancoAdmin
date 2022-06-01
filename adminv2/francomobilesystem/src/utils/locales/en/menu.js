@@ -63,5 +63,19 @@ export const TRANSLATIONS_EN = {
     'label.locationName' : 'Location',
     'label.schedule': 'Schedule',
     'label.manager': 'Manager',
-    'label.warehousename': 'Warehousename'
+    'label.warehousename': 'Warehousename',
+    'label.editCompany' : 'Edit Company',
+    'label.addCompany' : 'Add Company',
+    'label.workyard' : 'Work Yard',
+    'label.manager' : 'Manager',
+    'label.editworkyard' : 'Edit Workyard',
+    'label.addworkyard' : 'Add Wordyard',
+    'label.EditPartCategory' : 'Edit Category Parts',
+    'label.AddPartCategory' : 'Add Category Parts',
+    'label.CategoryParts' : 'Category Parts',
+    'label.CategoryFailure' : 'Category Failure',
+    'label.EditCategoryFailures' : 'Edit Category Failures',
+    'label.AddCategoryFailures' : 'Add Category Failures',
+    'label.Editwarehousename' : 'Edit WareHousename',
+    'label.Addtwarehousename' : 'Add WareHousename'
    }
