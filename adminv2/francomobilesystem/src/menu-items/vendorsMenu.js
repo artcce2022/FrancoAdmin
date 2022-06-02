@@ -1,5 +1,6 @@
 // assets
 import { IconKey } from '@tabler/icons';
+import i18next from 'i18next';
 
 // constant
 const icons = {
@@ -10,7 +11,7 @@ const icons = {
 
 const warehousePages = {
     id: 'warehouse',
-    title: 'Warehouse',    
+    title: `${i18next.t(`label.warehouses`)}`,    
     type: 'group',
     children: [
           
