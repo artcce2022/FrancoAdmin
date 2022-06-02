@@ -17,7 +17,7 @@ const warehousePages = {
           
                 {
                     id: 'vendors',
-                    title: 'Vendors',
+                    title: `${i18next.t(`label.vendors`)}`,
                     type: 'item',
                     url: 'vendors' ,
                     target: false

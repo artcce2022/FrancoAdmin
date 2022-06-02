@@ -92,5 +92,14 @@ export const TRANSLATIONS_EN = {
     'label.CategorysParts' : 'Part Categories',
     'label.CategorysFailure' : 'Failure Categories',
     'label.warehouses': 'Warehouses',
-    'label.dashboard' : 'Dashboard'
+    'label.dashboard' : 'Dashboard',
+    'label.vendors' : 'Vendors',
+    'label.vendor' : 'Vendor',
+    'label.editvendor' : 'Edit Vendor',
+    'label.addvendor' : 'Add Vendor',
+    'label.extension' :'Extension',
+    'label.fax' : 'Fax',
+    'label.terms' : 'Terms',
+    'label.limits' : 'Limits',
+    'label.comment' : 'Comments'
 }

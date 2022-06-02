@@ -4,6 +4,7 @@ import MyModal from '../../shared/Modal';
 import EditVendor from './_EditVendor.js'
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button , CardHeader, IconButton } from '@mui/material';
 import MainCard from '../../ui-component/cards/MainCard';
+import i18next from 'i18next';
 
 const URI = 'http://localhost:3001/vendors/'
 const VendorsList =() =>{
@@ -26,15 +27,15 @@ const VendorsList =() =>{
     }
 
     return (<div>
-        <MainCard title={<CardHeader action={<Button  variant="contained"  onClick={()=> {setIdVendor(0); setOpenModal(true);}} className='btn btn-primary'>Agregar</Button>} title="Vendedores"/>} >
+        <MainCard title={<CardHeader action={<Button  variant="contained"  onClick={()=> {setIdVendor(0); setOpenModal(true);}} className='btn btn-primary'>{i18next.t('label.Add')}</Button>} title="Vendedores"/>} >
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} size="small" aria-label="Patios">
                     <TableHead>
                         <TableRow>
-                            <TableCell>Vendedor</TableCell>
-                            <TableCell>Contacto</TableCell>
-                            <TableCell>Telefono</TableCell>
-                            <TableCell>Acciones</TableCell>
+                            <TableCell>{i18next.t('label.vendor')}</TableCell>
+                            <TableCell>{i18next.t('label.Contact')}</TableCell>
+                            <TableCell>{i18next.t('label.Phone')}</TableCell>
+                            <TableCell>{i18next.t('label.Actions')}</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -54,7 +55,7 @@ const VendorsList =() =>{
                     </TableBody>
                 </Table>
             </TableContainer>
-            {openModal && <MyModal id="id_myModal" title={idVendor > 0 ? "Editar Vendedor" : "Agregar Vendedor"} openModal={openModal} closeModal={handleClose} >
+            {openModal && <MyModal id="id_myModal" title={idVendor > 0 ? `${i18next.t('label.editvendor')}` : `${i18next.t('label.Addvendor')}` } openModal={openModal} closeModal={handleClose} >
                 <EditVendor idVendor={idVendor} closeModal={handleClose} />
             </MyModal>}
         </MainCard>

@@ -5,7 +5,7 @@ import { Grid, Divider, Button, Paper, Autocomplete, InputMask, Stack } from '@m
 import { FormInputText } from '../../form-components/FormInputText.js';
 import { FormAutoCompleteText } from '../../form-components/FormAutoCompleteText_V2.js';
 import InputEmailField from '../../form-components/InputEmailField.js';
-
+import i18next from 'i18next';
 
 export default function EditVendor({ idVendor, closeModal }) {
     //const [warehouse] =useWarehouse({idWarehouse}); 
@@ -100,37 +100,37 @@ export default function EditVendor({ idVendor, closeModal }) {
             <form onSubmit={handleSubmit(onSubmit)}>
                 <Grid container spacing={3}>
                     <Grid item xs={12}>
-                        <FormInputText control={control} label={"Vendedor"} name={"name"} ></FormInputText>
+                        <FormInputText control={control} label={i18next.t('label.vendor')} name={"name"} ></FormInputText>
                     </Grid>
                     <Grid item xs={12}>
-                        <FormInputText control={control} label={"Address"} name={"address"} ></FormInputText>
+                        <FormInputText control={control} label={i18next.t('label.Address')} name={"address"} ></FormInputText>
                     </Grid>
                     <Grid item xs={6}>
-                        <FormInputText control={control} label={"ZipCode"} name={"zipcode"} ></FormInputText>
+                        <FormInputText control={control} label={i18next.t('label.ZipCode')} name={"zipcode"} ></FormInputText>
                     </Grid>                    
                     <Grid item xs={6}>
-                        <FormInputText control={control} label={"Contacto"} name={"contact"} ></FormInputText>
+                        <FormInputText control={control} label={i18next.t('label.Contact')} name={"contact"} ></FormInputText>
                     </Grid>
                     <Grid item xs={6}>
-                        <FormInputText control={control} label={"Telefono"} name={"phone"} ></FormInputText>
+                        <FormInputText control={control} label={i18next.t('label.Phone')} name={"phone"} ></FormInputText>
                     </Grid>
                     <Grid item xs={6}>
-                        <FormInputText control={control} label={"Extension"} name={"extension"} ></FormInputText>
+                        <FormInputText control={control} label={i18next.t('label.extension')} name={"extension"} ></FormInputText>
                     </Grid>
                     <Grid item xs={6}>
-                        <FormInputText control={control} label={"Fax"} name={"fax"} ></FormInputText>
+                        <FormInputText control={control} label={i18next.t('label.fax')} name={"fax"} ></FormInputText>
                     </Grid>
                     <Grid item xs={6}>
-                        <FormInputText control={control} label={"Email"} name={"email"} ></FormInputText>
+                        <FormInputText control={control} label={i18next.t('label.Email')} name={"email"} ></FormInputText>
                     </Grid>
                     <Grid item xs={6}>
-                        <FormInputText control={control} label={"terms"} name={"terms"} ></FormInputText>
+                        <FormInputText control={control} label={i18next.t('label.terms')} name={"terms"} ></FormInputText>
                     </Grid>
                     <Grid item xs={6}>
-                        <FormInputText control={control} label={"Limits"} name={"limits"} ></FormInputText>
+                        <FormInputText control={control} label={i18next.t('label.limits')} name={"limits"} ></FormInputText>
                     </Grid>
                     <Grid item xs={12}>
-                        <FormInputText control={control} label={"Comentarios"} name={"comments"} ></FormInputText>
+                        <FormInputText control={control} label={i18next.t('label.comment')} name={"comments"} ></FormInputText>
                     </Grid> 
                     <Grid item xs={12}>
                         <Divider variant="inset" />
@@ -138,10 +138,10 @@ export default function EditVendor({ idVendor, closeModal }) {
                     <Grid item xs={12}>
                         <Stack item xs={12} alignContent="right" direction="row" spacing={2}>
                             <Button onClick={handleSubmit(onSubmit)} variant="contained" >
-                                Guardar
+                            {i18next.t('label.Save')}
                             </Button>
                             <Button variant="contained" color='secondary' onClick={closeModal} >
-                                Cancel
+                            {i18next.t('label.Cancel')}
                             </Button>
                         </Stack>
                     </Grid>

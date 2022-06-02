@@ -15,7 +15,7 @@ export const TRANSLATIONS_ES = {
     "label.Company": "Empresa",
     "label.Contact":"Contacto",
     "label.Address":"Dirección",
-    "label.ZipCode":"ZipCode",
+    "label.ZipCode":"Código Postal.",
     "label.City":"Ciudad",
     "label.State":"Estado",
     "label.Phone":"Teléfono",
@@ -94,5 +94,14 @@ export const TRANSLATIONS_ES = {
     'label.CategorysParts' : 'Categorías de Refacciones',
     'label.CategorysFailure' : 'Categorías de Fallas',
     'label.warehouses': 'Almacenes',
-    'label.dashboard' : 'Escritorio'
+    'label.dashboard' : 'Escritorio',
+    'label.vendors' : 'Vendedores',
+    'label.vendor' : 'Vendedor',
+    'label.editvendor' : 'Editar Vendedor',
+    'label.addvendor' : 'Agregar Vendedor',
+    'label.extension' :'Extensión',
+    'label.fax' : 'Fax',
+    'label.terms' : 'Términos',
+    'label.limits' : 'Limites',
+    'label.comment' : 'Comentarios'
 }
