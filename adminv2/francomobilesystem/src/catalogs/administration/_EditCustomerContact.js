@@ -1,8 +1,9 @@
 import {  useEffect, useState} from 'react'
 import { useForm  } from 'react-hook-form';
 import axios from 'axios'
-import { Grid, Divider, Button, Paper } from '@mui/material';
+import { Grid, Divider, Button, Paper, Stack } from '@mui/material';
 import { FormInputText } from '../../form-components/FormInputText.js';
+import i18next from 'i18next';
 const URI = 'http://localhost:3001/customercontact/';
 
 export default function EditCustomerContact({idCustomerContact, idCustomer, closeModal }) {
@@ -88,28 +89,28 @@ const [customerContact, setCustomerContact] = useState([]);
       <form onSubmit={handleSubmit(onSubmit)}>
         <Grid container spacing={3}>
           <Grid item xs={2}>
-            <FormInputText control={control} label={"Title"} name={"title"} ></FormInputText>
+            <FormInputText control={control} label={i18next.t('label.title')} name={"title"} ></FormInputText>
           </Grid>
           <Grid item xs={4}>
-            <FormInputText control={control} label={"Name"} name={"name"} ></FormInputText>
+            <FormInputText control={control} label={i18next.t('label.Name')} name={"name"} ></FormInputText>
           </Grid>
           <Grid item xs={4}>
-            <FormInputText control={control} label={"Lastname"} name={"lastname"} ></FormInputText>
+            <FormInputText control={control} label={i18next.t('label.Lastname')} name={"lastname"} ></FormInputText>
           </Grid>         
           <Grid item xs={6}>
-          <FormInputText control={control} label={"Phone"} name={"phone"} ></FormInputText>
+          <FormInputText control={control} label={i18next.t('label.Phone')} name={"phone"} ></FormInputText>
           </Grid>
           <Grid item xs={6}>
-          <FormInputText control={control} label={"Mobilephone"} name={"mobile"} ></FormInputText>
+          <FormInputText control={control} label={i18next.t('label.Mobile')} name={"mobile"} ></FormInputText>
           </Grid>
           <Grid item xs={6}>
-          <FormInputText control={control} label={"Email"} name={"email"} ></FormInputText>
+          <FormInputText control={control} label={i18next.t('label.Email')} name={"email"} ></FormInputText>
           </Grid>
           <Grid item xs={6}>
-          <FormInputText control={control} label={"Password"} name={"password"} ></FormInputText>
+          <FormInputText control={control} label={i18next.t('label.pass')} name={"password"} ></FormInputText>
           </Grid>
           <Grid item xs={6}>
-          <FormInputText control={control} label={"Confirmar Password"} name={"password"} ></FormInputText>
+          <FormInputText control={control} label={i18next.t('label.confirmpass')} name={"password"} ></FormInputText>
           </Grid>
           <Grid item xs={6}> 
           </Grid>
@@ -118,10 +119,10 @@ const [customerContact, setCustomerContact] = useState([]);
           </Grid>
           <Grid item xs={12}  alignContent="right">
             <Button onClick={handleSubmit(onSubmit)}  variant="contained" >
-              Guardar
+            {i18next.t('label.Save')}
             </Button>
             <Button variant="contained" color='secondary' onClick={closeModal} >
-              Cancel
+            {i18next.t('label.Cancel')}
             </Button>
           </Grid>
         </Grid>

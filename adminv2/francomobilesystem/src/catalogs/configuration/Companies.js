@@ -62,7 +62,7 @@ const CompaniesList = () => {
                     </TableBody>
                 </Table>
             </TableContainer>
-            {openModal && <MyModal id="id_myModal" title={idCompany > 0 ? `${i18next.t('label.editCompany')}` : `${i18next.t('label.AddCompany')}` } openModal={openModal} closeModal={handleClose} >
+            {openModal && <MyModal id="id_myModal" title={idCompany > 0 ? `${i18next.t('label.editCompany')}` : `${i18next.t('label.addCompany')}` } openModal={openModal} closeModal={handleClose} >
                 <EditCompany idCompany={idCompany} closeModal={handleClose} />
             </MyModal>}
         </MainCard>

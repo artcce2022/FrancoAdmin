@@ -1,5 +1,6 @@
 // assets
 import { IconDashboard } from '@tabler/icons';
+import i18next from 'i18next';
 
 // constant
 const icons = { IconDashboard };
@@ -8,7 +9,7 @@ const icons = { IconDashboard };
 
 const dashboard = {
     id: 'dashboard',
-    title: 'Dashboard',
+    title: `${i18next.t('label.dashboard')}`,
     type: 'group',
     children: [
         {

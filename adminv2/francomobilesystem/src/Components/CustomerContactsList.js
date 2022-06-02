@@ -4,6 +4,7 @@ import MyModal from '../shared/Modal';
 import EditCustomerContact from '../catalogs/administration/_EditCustomerContact.js'; 
 import { useParams} from 'react-router-dom' 
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button , CardHeader, IconButton, Typography, Divider } from '@mui/material';
+import i18next from 'i18next';
 
 const CustomerContactsList = () =>{
     const [customercontacts, setCustomercontacts] = useState([]);
@@ -32,17 +33,17 @@ const CustomerContactsList = () =>{
 
     return (
         <Paper>
-              <CardHeader title={<CardHeader action={<Button variant="contained"  onClick={() => { setIdCustomerContact(0); setOpenModal(true); }}  className='btn btn-primary'>Agregar</Button>} title="Contactos" />} >     
+              <CardHeader title={<CardHeader action={<Button variant="contained"  onClick={() => { setIdCustomerContact(0); setOpenModal(true); }}  className='btn btn-primary'>{i18next.t('label.Add')}</Button>} title={i18next.t('label.contacts')} />} >     
                         </CardHeader>
              <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} size="small" aria-label="Patios">
                     <TableHead>
                         <TableRow>
-                            <TableCell>Cliente</TableCell>
-                            <TableCell>Name</TableCell>
-                            <TableCell>LastName</TableCell>
-                            <TableCell>Phone</TableCell>
-                            <TableCell>Acciones</TableCell>
+                            <TableCell>{i18next.t('label.Customer')}</TableCell>
+                            <TableCell>{i18next.t('label.Name')}</TableCell>
+                            <TableCell>{i18next.t('label.Lastname')}</TableCell>
+                            <TableCell>{i18next.t('label.Phone')}</TableCell>
+                            <TableCell>{i18next.t('label.Actions')}</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -58,14 +59,14 @@ const CustomerContactsList = () =>{
                                 <TableCell>{contact.lastname}</TableCell>
                                 <TableCell>{contact.phone}</TableCell>
                                 <TableCell>
-                                    <Button  variant="outlined"  onClick={() => { setIdCustomerContact(contact.idcustomercontact); setOpenModal(true); }} >Editar</Button>                                     
+                                    <Button  variant="outlined"  onClick={() => { setIdCustomerContact(contact.idcustomercontact); setOpenModal(true); }} >{i18next.t('label.Edit')}</Button>                                     
                                 </TableCell>                              
                             </TableRow>
                         ))}
                     </TableBody>
                 </Table>
             </TableContainer>
-            {openModal && <MyModal id="id_myModal" title={idCustomer > 0 ? "Editar Contacto" : "Agregar Contacto"} openModal={openModal} closeModal={handleClose} >
+            {openModal && <MyModal id="id_myModal" title={idCustomer > 0 ? `${i18next.t('label.EditCustomer')}` : `${i18next.t('label.AddCustomer')}` } openModal={openModal} closeModal={handleClose} >
                     <EditCustomerContact  idCustomer={idCustomer} idCustomerContact={idCustomerContact} closeModal={handleClose}/> 
             </MyModal>}           
        

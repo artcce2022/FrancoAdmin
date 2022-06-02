@@ -70,7 +70,7 @@ const CustomersList =() =>{
                     </TableBody>
                 </Table>
             </TableContainer>
-            {openModal && <MyModal id="id_myModal" title={idCustomer > 0 ? "Editar Cliente" : "Agregar Cliente"} openModal={openModal} closeModal={handleClose} >
+            {openModal && <MyModal id="id_myModal" title={idCustomer > 0 ? `${i18next.t('label.EditCustomer')}` : `${i18next.t('label.AddCustomer')}` } openModal={openModal} closeModal={handleClose} >
                 <EditCustomer idCustomer={idCustomer} closeModal={handleClose} />
             </MyModal>}
         </MainCard>

@@ -146,10 +146,10 @@ export default function EditEmployee({ idEmployee, closeModal }) {
            <Grid item xs={12}>
            <Stack item xs={12} alignContent="right" direction="row" spacing={2}>
             <Button onClick={handleSubmit(onSubmit)} variant="contained" >
-              Guardar
+            {i18next.t('label.Save')}
             </Button>
             <Button variant="contained" color='secondary' onClick={closeModal} >
-              Cancel
+            {i18next.t('label.Cancel')}
             </Button>
             </Stack>
           </Grid>
