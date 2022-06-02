@@ -15,7 +15,7 @@ const icons = {
 
 const servicesPages = {
     id: 'services',
-    title: 'services',    
+    title: `${i18n.t(`menu.Services`)}`,    
     type: 'group',
     children: [
           

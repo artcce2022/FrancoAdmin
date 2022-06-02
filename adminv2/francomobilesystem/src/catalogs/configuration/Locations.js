@@ -49,7 +49,7 @@ const LocationsList =() =>{
                                 </TableCell>
                                 <TableCell>{location.address}</TableCell>
                                 <TableCell>{location.manager}</TableCell>
-                                <TableCell><Button  variant="outlined"  onClick={() => { setIdLocation(location.idLocation); setOpenModal(true); }} >{i18next.t('label.Edit')}Editar</Button> </TableCell>
+                                <TableCell><Button  variant="outlined"  onClick={() => { setIdLocation(location.idLocation); setOpenModal(true); }} >{i18next.t('label.Edit')}</Button> </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>

@@ -67,7 +67,6 @@ export const TRANSLATIONS_EN = {
     'label.editCompany' : 'Edit Company',
     'label.addCompany' : 'Add Company',
     'label.workyard' : 'Work Yard',
-    'label.manager' : 'Manager',
     'label.editworkyard' : 'Edit Workyard',
     'label.addworkyard' : 'Add Wordyard',
     'label.EditPartCategory' : 'Edit Category Parts',
@@ -77,5 +76,21 @@ export const TRANSLATIONS_EN = {
     'label.EditCategoryFailures' : 'Edit Category Failures',
     'label.AddCategoryFailures' : 'Add Category Failures',
     'label.Editwarehousename' : 'Edit WareHousename',
-    'label.Addtwarehousename' : 'Add WareHousename'
-   }
+    'label.Addtwarehousename' : 'Add WareHousename',
+    'label.title' :'Title',
+    'label.pass' : 'Password',
+    'label.confirmpass' : 'Confirm Password',
+    'label.editcontact' : 'Edit Contact',
+    'label.addcontact' : 'Add Contact',
+    'label.contacts' : 'Contacts',
+    'label.customers':'Customers',
+    'label.administration' : 'Administration',
+    'label.config' : 'Configuration',  
+    'label.companies' : 'Companies',
+    'label.employees' : 'Employees',
+    'label.workyards' : 'Work Yards',
+    'label.CategorysParts' : 'Part Categories',
+    'label.CategorysFailure' : 'Failure Categories',
+    'label.warehouses': 'Warehouses',
+    'label.dashboard' : 'Dashboard'
+}

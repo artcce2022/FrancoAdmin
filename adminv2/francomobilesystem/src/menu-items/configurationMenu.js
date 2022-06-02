@@ -1,5 +1,6 @@
 // assets
 import { IconKey } from '@tabler/icons';
+import i18next from 'i18next';
 
 // constant
 const icons = {
@@ -10,48 +11,48 @@ const icons = {
 
 const configurationPages = {
     id: 'configuration',
-    title: 'Configuration',    
+    title: `${i18next.t('label.config')}`,    
     type: 'group',
     children: [
           
                 {
                     id: 'Companies',
-                    title: 'Empresas',
+                    title: `${i18next.t('label.companies')}`,
                     type: 'item',
                     url: 'Companies' ,
                     target: false
                 },
                 {
                     id: 'employees',
-                    title: 'Empleados',
+                    title: `${i18next.t('label.employees')}`,
                     type: 'item',
                     url: 'employees',
                     target: false
                 },
                 {
                     id: 'locations',
-                    title: 'Patios',
+                    title: `${i18next.t('label.workyards')}`,
                     type: 'item',
                     url: 'locations',
                     target: false
                 },
                 {
                     id: 'partscategory',
-                    title: 'Categorias de Refacciones',
+                    title: `${i18next.t('label.CategorysParts')}`,
                     type: 'item',
                     url: 'partscategory',
                     target: false
                 },
                 {
                     id: 'simptomscategory',
-                    title: 'Categorias de Fallas',
+                    title: `${i18next.t('label.CategorysFailure')}`,
                     type: 'item',
                     url: 'simptomscategory',
                     target: false
                 },
                 {
                     id: 'warehouses',
-                    title: 'Almacenes',
+                    title: `${i18next.t('label.warehouses')}`,
                     type: 'item',
                     url: 'warehouses',
                     target: false
