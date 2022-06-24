@@ -105,8 +105,10 @@ export default function EditCommonFailure({ idCommonFailure, closeModal, idsympt
                             <FormInputText control={control} label={i18next.t('label.shortDescription')} name={"shortdescription"} ></FormInputText>
                         </Grid>
                         <Grid item xs={12}>
+ 
                             <FormInputText control={control} label={i18next.t('label.Descripcion')} name={"symtomdescription"} ></FormInputText>
-                        </Grid>
+ 
+                                </Grid>
                         <Grid item xs={6}>
                             <FormInputText control={control} label={i18next.t('label.RequiredWorks')} name={"workrequested"} ></FormInputText>
                         </Grid>

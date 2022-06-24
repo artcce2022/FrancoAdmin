@@ -5,6 +5,7 @@ import EditCompany from './_EditCompany.js';
 import * as React from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button , CardHeader, IconButton } from '@mui/material';
 import MainCard from './../../ui-component/cards/MainCard'; 
+import i18next from 'i18next';
 
 
 
@@ -38,10 +39,10 @@ const CompaniesList = () => {
                 <Table sx={{ minWidth: 650 }} size="small" aria-label="Companies">
                     <TableHead>
                         <TableRow>
-                            <TableCell>Empresa</TableCell>
-                            <TableCell>Telefono</TableCell>
-                            <TableCell>Email</TableCell>
-                            <TableCell>Acciones</TableCell>
+                            <TableCell>{i18next.t('label.NomEmpresa')}</TableCell>
+                            <TableCell>{i18next.t('label.Phone')}</TableCell>
+                            <TableCell>{i18next.t('label.Email')}</TableCell>
+                            <TableCell>{i18next.t('label.Actions')}</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -61,7 +62,7 @@ const CompaniesList = () => {
                     </TableBody>
                 </Table>
             </TableContainer>
-            {openModal && <MyModal id="id_myModal" title={idCompany > 0 ? "Editar Empresa" : "Agregar Empresa"} openModal={openModal} closeModal={handleClose} >
+            {openModal && <MyModal id="id_myModal" title={idCompany > 0 ? `${i18next.t('label.editCompany')}` : `${i18next.t('label.addCompany')}` } openModal={openModal} closeModal={handleClose} >
                 <EditCompany idCompany={idCompany} closeModal={handleClose} />
             </MyModal>}
         </MainCard>
