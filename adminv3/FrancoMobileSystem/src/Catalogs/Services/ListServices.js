@@ -17,7 +17,7 @@ const URI = ApiEndpoint + 'services/';
 const columns = [
   {
     accessor: 'service',
-    Header: `${i18next.t('label.ServiceInfo')}`,
+    Header: i18next.t('label.ServiceInfo'),
     headerProps: { className: 'pe-1' },
     cellProps: {
       className: 'py-2'
@@ -40,7 +40,7 @@ const columns = [
   },
   {
     accessor: 'customer',
-    Header: `${i18next.t('label.Customer')}`,
+    Header: i18next.t('label.Customer'),
     Cell: rowData => {
       return (
         <>
@@ -55,7 +55,7 @@ const columns = [
   },
   {
     accessor: 'locationName',
-    Header: 'Location',
+    Header: i18next.t('label.locationName'),
     Cell: rowData => {
       return (
         <>
@@ -121,13 +121,13 @@ const columns = [
       return (
         <CardDropdown iconClassName="fs--1">
           <div className="py-2">
-            <Dropdown.Item href="#!">Completed</Dropdown.Item>
-            <Dropdown.Item href="#!">Processing</Dropdown.Item>
-            <Dropdown.Item href="#!">On Hold</Dropdown.Item>
-            <Dropdown.Item href="#!">Pending</Dropdown.Item>
+            <Dropdown.Item href="#!">{i18next.t('label.completed')}</Dropdown.Item>
+            <Dropdown.Item href="#!">{i18next.t('status.InProccess')}</Dropdown.Item>
+            <Dropdown.Item href="#!">{i18next.t('label.onhold')}</Dropdown.Item>
+            <Dropdown.Item href="#!">{i18next.t('label.pending')}</Dropdown.Item>
             <Dropdown.Divider as="div" />
             <Dropdown.Item href="#!" className="text-danger">
-              Delete
+            {i18next.t('label.delete')}
             </Dropdown.Item>
           </div>
         </CardDropdown>

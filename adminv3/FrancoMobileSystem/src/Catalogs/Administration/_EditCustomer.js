@@ -197,7 +197,7 @@ export default function EditCustomer({
           <Form onSubmit={handleSubmit(onSubmit)}>
             <Form.Group className="mb-3" controlId="shortname">
               <FormInputText
-                label={i18next.t('label.ShortName')}
+                label={i18next.t('label.Name')}
                 changeHandler={onChange}
                 name={'shortname'}
                 control={control}
@@ -225,7 +225,7 @@ export default function EditCustomer({
               </Form.Group>
               <Form.Group as={Col} className="mb-3" controlId="lastname">
                 <FormInputText
-                  label={i18next.t('label.LastName')}
+                  label={i18next.t('label.Lastname')}
                   changeHandler={onChange}
                   name={'lastname'}
                   control={control}
@@ -308,7 +308,7 @@ export default function EditCustomer({
               </Form.Group>
               <Form.Group as={Col} className="mb-3" controlId="mobilephone">
                 <FormInputText
-                  label={i18next.t('label.MobilePhone')}
+                  label={i18next.t('label.Mobile')}
                   changeHandler={onChange}
                   name={'mobilephone'}
                   control={control}

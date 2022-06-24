@@ -11,7 +11,7 @@ export const dashboardRoutes = {
       active: true
     },
     {
-      name: 'New Service', // `${i18next.t('label.CommonFailures')}`,
+      name: 'NewService', // `${i18next.t('label.CommonFailures')}`,
       to: '/Services/NewService/?id=' + uuidv4(),
       active: true
     }
@@ -28,12 +28,12 @@ export const administrationRoutes = {
       icon: 'chart-pie',
       children: [
         {
-          name: 'Customer', // `${i18next.t('label.Customer')}`,
+          name: 'Customers', // `${i18next.t('label.Customer')}`,
           to: '/Administration/Customers',
           active: true
         },
         {
-          name: 'Common Failures', // `${i18next.t('label.CommnonFailure')}`,
+          name: 'CommonFailures', // `${i18next.t('label.CommnonFailure')}`,
           to: '/Administration/CommonFailures',
           active: true
         }

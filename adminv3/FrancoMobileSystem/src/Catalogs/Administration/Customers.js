@@ -35,19 +35,19 @@ const Customers = () => {
   const columns = [
     {
       accessor: 'shortname',
-      Header: 'Name',
+      Header: i18next.t('label.Name'),
       headerProps: { style: { minWidth: '200px' }, className: 'ps-5' },
       cellProps: { className: 'ps-5' }
     },
     {
       accessor: 'company',
-      Header: 'Company',
+      Header: i18next.t('label.Company'),
       headerProps: { style: { minWidth: '200px' }, className: 'ps-5' },
       cellProps: { className: 'ps-5' }
     },
     {
       accessor: 'city',
-      Header: 'City'
+      Header: i18next.t('label.City'),
     },
     {
       accessor: 'none',
@@ -77,7 +77,7 @@ const Customers = () => {
             </OverlayTrigger>
             <OverlayTrigger
               placement="top"
-              overlay={<Tooltip>{i18next.t('label.Detail')}</Tooltip>}
+              overlay={<Tooltip>{i18next.t('label.Detalle')}</Tooltip>}
             >
               <Button
                 variant="falcon-default"

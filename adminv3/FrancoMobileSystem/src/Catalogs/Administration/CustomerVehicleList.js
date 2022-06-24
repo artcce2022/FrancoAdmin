@@ -45,7 +45,7 @@ const CustomerVehicleList = () => {
   return (
     <Card className="mb-3">
       <GenericTableHeader
-        label={i18next.t('label.Vehicles')}
+        label={i18next.t('label.vehicles')}
         newFunction={() => {
           setIdVehicle(0);
           setOpenModal(true);

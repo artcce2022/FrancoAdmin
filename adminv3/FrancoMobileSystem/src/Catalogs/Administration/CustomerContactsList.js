@@ -61,7 +61,7 @@ const CustomerContactsList = () => {
                   {i18next.t('label.Name')}
                 </th>
                 <th className="border-0 text-end">
-                  {i18next.t('label.LastName')}
+                  {i18next.t('label.Lastname')}
                 </th>
                 <th className="border-0 text-end">
                   {i18next.t('label.Phone')}
@@ -98,7 +98,7 @@ const CustomerContactsList = () => {
                     </OverlayTrigger>
                     <OverlayTrigger
                       placement="top"
-                      overlay={<Tooltip>{i18next.t('label.Delete')}</Tooltip>}
+                      overlay={<Tooltip>{i18next.t('label.delete')}</Tooltip>}
                     >
                       <Button
                         variant="falcon-default"
