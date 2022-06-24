@@ -1,0 +1,41 @@
+SELECT  
+extract(hour from B.tst_envio), count(*) 
+ --B.vc_telefono, vc_codigo, vc_pin, b_ok, vc_tipo
+--id_visita, id_landing, tst_visita, vc_urlincoming, vc_parametrosurl, vc_ipincoming, vc_useragent, vc_referer, vc_refererdomain, vc_refererparameters
+	FROM landing.tr_telefono B
+	inner join landing.tr_pin C ON B.id_visita=C.id_visita
+	inner join landing.tr_suscripcion S ON S.id_visita=B.id_visita
+	where B.tst_envio::date='2022/05/31'	
+	and vc_tipo!='Existe'
+	and b_ok
+	--and length(vc_codigo)>7
+	and B.id_visita not in(
+	select B.id_visita
+	FROM landing.tr_telefono B
+	inner join landing.tr_pin C ON B.id_visita=C.id_visita 
+	where  B.tst_envio::date='2022/05/31'
+		and vc_pin=vc_codigo
+	) 
+	group by extract(hour from B.tst_envio)
+	order by extract(hour from B.tst_envio)
+
+SELECT  
+extract(hour from B.tst_envio), count(*) 
+ --B.vc_telefono, vc_codigo, vc_pin, b_ok, vc_tipo
+--id_visita, id_landing, tst_visita, vc_urlincoming, vc_parametrosurl, vc_ipincoming, vc_useragent, vc_referer, vc_refererdomain, vc_refererparameters
+	FROM landing.tr_telefono B
+	inner join landing.tr_pin C ON B.id_visita=C.id_visita
+	inner join landing.tr_suscripcion S ON S.id_visita=B.id_visita
+	where B.tst_envio::date='2022/05/31'	
+	and vc_tipo!='Existe'
+	and b_ok
+	--and length(vc_codigo)>7
+	and B.id_visita  in(
+	select B.id_visita
+	FROM landing.tr_telefono B
+	inner join landing.tr_pin C ON B.id_visita=C.id_visita 
+	where  B.tst_envio::date='2022/05/31'
+		and vc_pin=vc_codigo
+	) 
+	group by extract(hour from B.tst_envio)
+	order by extract(hour from B.tst_envio)

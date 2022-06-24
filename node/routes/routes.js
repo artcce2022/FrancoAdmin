@@ -8,7 +8,7 @@ import { deleteLocation, getLocation, getLocations, insertLocation, updateLocati
 import { getMovementType, getMovementTypes } from '../controllers/MovementTypesController.js'
 import { deletePartCategory, getPartcategory, getPartsCategories, insertPartCategory, updatePartCategory } from '../controllers/PartsCategoryController.js'
 import { deleteParts, getPart, getParts, insertPart, updatePart } from '../controllers/PartsController.js'
-import { getAllServices, getService, getServiceDetails, getServiceFailures, getServiceFiles, insertService, saveService, saveServiceFile, updateService } from '../controllers/ServicesController.js'
+import { deleteFileService, getAllServices, getFile, getService, getServiceDetails, getServiceFailures, getServiceFiles, getServiceParts, insertService, saveService, saveServiceFile, updateService, updateServiceCommonFailure } from '../controllers/ServicesController.js'
 import { getAllServiceStatus, getServiceStatus } from '../controllers/ServiceStatusController.js'
 import { deleteSymptomCategory, getSymptomCategory, getSymptomsCategories, insertSymptomCategory, updateSymptomCategory } from '../controllers/SymptomsCategoriesController.js'
 import { deleteVehicle, getAllVehicles, getVehicle, getVehicles, insertVehicle, updateVehicle } from '../controllers/VehiclesController.js'
@@ -110,10 +110,14 @@ router.get('/servicestatus/:id',getServiceStatus)
 router.get('/services/', getAllServices) 
 router.get('/services/:id',getService)
 router.get('/services/failures/:id',getServiceFailures)
+router.put('/services/failures/:id',updateServiceCommonFailure)
 router.get('/services/details/:id',getServiceDetails)
 router.get('/services/files/:id',getServiceFiles)
+router.get('/services/parts/:id',getServiceParts)
 router.post('/service/savefile/',uploadfile, saveServiceFile )
+router.delete('/services/file/:id', deleteFileService )
 router.post('/services/', insertService )
 router.post('/service/save/:id', saveService )
 router.put('/services/:id', updateService ) 
+router.post('/services/getfile/',getFile)
 export default router

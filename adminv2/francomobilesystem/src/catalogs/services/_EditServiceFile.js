@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form';
 import axios from 'axios'
-import { Grid, Divider, Button, Paper, Select, MenuItem, InputLabel, Stack } from '@mui/material';
+import { Grid, Divider, Button, Paper, Select, MenuItem, InputLabel, Stack, Checkbox, FormControlLabel } from '@mui/material';
 import { FormInputText } from '../../form-components/FormInputTextV2.js';
 import { v4 as uuidv4 } from 'uuid';
 import { AlertNotification } from '../../form-components/NotifyAlert.js';
@@ -15,6 +15,8 @@ export default function EditServiceFile({ action, closeModal, idService, service
     const [typeAlert, setTypeAlert] = useState("success");
     const [description, setDescription] = useState("");
     const [attachment, setAttachment] = useState(null);
+    const [isVisible, setIsVisible] = useState(true);
+
     const URISaveFile = 'http://localhost:3001/service/savefile/';
     const { register, control, handleSubmit, reset, setValue, formState: { errors } } = useForm({
         mode: 'onBlur',
@@ -37,6 +39,7 @@ export default function EditServiceFile({ action, closeModal, idService, service
         formData.append("name", "ServiceFile");
         formData.append("description", description);
         formData.append("uuid", serviceGuid);
+        formData.append("visibilitycustomer", isVisible);
         formData.append("ServiceFile", files[0]);
         formData.append("idService", idService);
         axios
@@ -44,7 +47,10 @@ export default function EditServiceFile({ action, closeModal, idService, service
             headers: {'Content-Type': 'multipart/form-data'}
           })  
           .then((res) => {
-            alert("File Upload success");
+            setAlertMessage(i18next.t('SuccessfulRecord'));
+            setTypeAlert("success");
+            setOpenAlert(true);
+            closeModal(); 
           })
           .catch((err) => alert("File Upload Error"));
 
@@ -101,8 +107,12 @@ export default function EditServiceFile({ action, closeModal, idService, service
                             {/* <FormInputText control={control} newValue={description} label={i18next.t('label.Description')} name={"description"}></FormInputText> */}
                             <FormInputText newValue={description} control={control} label={i18next.t('label.Description')} name={"description"} changeHandler={(event)=>{setDescription(event.target.value); onChange(event); }} ></FormInputText>
                          </Grid>
+                         <Grid item md={6}>
+                         <FormControlLabel control={<Checkbox   checked={isVisible} onClick={(e) => setIsVisible(e.target.checked)}  name="isvisible"  ></Checkbox>} label="Visible para Cliente"  />
+                            
+                        </Grid>
                         <Grid item md={6}>
-                            {idService && <FormInputFile description={description} handleChangeFile={handleChangeFile} name="ServiceFile" control={control} idService={idService} ></FormInputFile>}
+                            {idService && <FormInputFile  description={description} handleChangeFile={handleChangeFile} name="ServiceFile" control={control} idService={idService} ></FormInputFile>}
                         </Grid>
                         <Grid item xs={12}>
                             <Divider variant="inset" />

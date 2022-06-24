@@ -3,6 +3,8 @@ import ServiceFailuresModel from "../models/ServiceFailuresModel.js";
 import ServicesModel from "../models/ServicesModel.js";
 import ServiceDetailsModel from "../models/ServiceDetailsModel.js";  
 import ServiceFilesModel from "../models/ServiceFilesModel.js";
+import fs from 'fs'
+import ServicePartsModel from "../models/ServicePartsModel.js";
 //**Metodos para el CRUD */
 export const getAllServices = async (req, res) => {
     console.log("entre a getAllServices");
@@ -58,6 +60,18 @@ export const getServiceFiles= async (req, res)=>{
         res.json({ message: error.message });
     }
 }
+
+
+export const getServiceParts = async (req, res) => {
+    console.log("entre a getServiceParts");
+    try {
+        const serviceParts = await ServicePartsModel.findAll({ where: { idservice: req.params.id }, include: { all: true } });
+        res.json(serviceParts);
+    } catch (error) {
+        console.log(error.message);
+        res.json({ message: error.message });
+    }
+};
 
 export const saveServiceFile = async (req, res) => {
     console.log("entre a saveServiceFile"); 
@@ -121,9 +135,10 @@ export const insertService = async (req, res) => {
 export const saveService = async (req, res) => {
     const NOW = new Date();
     try {
-        let data = JSON.parse(req.body.data);
+      
+        let data =req.body;
         let newIdService;
-
+        console.log(data);
         let result = await ServicesModel.create({
             idcompany: 1,//data.idcompany,
             idcustomer: data.idCustomer,
@@ -152,6 +167,20 @@ export const saveService = async (req, res) => {
     }
 
 };
+
+/* Update Record*/
+export const updateServiceCommonFailure = async (req, res) => {
+    try {
+        ServiceFailuresModel.update(req.body, {
+            where: { idservicefailures: req.params.id }
+        });
+        res.json({ 'message': "Registro Actualizado Exitosamente" });
+    } catch (error) {
+
+        res.json({ message: error.message });
+    }
+};
+
 /* Update Record*/
 export const updateService = async (req, res) => {
     try {
@@ -162,5 +191,37 @@ export const updateService = async (req, res) => {
     } catch (error) {
 
         res.json({ message: error.message });
+    }
+};
+
+/* Update Record*/
+export const getFile = async (req, res) => {
+    try {
+        const path="./" + req.body.path;
+        res.download(path);
+    } catch (error) {
+
+        res.json({ message: error.message });
+    }
+};
+
+/* Delete Record*/
+export const deleteFileService = async (req, res) => {
+    try {
+        ServiceFilesModel.destroy( {
+            where: {idservicefile:req.params.id}
+        });   
+        
+        res.json({message:"Registro Eliminado Exitosamente"});
+    } catch (error) {
+        
+        res.json({message: error.message});
+    }
+
+    try {
+        const path="./" + req.body.path;      
+        fs.unlinkSync(path);
+    } catch (error) {
+      
     }
 };

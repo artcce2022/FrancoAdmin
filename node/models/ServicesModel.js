@@ -6,6 +6,7 @@ import CompanyModel from "./CompanyModel.js";
 import VehiclesModel from "./VehiclesModel.js";
 import LocationsModel from "./LocationsModel.js";
 import ServiceStatusModel from "./ServiceStatusModel.js";
+import ServicePartsModel from "./ServicePartsModel.js";
 
 const ServicesModel=  db.define('services',{
     idservice:{ type: DataTypes.INTEGER,
@@ -41,5 +42,9 @@ ServicesModel.belongsTo(LocationsModel, {
 ServicesModel.belongsTo(ServiceStatusModel, {
     foreignKey: 'idservicestatus'
 });
+ 
+// ServicesModel.belongsTo(ServicePartsModel , {
+//     foreignKey: 'idserviceparts'
+// });
 //ServicesModel.hasMany(ServiceFailureModel)
 export default ServicesModel;

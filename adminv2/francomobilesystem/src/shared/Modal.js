@@ -1,6 +1,6 @@
-import { Box,  Dialog , DialogContent , DialogTitle, Typography    } from '@mui/material'; 
+import { Box,  Button,  Dialog , DialogActions, DialogContent , DialogTitle, Typography    } from '@mui/material'; 
 
-const MyModal = ({ id, title, modalContent, openModal, closeModal, children }) => {
+const MyModal = ({ id, title, modalContent, openModal, closeModal, children,isConfirm, onConfirm }) => {
 
   const handleClose = () => closeModal(false);    
   const style = {
@@ -17,7 +17,24 @@ const MyModal = ({ id, title, modalContent, openModal, closeModal, children }) =
      </DialogTitle>
         <DialogContent>
              {children}             
-          </DialogContent>              
+          </DialogContent>
+          {isConfirm &&  <DialogActions>
+        <Button
+          variant="contained"
+          onClick={() =>{ handleClose()}} 
+        >
+          No
+        </Button>
+        <Button
+          variant="contained"
+          onClick={() => {          
+            onConfirm();
+            handleClose();
+          }}   
+        >
+          Yes
+        </Button>
+      </DialogActions> }              
       </Dialog >
     </>
   );

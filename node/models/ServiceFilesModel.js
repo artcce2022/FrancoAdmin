@@ -11,7 +11,8 @@ const ServiceFilesModel =  db.define('servicefiles',{
         filename:{ type: DataTypes.STRING},
         filetype:{ type: DataTypes.STRING},
         description:{ type: DataTypes.STRING},
-        fileguid:{ type: DataTypes.STRING}
+        fileguid:{ type: DataTypes.STRING},
+        visibilitycustomer:{type:DataTypes.BOOLEAN}
 },{
     timestamps: false,freezeTableName: true
 });

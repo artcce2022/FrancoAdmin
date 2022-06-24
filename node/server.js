@@ -3,7 +3,6 @@ import express from 'express';
 import cors from 'cors';
 import db from "./database/db.js"
 import bodyParser from 'body-parser'
-import fileupload from 'express-fileupload'
 
 import routes from './routes/routes.js' 
 var app = express();

@@ -17,7 +17,7 @@ export const getCommonFailures = async  (req, res)=> {
 /* Get Record*/
 export const getCommonFailure =async (req, res)=>{
     try {
-        const failure =await CommonFailuresModel.findAll({where:{idcommonfailures:req.params.id}});
+        const failure =await CommonFailuresModel.findAll({where:{idcommonfailures:req.params.id}, include:{all: true}});
         res.json(failure[0]);
     } catch (error) {
         res.json({message: error.message});

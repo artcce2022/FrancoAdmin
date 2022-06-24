@@ -7,6 +7,8 @@ import EditFailureService from './_EditFailureService.js';
 import i18next from '../../utils/locales/i18n.js'
 import StepButtons from '../../form-components/Steps/StepButtons.js';
 import EditServiceDetail from './_EditServiceDetail.js';
+import { IconCheck, IconEraser, IconPlaylistAdd } from '@tabler/icons';
+import { minHeight } from '@mui/system';
 
 const ServiceDetailsList = ({ idService }) => {
     const [detailList, setDetailList] = useState([]);    
@@ -29,17 +31,10 @@ const URI = 'http://localhost:3001/services/details/'
 
     return (
         <>
-            <MainCard title={<CardHeader action={<Button variant="contained" onClick={() => {  }} className='btn btn-primary'>Agregar</Button>} title={i18next.t('label.DetailsReported')} />} >
+            <MainCard sx={{minHeight: 500, maxHeight: 500, overflow: 'auto'}} title={i18next.t('label.DetailsReported')} >
                 <TableContainer component={Paper}>
-                    <Table sx={{ minWidth: 650 }} size="small" aria-label="Patios">
-                        <TableHead>
-                            <TableRow>
-                                <TableCell>{i18next.t('label.Description')}</TableCell>
-                                <TableCell>{i18next.t('label.Actions')}</TableCell>
-                            </TableRow>
-                        </TableHead>
+                    <Table sx={{ minWidth: 400 }} size="small" aria-label="Patios">
                         <TableBody>
-
                             {detailList.map((detail, index) => (
                                 <TableRow
                                     key={detail.idservicedetail}
@@ -47,11 +42,7 @@ const URI = 'http://localhost:3001/services/details/'
                                 >
                                     <TableCell component="th" scope="row">
                                         {detail.detail}
-                                    </TableCell>
-                                    <TableCell>
-                                        {/* <Button  variant="outlined"  onClick={() => { setDetail(detail.description); setOpenModalDetail(true); }} >Editar</Button> */}
-                                        {/* <Button variant="outlined" onClick={() => { deleteDetail(detail.rowId, index) }} >Eliminar</Button> */}
-                                    </TableCell>
+                                    </TableCell>                                   
                                 </TableRow>
                             ))}
                         </TableBody>
