@@ -86,7 +86,7 @@ const CommonFailures = () => {
             </OverlayTrigger>
             <OverlayTrigger
               placement="top"
-              overlay={<Tooltip>{i18next.t('label.Delete')}</Tooltip>}
+              overlay={<Tooltip>{i18next.t('label.delete')}</Tooltip>}
             >
               <Button
                 variant="falcon-default"
@@ -116,7 +116,7 @@ const CommonFailures = () => {
         <Card className="mb-3">
           <Card.Header>
             <GenericTableHeader
-              label={i18next.t('label.CommonFailures')}
+              label={i18next.t('label.faultCommons')}
               newFunction={() => {
                 setIdCommonFailure(0);
                 setOpenModal(true);
@@ -148,7 +148,7 @@ const CommonFailures = () => {
               ? i18next.t('label.Edit')
               : i18next.t('label.Add')) +
             ' ' +
-            i18next.t('label.CommonFailure')
+            i18next.t('label.faultCommons')
           }
           openModal={openModal}
           closeModal={handleClose}

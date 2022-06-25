@@ -137,7 +137,7 @@ export default function EditCustomerContact({
             <Form.Group className="mb-3" controlId="lastname">
               <FormInputText
                 control={control}
-                label={i18next.t('label.LastName')}
+                label={i18next.t('label.Lastname')}
                 name="lastname"
                 changeHandler={onChange}
                 defaultValue={contact.lastname}
@@ -147,7 +147,7 @@ export default function EditCustomerContact({
               <Form.Group as={Col} className="mb-3" controlId="title">
                 <FormInputText
                   control={control}
-                  label={i18next.t('label.Title')}
+                  label={i18next.t('label.title')}
                   name="title"
                   changeHandler={onChange}
                   defaultValue={contact.title}
@@ -169,7 +169,7 @@ export default function EditCustomerContact({
               <Form.Group as={Col} className="mb-3" controlId="mobile">
                 <FormInputText
                   control={control}
-                  label={i18next.t('label.MobilePhone')}
+                  label={i18next.t('label.Mobile')}
                   name="mobile"
                   changeHandler={onChange}
                   defaultValue={contact.mobile}
@@ -191,7 +191,7 @@ export default function EditCustomerContact({
               <Form.Group as={Col} className="mb-3" controlId="password">
                 <FormInputText
                   control={control}
-                  label={i18next.t('label.Password')}
+                  label={i18next.t('label.password')}
                   name="password"
                   changeHandler={onChange}
                   defaultValue={contact.password}

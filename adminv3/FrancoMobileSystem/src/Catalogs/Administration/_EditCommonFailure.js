@@ -144,7 +144,7 @@ export default function EditCommonFailure({
         <Card.Body>
           <Form onSubmit={handleSubmit(onSubmit)}>
             <FormInputText
-              label={i18next.t('label.ShortDescription')}
+              label={i18next.t('label.shortDescription')}
               changeHandler={onChange}
               name={'shortdescription'}
               control={control}
