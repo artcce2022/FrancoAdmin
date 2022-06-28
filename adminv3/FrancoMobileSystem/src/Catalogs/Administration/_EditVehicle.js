@@ -9,11 +9,15 @@ import i18next from 'i18next';
 
 const URI = ApiEndpoint + 'vehicles/';
 
-export default function EditVehicle({ idVehicle, idCustomer, closeModal }) {
-  //const [commonFailure] =useCommonFailures({idCommonFailure});
-  const [alertMessage, setAlertMessage] = useState('');
-  const [openAlert, setOpenAlert] = useState(false);
-  const [typeAlert, setTypeAlert] = useState('success');
+export default function EditVehicle({
+  idVehicle,
+  idCustomer,
+  closeModal,
+  setOpenAlert,
+  setTypeAlert,
+  setAlertMessage
+}) {
+  const [validated, setValidated] = useState(false);
 
   const {
     control,
@@ -55,9 +59,17 @@ export default function EditVehicle({ idVehicle, idCustomer, closeModal }) {
   // const fields = ['warehousename', 'address',  'phone', 'manager'];
   // fields.forEach(field => setValue(field, warehouse[field]));
 
-  const onSubmit = async data => {
-    console.log(vehicle);
+  const onSubmit = (data, e) => {
+    const form = e.target;
+    if (form.checkValidity() === false) {
+      console.log('entre a submit 123');
+      setValidated(true);
+      e.preventDefault();
+      e.stopPropagation();
+      return;
+    }
 
+    setValidated(true);
     if (idVehicle > 0) {
       axios
         .put(URI + idVehicle, {
@@ -112,100 +124,115 @@ export default function EditVehicle({ idVehicle, idCustomer, closeModal }) {
     setVehicle({ ...vehicle, [name]: value });
   };
 
-  const handleCloseAlert = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-    setOpenAlert(false);
-  };
   return (
     <>
       <Card style={{ width: '100%' }}>
         <Card.Body>
-          <Form onSubmit={handleSubmit(onSubmit)}>
-            <Form.Group className="mb-3" controlId="vin">
-              <FormInputText
-                label={i18next.t('label.Vin')}
-                changeHandler={onChange}
-                name={'vin'}
-                control={control}
-                defaultValue={vehicle.vin}
-              ></FormInputText>
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="license">
-              <FormInputText
-                control={control}
-                label={i18next.t('label.License')}
-                name="license"
-                changeHandler={onChange}
-                defaultValue={vehicle.license}
-              ></FormInputText>
-            </Form.Group>
-            <Row className="mb-3">
-              <Form.Group as={Col} className="mb-3" controlId="year">
-                <FormInputText
-                  control={control}
-                  label={i18next.t('label.Year')}
-                  name="year"
-                  changeHandler={onChange}
-                  defaultValue={vehicle.year}
-                ></FormInputText>
-              </Form.Group>
+          <Form
+            noValidate
+            validated={validated}
+            onSubmit={handleSubmit(onSubmit)}
+          >
+            <Row>
+              <Col>
+                <Form.Group className="mb-3" controlId="vin">
+                  <FormInputText
+                    label={i18next.t('label.Vin')}
+                    changeHandler={onChange}
+                    name={'vin'}
+                    control={control}
+                    defaultValue={vehicle.vin}
+                  ></FormInputText>
+                </Form.Group>
+              </Col>
+              <Col>
+                <Form.Group className="mb-3" controlId="license">
+                  <FormInputText
+                    control={control}
+                    label={i18next.t('label.License')}
+                    name="license"
+                    changeHandler={onChange}
+                    defaultValue={vehicle.license}
+                  ></FormInputText>
+                </Form.Group>
+              </Col>
             </Row>
-            <Row className="mb-3">
-              <Form.Group as={Col} className="mb-3" controlId="make">
-                <FormInputText
-                  control={control}
-                  label={i18next.t('label.Make')}
-                  name="make"
-                  changeHandler={onChange}
-                  defaultValue={vehicle.make}
-                ></FormInputText>
-              </Form.Group>
+            <Row>
+              <Col>
+                {' '}
+                <Form.Group as={Col} className="mb-3" controlId="year">
+                  <FormInputText
+                    control={control}
+                    label={i18next.t('label.Year')}
+                    name="year"
+                    changeHandler={onChange}
+                    defaultValue={vehicle.year}
+                  ></FormInputText>
+                </Form.Group>
+              </Col>
+              <Col>
+                {' '}
+                <Form.Group as={Col} className="mb-3" controlId="make">
+                  <FormInputText
+                    control={control}
+                    label={i18next.t('label.Make')}
+                    name="make"
+                    changeHandler={onChange}
+                    defaultValue={vehicle.make}
+                  ></FormInputText>
+                </Form.Group>
+              </Col>
             </Row>
-            <Row className="mb-3">
-              <Form.Group as={Col} className="mb-3" controlId="model">
-                <FormInputText
-                  control={control}
-                  label={i18next.t('label.Model')}
-                  name="model"
-                  changeHandler={onChange}
-                  defaultValue={vehicle.model}
-                ></FormInputText>
-              </Form.Group>
+            <Row>
+              <Col>
+                <Form.Group as={Col} className="mb-3" controlId="model">
+                  <FormInputText
+                    control={control}
+                    label={i18next.t('label.Model')}
+                    name="model"
+                    changeHandler={onChange}
+                    defaultValue={vehicle.model}
+                  ></FormInputText>
+                </Form.Group>
+              </Col>
+              <Col>
+                <Form.Group as={Col} className="mb-3" controlId="color">
+                  <FormInputText
+                    control={control}
+                    label={i18next.t('label.Color')}
+                    name="color"
+                    changeHandler={onChange}
+                    defaultValue={vehicle.color}
+                  ></FormInputText>
+                </Form.Group>
+              </Col>
             </Row>
-            <Row className="mb-3">
-              <Form.Group as={Col} className="mb-3" controlId="color">
-                <FormInputText
-                  control={control}
-                  label={i18next.t('label.Color')}
-                  name="color"
-                  changeHandler={onChange}
-                  defaultValue={vehicle.color}
-                ></FormInputText>
-              </Form.Group>
-            </Row>
-            <Row className="mb-3">
-              <Form.Group as={Col} className="mb-3" controlId="unit">
-                <FormInputText
-                  control={control}
-                  label={i18next.t('label.Unit')}
-                  name="unit"
-                  changeHandler={onChange}
-                  defaultValue={vehicle.unit}
-                ></FormInputText>
-              </Form.Group>
-            </Row>
-            <Row className="mb-3">
-              <Form.Group as={Col} className="mb-3" controlId="memo">
-                <FormInputText
-                  control={control}
-                  label={i18next.t('label.Memo')}
-                  name="memo"
-                  changeHandler={onChange}
-                  defaultValue={vehicle.v}
-                ></FormInputText>
-              </Form.Group>
+
+            <Row>
+              <Col>
+                {' '}
+                <Form.Group as={Col} className="mb-3" controlId="unit">
+                  <FormInputText
+                    control={control}
+                    label={i18next.t('label.Unit')}
+                    name="unit"
+                    changeHandler={onChange}
+                    defaultValue={vehicle.unit}
+                  ></FormInputText>
+                </Form.Group>
+              </Col>
+              <Col>
+                {' '}
+                <Form.Group as={Col} className="mb-3" controlId="memo">
+                  <FormInputText
+                    control={control}
+                    label={i18next.t('label.Memo')}
+                    name="memo"
+                    changeHandler={onChange}
+                    defaultValue={vehicle.v}
+                  ></FormInputText>
+                </Form.Group>
+              </Col>
             </Row>
             <Button
               type="submit"
@@ -218,14 +245,6 @@ export default function EditVehicle({ idVehicle, idCustomer, closeModal }) {
           </Form>
         </Card.Body>
       </Card>
-      {openAlert && (
-        <AlertNotification
-          open={openAlert}
-          handleClose={handleCloseAlert}
-          type={typeAlert}
-          message={alertMessage}
-        />
-      )}
     </>
   );
 }

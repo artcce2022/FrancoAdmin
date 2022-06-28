@@ -4,17 +4,18 @@ import axios from 'axios';
 import { Button, Card, Col, Form, Row } from 'react-bootstrap';
 import { ApiEndpoint } from 'utils/ApiEndPont';
 import { FormInputText } from 'form-components/FormInputText';
-import AlertNotification from 'form-components/AlertNotification.js';
 import i18next from 'i18next';
 
 const URI = ApiEndpoint + 'vendors/';
 
-export default function EditVendor({ idVendor, closeModal }) {
-  //const [commonFailure] =useCommonFailures({idCommonFailure});
-  const [alertMessage, setAlertMessage] = useState('');
-  const [openAlert, setOpenAlert] = useState(false);
-  const [typeAlert, setTypeAlert] = useState('success');
-
+export default function EditVendor({
+  idVendor,
+  closeModal,
+  setOpenAlert,
+  setTypeAlert,
+  setAlertMessage
+}) {
+  const [validated, setValidated] = useState(false);
   const {
     control,
     handleSubmit,
@@ -54,13 +55,17 @@ export default function EditVendor({ idVendor, closeModal }) {
     axios.get(URI + idVendor).then(response => {
       setVendor(response.data);
     });
-  }, []); // empty array makes hook working once
+  }, []);
+  const onSubmit = (data, e) => {
+    const form = e.target;
+    if (form.checkValidity() === false) {
+      setValidated(true);
+      e.preventDefault();
+      e.stopPropagation();
+      return;
+    }
 
-  // const fields = ['warehousename', 'address',  'phone', 'manager'];
-  // fields.forEach(field => setValue(field, warehouse[field]));
-
-  const onSubmit = async data => {
-    console.log(vendor);
+    setValidated(true);
 
     if (idVendor > 0) {
       const URI = URI + idVendor;
@@ -122,17 +127,15 @@ export default function EditVendor({ idVendor, closeModal }) {
     setVendor({ ...vendor, [name]: value });
   };
 
-  const handleCloseAlert = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-    setOpenAlert(false);
-  };
   return (
     <>
       <Card style={{ width: '100%' }}>
         <Card.Body>
-          <Form onSubmit={handleSubmit(onSubmit)}>
+          <Form
+            noValidate
+            validated={validated}
+            onSubmit={handleSubmit(onSubmit)}
+          >
             <Form.Group className="mb-3" controlId="name">
               <FormInputText
                 label={'Vendedor'}
@@ -253,14 +256,6 @@ export default function EditVendor({ idVendor, closeModal }) {
           </Form>
         </Card.Body>
       </Card>
-      {openAlert && (
-        <AlertNotification
-          open={openAlert}
-          handleClose={handleCloseAlert}
-          type={typeAlert}
-          message={alertMessage}
-        />
-      )}
     </>
   );
 }

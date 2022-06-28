@@ -13,15 +13,22 @@ import {
 } from 'react-bootstrap';
 import i18next from 'i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import IconButton from 'components/common/IconButton';
 import GenericTableHeader from '../../form-components/TableHeaders/GenericTableHeader';
 import MyModal from 'shared/Modal';
 import EditCustomerContact from './_EditContactCustomer';
 import { ApiEndpoint } from 'utils/ApiEndPont';
+import ConfirmAction from 'form-components/ConfirmationModal';
+import AlertNotification from 'form-components/AlertNotification';
 
 const CustomerContactsList = () => {
   const [customercontacts, setCustomercontacts] = useState([]);
   const [openModal, setOpenModal] = useState(false);
+  const [openConfirm, setOpenConfirm] = useState(null);
+  const [openAlert, setOpenAlert] = useState(false);
+  const [typeAlert, setTypeAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState(false);
+  const [idCustomerToDelete, setIdCustomerToDelete] = useState(0);
+
   let [idCustomerContact, setIdCustomerContact] = useState(0);
   let [idCustomer, setIdCustomer] = useState(0);
   let { id } = useParams();
@@ -30,6 +37,18 @@ const CustomerContactsList = () => {
     getCustomerContacts();
   };
 
+  const handleCloseConfirm = () => {
+    setOpenConfirm(false);
+    getCustomerContacts();
+  };
+
+  const DeleteConfirmed = isConfirmed => {
+    console.log('DElete Accepted');
+  };
+
+  const handleCloseAlert = () => {
+    setOpenAlert(false);
+  };
   //mostrar companies
   const getCustomerContacts = async () => {
     setIdCustomer(id);
@@ -104,8 +123,8 @@ const CustomerContactsList = () => {
                         variant="falcon-default"
                         size="sm"
                         onClick={() => {
-                          setIdCustomerContact(contact.idcustomercontact);
-                          setOpenModal(true);
+                          setIdCustomerToDelete(contact.idcustomercontact);
+                          setOpenConfirm(true);
                         }}
                       >
                         <FontAwesomeIcon icon="trash-alt" />
@@ -135,8 +154,28 @@ const CustomerContactsList = () => {
             idContact={idCustomerContact}
             idCustomer={idCustomer}
             closeModal={handleClose}
+            setOpenAlert={setOpenAlert}
+            setTypeAlert={setTypeAlert}
+            setAlertMessage={setAlertMessage}
           />
         </MyModal>
+      )}
+      {openAlert && (
+        <AlertNotification
+          open={openAlert}
+          handleClose={handleCloseAlert}
+          type={typeAlert}
+          message={alertMessage}
+        />
+      )}
+      {openConfirm && (
+        <ConfirmAction
+          message={'Desea eliminar el registro?'}
+          title={'Confirmacion'}
+          handleClose={handleCloseConfirm}
+          open={openConfirm}
+          ConfirmAction={DeleteConfirmed}
+        ></ConfirmAction>
       )}
     </Card>
   );

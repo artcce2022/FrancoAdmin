@@ -12,12 +12,12 @@ const URI = ApiEndpoint + 'customercontact/';
 export default function EditCustomerContact({
   idContact,
   idCustomer,
-  closeModal
+  closeModal,
+  setOpenAlert,
+  setTypeAlert,
+  setAlertMessage
 }) {
-  //const [commonFailure] =useCommonFailures({idCommonFailure});
-  const [alertMessage, setAlertMessage] = useState('');
-  const [openAlert, setOpenAlert] = useState(false);
-  const [typeAlert, setTypeAlert] = useState('success');
+  const [validated, setValidated] = useState(false);
 
   const {
     control,
@@ -59,8 +59,17 @@ export default function EditCustomerContact({
   // const fields = ['warehousename', 'address',  'phone', 'manager'];
   // fields.forEach(field => setValue(field, warehouse[field]));
 
-  const onSubmit = async data => {
-    console.log(contact);
+  const onSubmit = (data, e) => {
+    const form = e.target;
+    if (form.checkValidity() === false) {
+      console.log('entre a submit 123');
+      setValidated(true);
+      e.preventDefault();
+      e.stopPropagation();
+      return;
+    }
+
+    setValidated(true);
 
     if (idContact > 0) {
       axios
@@ -114,90 +123,96 @@ export default function EditCustomerContact({
     setContact({ ...contact, [name]: value });
   };
 
-  const handleCloseAlert = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-    setOpenAlert(false);
-  };
   return (
     <>
       <Card style={{ width: '100%' }}>
         <Card.Body>
-          <Form onSubmit={handleSubmit(onSubmit)}>
-            <Form.Group className="mb-3" controlId="name">
+          <Form
+            noValidate
+            validated={validated}
+            onSubmit={handleSubmit(onSubmit)}
+          >
+            <Row>
+              <Col>
+                <Form.Group as={Col} className="mb-3" controlId="title">
+                  <FormInputText
+                    control={control}
+                    label={i18next.t('label.title')}
+                    name="title"
+                    changeHandler={onChange}
+                    defaultValue={contact.title}
+                  ></FormInputText>
+                </Form.Group>
+              </Col>
+              <Col>
+                {' '}
+                <Form.Group className="mb-3" controlId="name">
+                  <FormInputText
+                    label={i18next.t('label.Name')}
+                    changeHandler={onChange}
+                    name={'name'}
+                    control={control}
+                    defaultValue={contact.name}
+                  ></FormInputText>
+                </Form.Group>
+              </Col>
+              <Col>
+                {' '}
+                <Form.Group className="mb-3" controlId="lastname">
+                  <FormInputText
+                    control={control}
+                    label={i18next.t('label.Lastname')}
+                    name="lastname"
+                    changeHandler={onChange}
+                    defaultValue={contact.lastname}
+                  ></FormInputText>
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <Form.Group as={Col} className="mb-3" controlId="phone">
+                  <FormInputText
+                    control={control}
+                    label={i18next.t('label.Phone')}
+                    name="phone"
+                    changeHandler={onChange}
+                    defaultValue={contact.phone}
+                  ></FormInputText>
+                </Form.Group>
+              </Col>
+              <Col>
+                <Form.Group as={Col} className="mb-3" controlId="mobile">
+                  <FormInputText
+                    control={control}
+                    label={i18next.t('label.Mobile')}
+                    name="mobile"
+                    changeHandler={onChange}
+                    defaultValue={contact.mobile}
+                  ></FormInputText>
+                </Form.Group>
+              </Col>
+            </Row>
+            <Form.Group as={Col} className="mb-3" controlId="email">
               <FormInputText
-                label={i18next.t('label.Name')}
-                changeHandler={onChange}
-                name={'name'}
                 control={control}
-                defaultValue={contact.name}
+                label={i18next.t('label.Email')}
+                name="email"
+                type="email"
+                changeHandler={onChange}
+                defaultValue={contact.email}
               ></FormInputText>
             </Form.Group>
-            <Form.Group className="mb-3" controlId="lastname">
+            <Form.Group as={Col} className="mb-3" controlId="password">
               <FormInputText
                 control={control}
-                label={i18next.t('label.Lastname')}
-                name="lastname"
+                label={i18next.t('label.password')}
+                name="password"
+                type="password"
                 changeHandler={onChange}
-                defaultValue={contact.lastname}
+                defaultValue={contact.password}
               ></FormInputText>
             </Form.Group>
-            <Row className="mb-3">
-              <Form.Group as={Col} className="mb-3" controlId="title">
-                <FormInputText
-                  control={control}
-                  label={i18next.t('label.title')}
-                  name="title"
-                  changeHandler={onChange}
-                  defaultValue={contact.title}
-                ></FormInputText>
-              </Form.Group>
-            </Row>
-            <Row className="mb-3">
-              <Form.Group as={Col} className="mb-3" controlId="phone">
-                <FormInputText
-                  control={control}
-                  label={i18next.t('label.Phone')}
-                  name="phone"
-                  changeHandler={onChange}
-                  defaultValue={contact.phone}
-                ></FormInputText>
-              </Form.Group>
-            </Row>
-            <Row className="mb-3">
-              <Form.Group as={Col} className="mb-3" controlId="mobile">
-                <FormInputText
-                  control={control}
-                  label={i18next.t('label.Mobile')}
-                  name="mobile"
-                  changeHandler={onChange}
-                  defaultValue={contact.mobile}
-                ></FormInputText>
-              </Form.Group>
-            </Row>
-            <Row className="mb-3">
-              <Form.Group as={Col} className="mb-3" controlId="email">
-                <FormInputText
-                  control={control}
-                  label={i18next.t('label.Email')}
-                  name="email"
-                  changeHandler={onChange}
-                  defaultValue={contact.email}
-                ></FormInputText>
-              </Form.Group>
-            </Row>
-            <Row className="mb-3">
-              <Form.Group as={Col} className="mb-3" controlId="password">
-                <FormInputText
-                  control={control}
-                  label={i18next.t('label.password')}
-                  name="password"
-                  changeHandler={onChange}
-                  defaultValue={contact.password}
-                ></FormInputText>
-              </Form.Group>
-            </Row>
             <Button
               type="submit"
               onClick={handleSubmit(onSubmit)}
@@ -209,14 +224,6 @@ export default function EditCustomerContact({
           </Form>
         </Card.Body>
       </Card>
-      {openAlert && (
-        <AlertNotification
-          open={openAlert}
-          handleClose={handleCloseAlert}
-          type={typeAlert}
-          message={alertMessage}
-        />
-      )}
     </>
   );
 }

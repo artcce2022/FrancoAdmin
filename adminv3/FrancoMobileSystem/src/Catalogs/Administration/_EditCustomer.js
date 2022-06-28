@@ -41,6 +41,7 @@ export default function EditCustomer({
     email: ''
   });
   const [loading, setLoading] = useState(false);
+  const [validated, setValidated] = useState(false);
   // const [categoriesFailure] = useSymptomsCategory ();
   const {
     register,
@@ -125,10 +126,17 @@ export default function EditCustomer({
     }
   }, [filterStr]);
 
-  const onSubmit = async (data, e) => {
-    e.persist();
-    e.preventDefault();
-    console.log(e);
+  const onSubmit = (data, e) => {
+    const form = e.target;
+    if (form.checkValidity() === false) {
+      console.log('entre a submit 123');
+      setValidated(true);
+      e.preventDefault();
+      e.stopPropagation();
+      return;
+    }
+
+    setValidated(true);
     if (idCustomer > 0) {
       const URI = ApiEndpoint + 'customers/' + idCustomer;
       axios
@@ -183,18 +191,15 @@ export default function EditCustomer({
     const { name, value } = event.target;
     setCustomer({ ...customer, [name]: value });
   };
-
-  const handleCloseAlert = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-    setOpenAlert(false);
-  };
   return (
     <>
       <Card style={{ width: '100%' }}>
         <Card.Body>
-          <Form onSubmit={handleSubmit(onSubmit)}>
+          <Form
+            noValidate
+            validated={validated}
+            onSubmit={handleSubmit(onSubmit)}
+          >
             <Form.Group className="mb-3" controlId="shortname">
               <FormInputText
                 label={i18next.t('label.Name')}
@@ -245,7 +250,13 @@ export default function EditCustomer({
             </Form.Group>
             <Row className="mb-3">
               <Form.Group as={Col} className="mb-3" controlId="zipcode">
-                <Form.Label>zipcode</Form.Label>
+                <FormInputText
+                  label={i18next.t('label.ZipCode')}
+                  changeHandler={onChange}
+                  name={'zipcode'}
+                  control={control}
+                  defaultValue={customer.zipcode}
+                ></FormInputText>
                 {/* <FormAutoCompleteText
                   control={control}
                   setSelected={setSelectedZipCode}
@@ -323,28 +334,16 @@ export default function EditCustomer({
                 changeHandler={onChange}
                 name={'email'}
                 control={control}
+                type={'email'}
                 defaultValue={customer.email}
               ></FormInputText>
             </Form.Group>
-            <Button
-              type="submit"
-              onClick={handleSubmit(onSubmit)}
-              color="primary"
-              size="sm"
-            >
+            <Button type="submit" color="primary" size="sm">
               {i18next.t('label.Save')}
             </Button>
           </Form>
         </Card.Body>
       </Card>
-      {openAlert && (
-        <AlertNotification
-          open={openAlert}
-          handleClose={handleCloseAlert}
-          type={typeAlert}
-          message={alertMessage}
-        />
-      )}
     </>
   );
 }

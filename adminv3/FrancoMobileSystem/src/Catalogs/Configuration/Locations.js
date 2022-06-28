@@ -17,14 +17,21 @@ import MyModal from 'shared/Modal.js';
 import i18next from 'i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import EditLocation from './_EditLocation.js';
+import AlertNotification from 'form-components/AlertNotification.js';
+import { ApiEndpoint } from 'utils/ApiEndPont.js';
 // import EditCustomer from './_EditCustomer.js';
 
-const URI = 'http://localhost:3001/locations/';
+const URI = ApiEndpoint + 'locations/';
 
 const Locations = () => {
   const [locations, setLocations] = useState([]);
   const [openModal, setOpenModal] = useState(false);
   let [idLocation, setIdLocation] = useState(0);
+  const [openConfirm, setOpenConfirm] = useState(null);
+  const [openAlert, setOpenAlert] = useState(false);
+  const [typeAlert, setTypeAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState(false);
+
   const handleClose = () => {
     setOpenModal(false);
     getLocationsList();
@@ -33,6 +40,10 @@ const Locations = () => {
   useEffect(() => {
     getLocationsList();
   }, []);
+
+  const handleCloseAlert = () => {
+    setOpenAlert(false);
+  };
 
   //mostrar companies
   const getLocationsList = async () => {
@@ -83,21 +94,6 @@ const Locations = () => {
                 }}
               >
                 <FontAwesomeIcon icon="pencil-alt" />
-              </Button>
-            </OverlayTrigger>
-            <OverlayTrigger
-              placement="top"
-              overlay={<Tooltip>{i18next.t('label.Delete')}</Tooltip>}
-            >
-              <Button
-                variant="falcon-default"
-                size="sm"
-                onClick={() => {
-                  setIdLocation(idLocation);
-                  setOpenModal(true);
-                }}
-              >
-                <FontAwesomeIcon icon="trash-alt" />
               </Button>
             </OverlayTrigger>
           </>
@@ -154,9 +150,20 @@ const Locations = () => {
           }
           openModal={openModal}
           closeModal={handleClose}
+          setOpenAlert={setOpenAlert}
+          setTypeAlert={setTypeAlert}
+          setAlertMessage={setAlertMessage}
         >
           <EditLocation idLocation={idLocation} closeModal={handleClose} />
         </MyModal>
+      )}{' '}
+      {openAlert && (
+        <AlertNotification
+          open={openAlert}
+          handleClose={handleCloseAlert}
+          type={typeAlert}
+          message={alertMessage}
+        />
       )}
     </>
   );

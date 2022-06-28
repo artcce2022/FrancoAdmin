@@ -7,37 +7,45 @@ import { Button, Card } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import MyModal from 'shared/Modal';
 import { ApiEndpoint } from 'utils/ApiEndPont';
+import AddServiceFile from './_AddServiceFile';
+import pdfImg from '../../assets/img/icons/pdf.png';
+import genericFile from '../../assets/img/icons/genericFile.png';
 
-const ServiceFilesList = ({
-  idService,
-  setOpenModal,
-  serviceGuid,
-  refreshFiles,
-  setRefreshFiles
-}) => {
+const ServiceFilesList = ({ idService, setOpenModal, serviceGuid }) => {
   const [serviceFiles, setServiceFiles] = useState([]);
-  const [selectedTile, setSelectedTile] = useState(null);
   const { control } = useForm();
   const [confirmOpen, setConfirmOpen] = useState(null);
   const [file, setFile] = useState(null);
+  const [openModalFile, setOpenModalFile] = useState(false);
+  const [refreshFiles, setRefreshFiles] = useState(false);
+  const [openAlert, setOpenAlert] = useState(false);
+  const [typeAlert, setTypeAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState(false);
   const URI = ApiEndpoint + 'services/files/';
   const URIFiles = ApiEndpoint + 'services/getfile';
+  const handleClose = () => {
+    setOpenModalFile(false);
+    getServiceFiles();
+  };
+
   useEffect(() => {
     getServiceFiles();
   }, []);
+
   useEffect(() => {
-    if (refreshFiles === true) {
+    if (refreshFiles) {
       getServiceFiles();
       setRefreshFiles(false);
     }
   }, [refreshFiles]);
+
   const getServiceFiles = () => {
     console.log(URI + idService);
     axios.get(URI + idService).then(response => {
       let details = response.data;
       console.log(details);
+      console.log('details');
       setServiceFiles(details);
-      // setIdsymptomcategory(response.data.idsymptomcategory);
     });
   };
 
@@ -83,15 +91,6 @@ const ServiceFilesList = ({
       });
   };
 
-  const handleClickOpen = tile => {
-    console.log('clicked');
-    console.log(tile);
-    setSelectedTile(tile);
-  };
-
-  const handleClose = () => {
-    setSelectedTile(null);
-  };
   return (
     <>
       <Card className="mb-3">
@@ -99,7 +98,7 @@ const ServiceFilesList = ({
           <GenericTableHeader
             label={i18next.t('label.Files')}
             newFunction={() => {
-              setOpenModal(true);
+              setOpenModalFile(true);
             }}
           />
         </Card.Header>
@@ -108,8 +107,9 @@ const ServiceFilesList = ({
             <table class="table table-hover">
               <thead>
                 <tr>
-                  <th scope="col">Name</th>
-                  <th scope="col">Description</th>
+                  <th scope="col">{i18next.t('label.FileName')}</th>
+                  <th scope="col">{i18next.t('label.Description')}</th>
+                  <th scope="col">{i18next.t('label.VisibleToCustomer')}</th>
                   <th scope="col"> </th>
                 </tr>
               </thead>
@@ -123,26 +123,31 @@ const ServiceFilesList = ({
                             {(() => {
                               switch (file.filetype) {
                                 case 'image/png':
+                                case 'image/jpeg':
                                   return (
                                     <img
-                                      class="rounded-circle"
-                                      src="../../assets/img/team/4.jpg"
+                                      className="img-thumbnail"
+                                      src={
+                                        'http://127.0.0.1:8080/' +
+                                        file.path +
+                                        file.filename
+                                      }
                                       alt=""
                                     />
                                   );
                                 case 'application/pdf':
                                   return (
                                     <img
-                                      class="rounded-circle"
-                                      src="../../assets/img/team/4.jpg"
+                                      className="img-thumbnail"
+                                      src={pdfImg}
                                       alt=""
                                     />
                                   );
                                 default:
                                   return (
                                     <img
-                                      class="rounded-circle"
-                                      src="../../assets/img/team/4.jpg"
+                                      className="rounded-circle"
+                                      src={genericFile}
                                       alt=""
                                     />
                                   );
@@ -154,6 +159,9 @@ const ServiceFilesList = ({
                       </td>
                       <td class="align-middle text-nowrap">
                         {file.description}
+                      </td>
+                      <td class="align-middle text-nowrap">
+                        {file.visibilitycustomer ? 'visible' : 'No Visible'}
                       </td>
                       <td class="w-auto">
                         <Button
@@ -203,6 +211,23 @@ const ServiceFilesList = ({
             setConfirmOpen(false);
           }}
         ></MyModal>
+      )}
+      {openModalFile && (
+        <MyModal
+          id="id_myModalFile"
+          title={i18next.t('label.AddFile')}
+          openModal={openModalFile}
+          closeModal={handleClose}
+        >
+          <AddServiceFile
+            idService={idService}
+            serviceGuid={serviceGuid}
+            closeModal={handleClose}
+            setOpenAlert={setOpenAlert}
+            setTypeAlert={setTypeAlert}
+            setAlertMessage={setAlertMessage}
+          ></AddServiceFile>
+        </MyModal>
       )}
     </>
   );

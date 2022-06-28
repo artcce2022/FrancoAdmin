@@ -8,13 +8,18 @@ import { ApiEndpoint } from 'utils/ApiEndPont';
 import FileUpload from 'utils/FileUpload';
 import { v4 as uuidv4 } from 'uuid';
 
-const AddServiceFile = ({ action, closeModal, idService, serviceGuid }) => {
-  const [alertMessage, setAlertMessage] = useState('');
-  const [openAlert, setOpenAlert] = useState(false);
-  const [typeAlert, setTypeAlert] = useState('success');
+const AddServiceFile = ({
+  action,
+  closeModal,
+  idService,
+  serviceGuid,
+  setOpenAlert,
+  setTypeAlert,
+  setAlertMessage
+}) => {
   const [description, setDescription] = useState('');
   const [attachment, setAttachment] = useState(null);
-  const [isVisible, setIsVisible] = useState(true);
+  const [isVisibleToCustomer, setIsVisibleToCustomer] = useState(false);
 
   const URISaveFile = ApiEndpoint + 'service/savefile/';
   const {
@@ -49,7 +54,7 @@ const AddServiceFile = ({ action, closeModal, idService, serviceGuid }) => {
     formData.append('name', 'ServiceFile');
     formData.append('description', description);
     formData.append('uuid', serviceGuid);
-    formData.append('visibilitycustomer', isVisible);
+    formData.append('visibilitycustomer', isVisibleToCustomer);
     formData.append('ServiceFile', file);
     formData.append('idService', idService);
     axios
@@ -73,7 +78,7 @@ const AddServiceFile = ({ action, closeModal, idService, serviceGuid }) => {
     formData.append('name', 'ServiceFile');
     formData.append('description', description);
     formData.append('uuid', serviceGuid);
-    formData.append('visibilitycustomer', isVisible);
+    formData.append('visibilitycustomer', isVisibleToCustomer);
     formData.append('ServiceFile', files[0]);
     formData.append('idService', idService);
     axios
@@ -95,7 +100,9 @@ const AddServiceFile = ({ action, closeModal, idService, serviceGuid }) => {
   const onChange = event => {
     setDescription(event.target.value);
   };
-
+  const onChangeIsVisible = event => {
+    setIsVisibleToCustomer(!isVisibleToCustomer);
+  };
   const onSubmit = async (data, e) => {
     e.preventDefault();
     if (data.description) {
@@ -114,20 +121,6 @@ const AddServiceFile = ({ action, closeModal, idService, serviceGuid }) => {
 
     //action(newData);
   };
-  const onSubmitAndClose = async (data, e) => {
-    e.preventDefault();
-    if (data.description) {
-      let newData = data;
-      newData.rowId = uuidv4();
-      // action(newData);
-      closeModal();
-      setAlertMessage(i18next.t('SuccessfulRecord'));
-    } else {
-      setAlertMessage(i18next.t('label.ErrorSelectValid'));
-      setTypeAlert('warning');
-      setOpenAlert(true);
-    }
-  };
   return (
     <>
       <Form onSubmit={handleSubmit(onSubmit)}>
@@ -138,6 +131,13 @@ const AddServiceFile = ({ action, closeModal, idService, serviceGuid }) => {
           defaultValue={description}
           changeHandler={onChange}
         ></FormInputText>
+        <Form.Check
+          type="switch"
+          id="isVisible"
+          label={i18next.t('label.VisibleToCustomer')}
+          value={isVisibleToCustomer}
+          onChange={onChangeIsVisible}
+        />
         <input
           type="file"
           onChange={handleChangeFile}

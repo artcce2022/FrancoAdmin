@@ -11,10 +11,14 @@ import AlertNotification from 'form-components/AlertNotification';
 
 const URI = ApiEndpoint + 'warehouse/';
 
-export default function EditWarehouse({ idWarehouse, closeModal }) {
-  const [alertMessage, setAlertMessage] = useState('');
-  const [openAlert, setOpenAlert] = useState(false);
-  const [typeAlert, setTypeAlert] = useState('success');
+export default function EditWarehouse({
+  idWarehouse,
+  closeModal,
+  setOpenAlert,
+  setTypeAlert,
+  setAlertMessage
+}) {
+  const [validated, setValidated] = useState(false);
 
   const {
     control,
@@ -47,9 +51,15 @@ export default function EditWarehouse({ idWarehouse, closeModal }) {
     });
   }, []); // empty array makes hook working once
 
-  const onSubmit = async data => {
-    console.log(warehouse);
-
+  const onSubmit = (data, e) => {
+    const form = e.target;
+    setValidated(true);
+    if (form.checkValidity() === false) {
+      e.preventDefault();
+      e.stopPropagation();
+      return;
+    }
+    console.log('pase submit1');
     if (idWarehouse > 0) {
       axios
         .put(URI + idWarehouse, {
@@ -96,18 +106,15 @@ export default function EditWarehouse({ idWarehouse, closeModal }) {
     const { name, value } = event.target;
     setWarehouse({ ...warehouse, [name]: value });
   };
-
-  const handleCloseAlert = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-    setOpenAlert(false);
-  };
   return (
     <>
       <Card style={{ width: '100%' }}>
         <Card.Body>
-          <Form onSubmit={handleSubmit(onSubmit)}>
+          <Form
+            noValidate
+            validated={validated}
+            onSubmit={handleSubmit(onSubmit)}
+          >
             <Form.Group className="mb-3" controlId="warehousename">
               <FormInputText
                 label={i18next.t('label.WarehouseName')}
@@ -147,25 +154,12 @@ export default function EditWarehouse({ idWarehouse, closeModal }) {
                 defaultValue={warehouse.address}
               ></FormInputText>
             </Form.Group>
-            <Button
-              type="submit"
-              onClick={handleSubmit(onSubmit)}
-              color="primary"
-              size="sm"
-            >
+            <Button type="submit" color="primary" size="sm">
               {i18next.t('label.Save')}
             </Button>
           </Form>
         </Card.Body>
       </Card>
-      {openAlert && (
-        <AlertNotification
-          open={openAlert}
-          handleClose={handleCloseAlert}
-          type={typeAlert}
-          message={alertMessage}
-        />
-      )}
     </>
   );
 }

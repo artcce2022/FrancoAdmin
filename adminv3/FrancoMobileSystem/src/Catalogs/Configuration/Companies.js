@@ -17,17 +17,33 @@ import MyModal from 'shared/Modal.js';
 import i18next from 'i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import EditCompany from './_EditCompany.js';
+import AlertNotification from 'form-components/AlertNotification.js';
+import ConfirmAction from 'form-components/ConfirmationModal.js';
+import { ApiEndpoint } from 'utils/ApiEndPont.js';
 // import EditCustomer from './_EditCustomer.js';
 
-const URI = 'http://localhost:3001/companies/';
+const URI = ApiEndpoint + 'companies/';
 
 const Companies = () => {
   const [companies, setCompanies] = useState([]);
   const [openModal, setOpenModal] = useState(false);
+  const [openAlert, setOpenAlert] = useState(false);
+  const [typeAlert, setTypeAlert] = useState(false);
+  const [openConfirm, setOpenConfirm] = useState(null);
+  const [alertMessage, setAlertMessage] = useState(false);
+  const [idCompanyToDelete, setIdCompanyToDelete] = useState(0);
   let [idCompany, setIdCompany] = useState(0);
   const handleClose = () => {
     setOpenModal(false);
     getCompanyList();
+  };
+  const handleCloseConfirm = () => {
+    setOpenConfirm(false);
+    getCompanyList();
+  };
+
+  const DeleteConfirmed = isConfirmed => {
+    console.log('DElete Accepted');
   };
 
   console.log('entre ahora a 2');
@@ -41,6 +57,9 @@ const Companies = () => {
     setCompanies(res.data);
   };
 
+  const handleCloseAlert = () => {
+    setOpenAlert(false);
+  };
   const columns = [
     {
       accessor: 'companyName',
@@ -94,8 +113,8 @@ const Companies = () => {
                 variant="falcon-default"
                 size="sm"
                 onClick={() => {
-                  setIdCompany(idCompany);
-                  setOpenModal(true);
+                  setIdCompanyToDelete(idCompany);
+                  setOpenConfirm(true);
                 }}
               >
                 <FontAwesomeIcon icon="trash-alt" />
@@ -153,9 +172,29 @@ const Companies = () => {
           }
           openModal={openModal}
           closeModal={handleClose}
+          setOpenAlert={setOpenAlert}
+          setTypeAlert={setTypeAlert}
+          setAlertMessage={setAlertMessage}
         >
           <EditCompany idCompany={idCompany} closeModal={handleClose} />
         </MyModal>
+      )}
+      {openAlert && (
+        <AlertNotification
+          open={openAlert}
+          handleClose={handleCloseAlert}
+          type={typeAlert}
+          message={alertMessage}
+        />
+      )}
+      {openConfirm && (
+        <ConfirmAction
+          message={'Desea eliminar el registro?'}
+          title={'Confirmacion'}
+          handleClose={handleCloseConfirm}
+          open={openConfirm}
+          ConfirmAction={DeleteConfirmed}
+        ></ConfirmAction>
       )}
     </>
   );

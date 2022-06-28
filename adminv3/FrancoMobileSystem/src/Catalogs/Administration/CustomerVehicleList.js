@@ -18,12 +18,20 @@ import GenericTableHeader from '../../form-components/TableHeaders/GenericTableH
 import MyModal from 'shared/Modal';
 import EditVehicle from './_EditVehicle';
 import { ApiEndpoint } from 'utils/ApiEndPont';
-const URI = ApiEndpoint + 'customervehicles/';  
+import AlertNotification from 'form-components/AlertNotification';
+import ConfirmAction from 'form-components/ConfirmationModal';
+const URI = ApiEndpoint + 'customervehicles/';
 const CustomerVehicleList = () => {
   const [vehicles, setVehicles] = useState([]);
   const [openModal, setOpenModal] = useState(false);
   let [idCustomer, setIdCustomer] = useState(0);
   let [idVehicle, setIdVehicle] = useState(0);
+  const [openConfirm, setOpenConfirm] = useState(null);
+  const [openAlert, setOpenAlert] = useState(false);
+  const [typeAlert, setTypeAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState(false);
+  const [idVehicleToDelete, setIdVehicleToDelete] = useState(0);
+
   let { id } = useParams();
   const handleClose = () => {
     setOpenModal(false);
@@ -37,7 +45,18 @@ const CustomerVehicleList = () => {
     setVehicles(res.data);
     console.log(res.data);
   };
+  const handleCloseConfirm = () => {
+    setOpenConfirm(false);
+    getVehicles();
+  };
 
+  const DeleteConfirmed = isConfirmed => {
+    console.log('DElete Accepted');
+  };
+
+  const handleCloseAlert = () => {
+    setOpenAlert(false);
+  };
   useEffect(() => {
     getVehicles();
   }, []);
@@ -106,8 +125,8 @@ const CustomerVehicleList = () => {
                         variant="falcon-default"
                         size="sm"
                         onClick={() => {
-                          setIdVehicle(vehicle.idVehicle);
-                          setOpenModal(true);
+                          setIdVehicleToDelete(vehicle.idVehicle);
+                          setOpenConfirm(true);
                         }}
                       >
                         <FontAwesomeIcon icon="trash-alt" />
@@ -135,8 +154,28 @@ const CustomerVehicleList = () => {
             idVehicle={idVehicle}
             idCustomer={idCustomer}
             closeModal={handleClose}
+            setOpenAlert={setOpenAlert}
+            setTypeAlert={setTypeAlert}
+            setAlertMessage={setAlertMessage}
           />
         </MyModal>
+      )}
+      {openAlert && (
+        <AlertNotification
+          open={openAlert}
+          handleClose={handleCloseAlert}
+          type={typeAlert}
+          message={alertMessage}
+        />
+      )}
+      {openConfirm && (
+        <ConfirmAction
+          message={'Desea eliminar el registro?'}
+          title={'Confirmacion'}
+          handleClose={handleCloseConfirm}
+          open={openConfirm}
+          ConfirmAction={DeleteConfirmed}
+        ></ConfirmAction>
       )}
     </Card>
   );

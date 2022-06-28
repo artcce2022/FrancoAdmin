@@ -7,8 +7,6 @@ import {
   OverlayTrigger,
   Tooltip
 } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
-import CardDropdown from 'components/common/CardDropdown';
 import AdvanceTableWrapper from 'components/common/advance-table/AdvanceTableWrapper';
 import GenericTableHeader from '../../form-components/TableHeaders/GenericTableHeader.js';
 import AdvanceTablePagination from 'components/common/advance-table/AdvanceTablePagination';
@@ -17,23 +15,39 @@ import MyModal from 'shared/Modal.js';
 import i18next from 'i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import EditEmployee from './_EditEmployee.js';
+import AlertNotification from 'form-components/AlertNotification.js';
+import ConfirmAction from 'form-components/ConfirmationModal.js';
+import { ApiEndpoint } from 'utils/ApiEndPont.js';
 // import EditCustomer from './_EditCustomer.js';
 
-const URI = 'http://localhost:3001/employees/';
+const URI = ApiEndpoint + 'employees/';
 
 const Employees = () => {
   const [employees, setemployees] = useState([]);
   const [openModal, setOpenModal] = useState(false);
   let [idEmployee, setIdEmployee] = useState(0);
+  const [openConfirm, setOpenConfirm] = useState(null);
+  const [openAlert, setOpenAlert] = useState(false);
+  const [typeAlert, setTypeAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState(false);
+  const [idEmployeToDelete, setIdEmployeToDelete] = useState(0);
   const handleClose = () => {
     setOpenModal(false);
     getEmployeeList();
   };
-
+  const handleCloseConfirm = () => {
+    setOpenConfirm(false);
+    getEmployeeList();
+  };
   useEffect(() => {
     getEmployeeList();
   }, []);
-
+  const DeleteConfirmed = isConfirmed => {
+    console.log('DElete Accepted');
+  };
+  const handleCloseAlert = () => {
+    setOpenAlert(false);
+  };
   //mostrar companies
   const getEmployeeList = async () => {
     const res = await axios.get(URI);
@@ -56,6 +70,12 @@ const Employees = () => {
     {
       accessor: 'email',
       Header: `${i18next.t('label.Email')}`,
+      headerProps: { style: { minWidth: '200px' }, className: 'ps-5' },
+      cellProps: { className: 'ps-5' }
+    },
+    {
+      accessor: 'hiredate',
+      Header: `${i18next.t('label.HireDate')}`,
       headerProps: { style: { minWidth: '200px' }, className: 'ps-5' },
       cellProps: { className: 'ps-5' }
     },
@@ -93,8 +113,8 @@ const Employees = () => {
                 variant="falcon-default"
                 size="sm"
                 onClick={() => {
-                  setIdEmployee(idemployee);
-                  setOpenModal(true);
+                  setIdEmployeToDelete(idemployee);
+                  setOpenConfirm(true);
                 }}
               >
                 <FontAwesomeIcon icon="trash-alt" />
@@ -157,6 +177,23 @@ const Employees = () => {
         >
           <EditEmployee idEmployee={idEmployee} closeModal={handleClose} />
         </MyModal>
+      )}{' '}
+      {openAlert && (
+        <AlertNotification
+          open={openAlert}
+          handleClose={handleCloseAlert}
+          type={typeAlert}
+          message={alertMessage}
+        />
+      )}
+      {openConfirm && (
+        <ConfirmAction
+          message={'Desea eliminar el registro?'}
+          title={'Confirmacion'}
+          handleClose={handleCloseConfirm}
+          open={openConfirm}
+          ConfirmAction={DeleteConfirmed}
+        ></ConfirmAction>
       )}
     </>
   );

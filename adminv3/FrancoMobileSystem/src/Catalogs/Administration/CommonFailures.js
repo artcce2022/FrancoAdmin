@@ -7,35 +7,50 @@ import {
   OverlayTrigger,
   Tooltip
 } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
-import CardDropdown from 'components/common/CardDropdown';
 import AdvanceTableWrapper from 'components/common/advance-table/AdvanceTableWrapper';
 import GenericTableHeader from '../../form-components/TableHeaders/GenericTableHeader.js';
 import AdvanceTablePagination from 'components/common/advance-table/AdvanceTablePagination';
 import AdvanceTable from 'components/common/advance-table/AdvanceTable';
 import MyModal from 'shared/Modal.js';
-import EditCustomer from './_EditCustomer.js';
 import i18next from 'i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import EditCommonFailure from './_EditCommonFailure.js';
 import { ApiEndpoint } from 'utils/ApiEndPont.js';
+import AlertNotification from 'form-components/AlertNotification.js';
+import ConfirmAction from 'form-components/ConfirmationModal.js';
 // import EditCustomer from './_EditCustomer.js';
 
 const URI = ApiEndpoint + 'failures/';
 
 const CommonFailures = () => {
+  const [openAlert, setOpenAlert] = useState(false);
+  const [typeAlert, setTypeAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState(false);
   const [CommonFailures, setCommonFailures] = useState([]);
   const [openModal, setOpenModal] = useState(false);
+  const [openConfirm, setOpenConfirm] = useState(null);
   let [idCommonFailure, setIdCommonFailure] = useState(0);
+  const [idCommonFailureToDelete, setIdCommonFailureToDelete] = useState(0);
   const [idSymptomCategoryDefault, setIdSymptomCategoryDefault] = useState(0);
   const handleClose = () => {
     setOpenModal(false);
     getCommonFailuresList();
   };
-
+  const handleCloseAlert = () => {
+    setOpenAlert(false);
+  };
   useEffect(() => {
     getCommonFailuresList();
   }, []);
+
+  const handleCloseConfirm = () => {
+    setOpenConfirm(false);
+    getCommonFailuresList();
+  };
+
+  const DeleteConfirmed = isConfirmed => {
+    console.log('DElete Accepted');
+  };
 
   //mostrar companies
   const getCommonFailuresList = async () => {
@@ -92,8 +107,8 @@ const CommonFailures = () => {
                 variant="falcon-default"
                 size="sm"
                 onClick={() => {
-                  setIdCommonFailure(idcommonfailures);
-                  setOpenModal(true);
+                  setIdCommonFailureToDelete(idcommonfailures);
+                  setOpenConfirm(true);
                 }}
               >
                 <FontAwesomeIcon icon="trash-alt" />
@@ -139,7 +154,15 @@ const CommonFailures = () => {
             <AdvanceTablePagination table />
           </Card.Footer>
         </Card>
-      </AdvanceTableWrapper>
+      </AdvanceTableWrapper>{' '}
+      {openAlert && (
+        <AlertNotification
+          open={openAlert}
+          handleClose={handleCloseAlert}
+          type={typeAlert}
+          message={alertMessage}
+        />
+      )}
       {openModal && (
         <MyModal
           id="id_myModal"
@@ -154,11 +177,31 @@ const CommonFailures = () => {
           closeModal={handleClose}
         >
           <EditCommonFailure
+            setOpenAlert={setOpenAlert}
+            setTypeAlert={setTypeAlert}
+            setAlertMessage={setAlertMessage}
             idCommonFailure={idCommonFailure}
             idsymptomcategorydefault={idSymptomCategoryDefault}
             closeModal={handleClose}
           />
         </MyModal>
+      )}
+      {openAlert && (
+        <AlertNotification
+          open={openAlert}
+          handleClose={handleCloseAlert}
+          type={typeAlert}
+          message={alertMessage}
+        />
+      )}
+      {openConfirm && (
+        <ConfirmAction
+          message={'Desea eliminar el registro?'}
+          title={'Confirmacion'}
+          handleClose={handleCloseConfirm}
+          open={openConfirm}
+          ConfirmAction={DeleteConfirmed}
+        ></ConfirmAction>
       )}
     </>
   );

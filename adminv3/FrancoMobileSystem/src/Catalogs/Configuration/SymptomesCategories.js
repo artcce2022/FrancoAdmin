@@ -7,8 +7,6 @@ import {
   OverlayTrigger,
   Tooltip
 } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
-import CardDropdown from 'components/common/CardDropdown';
 import AdvanceTableWrapper from 'components/common/advance-table/AdvanceTableWrapper';
 import GenericTableHeader from '../../form-components/TableHeaders/GenericTableHeader.js';
 import AdvanceTablePagination from 'components/common/advance-table/AdvanceTablePagination';
@@ -17,14 +15,23 @@ import MyModal from 'shared/Modal.js';
 import i18next from 'i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import EditSymptomCategory from './_EditSymptomCategory.js';
+import ConfirmAction from 'form-components/ConfirmationModal.js';
+import AlertNotification from 'form-components/AlertNotification.js';
+import { ApiEndpoint } from 'utils/ApiEndPont.js';
 // import EditCustomer from './_EditCustomer.js';
 
-const URI = 'http://localhost:3001/scategories/';
+const URI = ApiEndpoint + 'scategories/';
 
 const SymptomCategories = () => {
   const [symptomcategories, setSymptomCategories] = useState([]);
   const [openModal, setOpenModal] = useState(false);
   let [idSymptomCategory, setIdSymptomCategory] = useState(0);
+  const [openAlert, setOpenAlert] = useState(false);
+  const [typeAlert, setTypeAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState(false);
+  const [openConfirm, setOpenConfirm] = useState(null);
+  const [idSymptomCategoryToDelete, setIdSymptomCategoryToDelete] = useState(0);
+
   const handleClose = () => {
     setOpenModal(false);
     getSymptomCategoriesList();
@@ -34,6 +41,18 @@ const SymptomCategories = () => {
     getSymptomCategoriesList();
   }, []);
 
+  const handleCloseConfirm = () => {
+    setOpenConfirm(false);
+    getSymptomCategoriesList();
+  };
+
+  const DeleteConfirmed = isConfirmed => {
+    console.log('DElete Accepted');
+  };
+
+  const handleCloseAlert = () => {
+    setOpenAlert(false);
+  };
   //mostrar companies
   const getSymptomCategoriesList = async () => {
     const res = await axios.get(URI);
@@ -81,8 +100,8 @@ const SymptomCategories = () => {
                 variant="falcon-default"
                 size="sm"
                 onClick={() => {
-                  setIdSymptomCategory(idsymptomcategory);
-                  setOpenModal(true);
+                  setIdSymptomCategoryToDelete(idsymptomcategory);
+                  setOpenConfirm(true);
                 }}
               >
                 <FontAwesomeIcon icon="trash-alt" />
@@ -146,8 +165,28 @@ const SymptomCategories = () => {
           <EditSymptomCategory
             idSymptomCategory={idSymptomCategory}
             closeModal={handleClose}
+            setOpenAlert={setOpenAlert}
+            setTypeAlert={setTypeAlert}
+            setAlertMessage={setAlertMessage}
           />
         </MyModal>
+      )}
+      {openAlert && (
+        <AlertNotification
+          open={openAlert}
+          handleClose={handleCloseAlert}
+          type={typeAlert}
+          message={alertMessage}
+        />
+      )}
+      {openConfirm && (
+        <ConfirmAction
+          message={'Desea eliminar el registro?'}
+          title={'Confirmacion'}
+          handleClose={handleCloseConfirm}
+          open={openConfirm}
+          ConfirmAction={DeleteConfirmed}
+        ></ConfirmAction>
       )}
     </>
   );

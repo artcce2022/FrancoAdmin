@@ -4,10 +4,7 @@ import axios from 'axios';
 import { Button, Card, Col, Form, Row } from 'react-bootstrap';
 import { ApiEndpoint } from 'utils/ApiEndPont';
 import { FormInputText } from 'form-components/FormInputText';
-import AlertNotification from 'form-components/AlertNotification.js';
 import i18next from 'i18next';
-import { FormInputDate } from 'form-components/FormInputDate';
-import ReactDatePicker from 'react-datepicker';
 
 const URI = ApiEndpoint + 'failures/';
 const URICategories = ApiEndpoint + 'scategories/';
@@ -15,29 +12,19 @@ const URICategories = ApiEndpoint + 'scategories/';
 export default function EditCommonFailure({
   idCommonFailure,
   idsymptomcategorydefault,
-  closeModal
+  closeModal,
+  setOpenAlert,
+  setTypeAlert,
+  setAlertMessage
 }) {
   //const [commonFailure] =useCommonFailures({idCommonFailure});
-  const [alertMessage, setAlertMessage] = useState('');
-  const [openAlert, setOpenAlert] = useState(false);
-  const [typeAlert, setTypeAlert] = useState('success');
+  const [validated, setValidated] = useState(false);
 
   const {
-    control,
     handleSubmit,
+    control,
     formState: { errors }
-  } = useForm({
-    mode: 'onBlur',
-    defaultValues: {
-      idcommonfailures: '',
-      shortdescription: '',
-      symtomdescription: '',
-      workrequested: '',
-      hours: '',
-      price: '',
-      idsymptomcategory: ''
-    }
-  });
+  } = useForm();
   const [values, setValues] = useState({
     idcommonfailures: '',
     shortdescription: '',
@@ -50,16 +37,18 @@ export default function EditCommonFailure({
   const [commonFailure, setCommonFailure] = useState(values);
   const [categoriesFailure, setcategoriesFailure] = useState([]);
   const [idsymptomcategory, setIdsymptomcategory] = useState('');
-
+  useEffect(() => {
+    if (idCommonFailure > 0) {
+      axios.get(URI + idCommonFailure).then(response => {
+        setCommonFailure(response.data);
+      });
+    }
+  }, []);
   useEffect(() => {
     axios(URICategories).then(({ data }) => {
       const listCategories = data.map(category => {
         if (category.idsymptomcategory === idsymptomcategorydefault) {
-          //   setValue("idsymptomcategory", { value: `${category.idsymptomcategory}`, label: category.category });
-          setIdsymptomcategory({
-            value: `${category.idsymptomcategory}`,
-            label: category.category
-          });
+          setIdsymptomcategory(`${category.idsymptomcategory}`);
         }
         return {
           value: `${category.idsymptomcategory}`,
@@ -67,21 +56,22 @@ export default function EditCommonFailure({
         };
       });
       setcategoriesFailure(listCategories);
-    });
-  }, []); // empty array makes hook working once
-
-  useEffect(() => {
-    axios.get(URI + idCommonFailure).then(response => {
-      setCommonFailure(response.data);
+      console.log(listCategories);
     });
   }, []); // empty array makes hook working once
 
   // const fields = ['warehousename', 'address',  'phone', 'manager'];
   // fields.forEach(field => setValue(field, warehouse[field]));
+  const onSubmit = (data, e) => {
+    const form = e.target;
+    if (form.checkValidity() === false) {
+      setValidated(true);
+      e.preventDefault();
+      e.stopPropagation();
+      return;
+    }
 
-  const onSubmit = async data => {
-    console.log(commonFailure);
-
+    setValidated(true);
     if (idCommonFailure > 0) {
       axios
         .put(URI + idCommonFailure, {
@@ -91,7 +81,7 @@ export default function EditCommonFailure({
           workrequested: commonFailure.workrequested,
           hours: commonFailure.hours,
           price: commonFailure.price,
-          idsymptomcategory: parseInt(idsymptomcategory)
+          idsymptomcategory: parseInt(commonFailure.idsymptomcategory)
         })
         .then(function (response) {
           setAlertMessage(i18next.t('label.SuccessfulRecord'));
@@ -112,7 +102,7 @@ export default function EditCommonFailure({
           workrequested: commonFailure.workrequested,
           hours: commonFailure.hours,
           price: commonFailure.price,
-          idsymptomcategory: parseInt(idsymptomcategory)
+          idsymptomcategory: parseInt(commonFailure.idsymptomcategory)
         })
         .then(function (response) {
           setAlertMessage(i18next.t('label.SuccessfulRecord'));
@@ -127,92 +117,111 @@ export default function EditCommonFailure({
     }
   };
   const onChange = event => {
-    console.log(event.target);
     const { name, value } = event.target;
     setCommonFailure({ ...commonFailure, [name]: value });
+    if (name === 'idsymptomcategory') {
+      setIdsymptomcategory(value);
+    }
   };
 
-  const handleCloseAlert = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-    setOpenAlert(false);
-  };
   return (
     <>
       <Card style={{ width: '100%' }}>
         <Card.Body>
-          <Form onSubmit={handleSubmit(onSubmit)}>
-            <FormInputText
-              label={i18next.t('label.shortDescription')}
-              changeHandler={onChange}
-              name={'shortdescription'}
-              control={control}
-              defaultValue={commonFailure.shortdescription}
-            ></FormInputText>
-            <FormInputText
-              control={control}
-              label={i18next.t('label.SymtomDescription')}
-              name="symtomdescription"
-              changeHandler={onChange}
-              defaultValue={commonFailure.symtomdescription}
-            ></FormInputText>
-            <Form.Group as={Col} className="mb-3" controlId="workrequested">
-              <FormInputText
-                control={control}
-                label={i18next.t('label.WorkRequested')}
-                name="workrequested"
-                changeHandler={onChange}
-                defaultValue={commonFailure.workrequested}
-              ></FormInputText>
-            </Form.Group>
-            <Form.Group as={Col} className="mb-3" controlId="hours">
-              <FormInputText
-                control={control}
-                label={i18next.t('label.Hours')}
-                name="hours"
-                changeHandler={onChange}
-                defaultValue={commonFailure.hours}
-              ></FormInputText>
-            </Form.Group>
-            <Form.Group as={Col} className="mb-3" controlId="price">
-              <FormInputText
-                control={control}
-                label={i18next.t('label.Price')}
-                name="price"
-                changeHandler={onChange}
-                defaultValue={commonFailure.price}
-              ></FormInputText>
-            </Form.Group>
-            <Form.Group as={Col} className="mb-3" controlId="category">
-              <Form.Select aria-label={i18next.t('label.Categoria')}>
-                {!!categoriesFailure?.length &&
-                  categoriesFailure.map(({ label, value }) => (
-                    <option key={value} value={value}>
-                      {label}
-                    </option>
-                  ))}
-              </Form.Select>
-            </Form.Group>
-            <Button
-              type="submit"
-              onClick={handleSubmit(onSubmit)}
-              color="primary"
-              size="sm"
-            >
-              {i18next.t('label.Save')}
-            </Button>
+          <Form
+            noValidate
+            validated={validated}
+            onSubmit={handleSubmit(onSubmit)}
+          >
+            <Row>
+              <Col>
+                <Form.Group
+                  as={Col}
+                  className="mb-3"
+                  controlId="idsymptomcategory"
+                >
+                  <Form.Label>{i18next.t('label.Categoria')}</Form.Label>
+                  <Form.Control
+                    as="select"
+                    aria-label={i18next.t('label.Categoria')}
+                    name="idsymptomcategory"
+                    onChange={onChange}
+                    value={`${idsymptomcategory}`}
+                  >
+                    {!!categoriesFailure?.length &&
+                      categoriesFailure.map(({ label, value }) => (
+                        <option key={value} value={value}>
+                          {label}
+                        </option>
+                      ))}
+                  </Form.Control>
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <FormInputText
+                  label={i18next.t('label.shortDescription')}
+                  changeHandler={onChange}
+                  name={'shortdescription'}
+                  control={control}
+                  defaultValue={commonFailure.shortdescription}
+                ></FormInputText>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <FormInputText
+                  control={control}
+                  label={i18next.t('label.SymtomDescription')}
+                  name="symtomdescription"
+                  changeHandler={onChange}
+                  errors={errors}
+                  defaultValue={commonFailure.symtomdescription}
+                ></FormInputText>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                {' '}
+                <FormInputText
+                  control={control}
+                  label={i18next.t('label.WorkRequested')}
+                  name="workrequested"
+                  changeHandler={onChange}
+                  errors={errors}
+                  defaultValue={commonFailure.workrequested}
+                ></FormInputText>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <FormInputText
+                  control={control}
+                  label={i18next.t('label.Hours')}
+                  name="hours"
+                  errors={errors}
+                  changeHandler={onChange}
+                  defaultValue={commonFailure.hours}
+                ></FormInputText>
+              </Col>
+              <Col>
+                <Form.Group as={Col} className="mb-3" controlId="price">
+                  <FormInputText
+                    control={control}
+                    label={i18next.t('label.Price')}
+                    name="price"
+                    errors={errors}
+                    changeHandler={onChange}
+                    defaultValue={commonFailure.price}
+                  ></FormInputText>
+                </Form.Group>
+              </Col>
+            </Row>
+            <Button type="submit">{i18next.t('label.Save')}</Button>
           </Form>
         </Card.Body>
       </Card>
-      {openAlert && (
-        <AlertNotification
-          open={openAlert}
-          handleClose={handleCloseAlert}
-          type={typeAlert}
-          message={alertMessage}
-        />
-      )}
     </>
   );
 }

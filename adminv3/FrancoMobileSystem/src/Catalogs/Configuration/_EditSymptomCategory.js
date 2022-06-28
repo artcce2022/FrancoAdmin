@@ -4,16 +4,18 @@ import axios from 'axios';
 import { Button, Card, Col, Form, Row } from 'react-bootstrap';
 import { ApiEndpoint } from 'utils/ApiEndPont';
 import { FormInputText } from 'form-components/FormInputText';
-import AlertNotification from 'form-components/AlertNotification.js';
 import i18next from 'i18next';
 
 const URI = ApiEndpoint + 'scategories/';
 
-export default function EditSymptomCategory({ idSymptomCategory, closeModal }) {
-  //const [commonFailure] =useCommonFailures({idCommonFailure});
-  const [alertMessage, setAlertMessage] = useState('');
-  const [openAlert, setOpenAlert] = useState(false);
-  const [typeAlert, setTypeAlert] = useState('success');
+export default function EditSymptomCategory({
+  idSymptomCategory,
+  closeModal,
+  setOpenAlert,
+  setTypeAlert,
+  setAlertMessage
+}) {
+  const [validated, setValidated] = useState(false);
 
   const {
     control,
@@ -38,8 +40,16 @@ export default function EditSymptomCategory({ idSymptomCategory, closeModal }) {
     });
   }, []);
 
-  const onSubmit = async data => {
-    console.log(symptompCategory);
+  const onSubmit = (data, e) => {
+    const form = e.target;
+    if (form.checkValidity() === false) {
+      setValidated(true);
+      e.preventDefault();
+      e.stopPropagation();
+      return;
+    }
+
+    setValidated(true);
 
     if (idSymptomCategory > 0) {
       axios
@@ -89,7 +99,11 @@ export default function EditSymptomCategory({ idSymptomCategory, closeModal }) {
     <>
       <Card style={{ width: '100%' }}>
         <Card.Body>
-          <Form onSubmit={handleSubmit(onSubmit)}>
+          <Form
+            noValidate
+            validated={validated}
+            onSubmit={handleSubmit(onSubmit)}
+          >
             <Form.Group className="mb-3" controlId="category">
               <FormInputText
                 label={i18next.t('label.Category')}
@@ -99,25 +113,12 @@ export default function EditSymptomCategory({ idSymptomCategory, closeModal }) {
                 defaultValue={symptompCategory.category}
               ></FormInputText>
             </Form.Group>
-            <Button
-              type="submit"
-              onClick={handleSubmit(onSubmit)}
-              color="primary"
-              size="sm"
-            >
+            <Button type="submit" color="primary" size="sm">
               {i18next.t('label.Save')}
             </Button>
           </Form>
         </Card.Body>
       </Card>
-      {openAlert && (
-        <AlertNotification
-          open={openAlert}
-          handleClose={handleCloseAlert}
-          type={typeAlert}
-          message={alertMessage}
-        />
-      )}
     </>
   );
 }

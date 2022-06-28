@@ -1,15 +1,21 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
+import AlertNotification from 'form-components/AlertNotification';
 import GenericTableHeader from 'form-components/TableHeaders/GenericTableHeader';
 import i18next from 'i18next';
 import React, { useEffect, useState } from 'react';
 import { Button, Card, Table } from 'react-bootstrap';
 import MyModal from 'shared/Modal';
 import { ApiEndpoint } from 'utils/ApiEndPont';
+import AddFailureServiceOnEdit from './_AddFailureServiceOnEdit';
 import EditFailuresService from './_EditFailuresService';
+import EditServiceFailureStatus from './_EditServiceFailureStatus';
 
 const URI = ApiEndpoint + 'services/failures/';
 const ServiceFailureList = ({ idService }) => {
+  const [openAlert, setOpenAlert] = useState(false);
+  const [typeAlert, setTypeAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState(false);
   const [idFailure, setIdFailure] = useState(0);
   const [failuresList, setFailuresList] = useState([]);
   const [openModalStatus, setOpenModalStatus] = useState(false);
@@ -18,12 +24,18 @@ const ServiceFailureList = ({ idService }) => {
   const [idCommonFailureStatus, setIdCommonFailureStatus] = useState('0');
   const handleClose = () => {
     setOpenModalStatus(false);
+    setOpenModalFailure(false);
     getServiceFailures();
+  };
+
+  const handleCloseAlert = () => {
+    setOpenAlert(false);
   };
 
   useEffect(() => {
     getServiceFailures();
   }, []);
+
   const getServiceFailures = () => {
     console.log(URI + idService);
     axios.get(URI + idService).then(response => {
@@ -115,7 +127,7 @@ const ServiceFailureList = ({ idService }) => {
                               setIdCommonFailureService(
                                 failure.idservicefailures
                               );
-                              setIdCommonFailureStatus('4');
+                              setIdCommonFailureStatus('2');
                               setOpenModalStatus(true);
                             }}
                           >
@@ -130,6 +142,14 @@ const ServiceFailureList = ({ idService }) => {
           </div>
         </Card.Body>
       </Card>
+      {openAlert && (
+        <AlertNotification
+          open={openAlert}
+          handleClose={handleCloseAlert}
+          type={typeAlert}
+          message={alertMessage}
+        />
+      )}
       {openModalStatus && (
         <MyModal
           id="id_myModal"
@@ -137,10 +157,31 @@ const ServiceFailureList = ({ idService }) => {
           openModal={openModalStatus}
           closeModal={handleClose}
         >
-          <EditFailuresService
+          <EditServiceFailureStatus
             idCommonFailureService={idCommonFailureService}
             idCommonFailureStatus={idCommonFailureStatus}
             closeModal={handleClose}
+            setOpenAlert={setOpenAlert}
+            setTypeAlert={setTypeAlert}
+            setAlertMessage={setAlertMessage}
+          />
+        </MyModal>
+      )}
+      {openModalFailure && (
+        <MyModal
+          id="id_myModal"
+          title={i18next.t('label.EditFailure')}
+          openModal={openModalFailure}
+          closeModal={handleClose}
+        >
+          <AddFailureServiceOnEdit
+            idFailure={idFailure}
+            failuresList={failuresList}
+            setOpenAlert={setOpenAlert}
+            setTypeAlert={setTypeAlert}
+            setAlertMessage={setAlertMessage}
+            closeModal={handleClose}
+            idService={idService}
           />
         </MyModal>
       )}

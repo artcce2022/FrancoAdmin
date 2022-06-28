@@ -16,24 +16,13 @@ import ServiceFilesList from './_ServiceFilesList';
 const DetailService = () => {
   const [service, setService] = useState([]);
   const [openModal, setOpenModal] = useState(false);
-  const [openModalFile, setOpenModalFile] = useState(false);
   const [idService, setIdService] = useState(null);
-  const [refreshFiles, setRefreshFiles] = useState(null);
-  const {
-    register,
-    control,
-    handleSubmit,
-    setValue,
-    formState: { errors }
-  } = useForm();
 
   let { id } = useParams();
   const URI = ApiEndpoint + 'services/' + id;
   const handleClose = () => {
     setOpenModal(false);
-    setOpenModalFile(false);
     getService();
-    setRefreshFiles(true);
   };
 
   //mostrar companies
@@ -102,31 +91,11 @@ const DetailService = () => {
             style={{ minHeight: 500, maxHeight: 500, overflow: 'auto' }}
           >
             {idService && (
-              <ServiceFilesList
-                setOpenModal={setOpenModalFile}
-                serviceGuid={id}
-                refreshFiles={true}
-                setRefreshFiles={setRefreshFiles}
-                idService={idService}
-              />
+              <ServiceFilesList serviceGuid={id} idService={idService} />
             )}
           </FalconComponentCard>
         </Col>
       </Row>
-      {openModalFile && (
-        <MyModal
-          id="id_myModalFile"
-          title={i18next.t('label.AddFile')}
-          openModal={openModalFile}
-          closeModal={handleClose}
-        >
-          <AddServiceFile
-            idService={idService}
-            serviceGuid={id}
-            closeModal={handleClose}
-          ></AddServiceFile>
-        </MyModal>
-      )}
     </>
   );
 };

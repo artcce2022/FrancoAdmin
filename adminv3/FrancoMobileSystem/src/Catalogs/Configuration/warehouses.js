@@ -7,8 +7,6 @@ import {
   OverlayTrigger,
   Tooltip
 } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
-import CardDropdown from 'components/common/CardDropdown';
 import AdvanceTableWrapper from 'components/common/advance-table/AdvanceTableWrapper';
 import GenericTableHeader from '../../form-components/TableHeaders/GenericTableHeader.js';
 import AdvanceTablePagination from 'components/common/advance-table/AdvanceTablePagination';
@@ -17,14 +15,23 @@ import MyModal from 'shared/Modal.js';
 import i18next from 'i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import EditWarehouse from './_EditWarehouse.js';
+import { ApiEndpoint } from 'utils/ApiEndPont.js';
+import AlertNotification from 'form-components/AlertNotification.js';
+import ConfirmAction from 'form-components/ConfirmationModal.js';
 // import EditCustomer from './_EditCustomer.js';
 
-const URI = 'http://localhost:3001/warehouse/';
+const URI = ApiEndpoint + 'warehouse/';
 
 const Warehouses = () => {
   const [warehouses, setWarehouses] = useState([]);
   const [openModal, setOpenModal] = useState(false);
   let [idWarehouses, setIdWarehouses] = useState(0);
+  const [openConfirm, setOpenConfirm] = useState(null);
+  const [openAlert, setOpenAlert] = useState(false);
+  const [typeAlert, setTypeAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState(false);
+  const [idWarehouseToDelete, setIdWarehouseToDelete] = useState(0);
+
   const handleClose = () => {
     setOpenModal(false);
     getWarehouses();
@@ -40,6 +47,18 @@ const Warehouses = () => {
     setWarehouses(res.data);
   };
 
+  const handleCloseConfirm = () => {
+    setOpenConfirm(false);
+    getWarehouses();
+  };
+
+  const DeleteConfirmed = isConfirmed => {
+    console.log('DElete Accepted');
+  };
+
+  const handleCloseAlert = () => {
+    setOpenAlert(false);
+  };
   const columns = [
     {
       accessor: 'warehousename',
@@ -91,8 +110,8 @@ const Warehouses = () => {
                 variant="falcon-default"
                 size="sm"
                 onClick={() => {
-                  setIdWarehouses(idwarehouse);
-                  setOpenModal(true);
+                  setIdWarehouseToDelete(idwarehouse);
+                  setOpenConfirm(true);
                 }}
               >
                 <FontAwesomeIcon icon="trash-alt" />
@@ -153,8 +172,31 @@ const Warehouses = () => {
           openModal={openModal}
           closeModal={handleClose}
         >
-          <EditWarehouse idWarehouse={idWarehouses} closeModal={handleClose} />
+          <EditWarehouse
+            idWarehouse={idWarehouses}
+            closeModal={handleClose}
+            setOpenAlert={setOpenAlert}
+            setTypeAlert={setTypeAlert}
+            setAlertMessage={setAlertMessage}
+          />
         </MyModal>
+      )}
+      {openAlert && (
+        <AlertNotification
+          open={openAlert}
+          handleClose={handleCloseAlert}
+          type={typeAlert}
+          message={alertMessage}
+        />
+      )}
+      {openConfirm && (
+        <ConfirmAction
+          message={'Desea eliminar el registro?'}
+          title={'Confirmacion'}
+          handleClose={handleCloseConfirm}
+          open={openConfirm}
+          ConfirmAction={DeleteConfirmed}
+        ></ConfirmAction>
       )}
     </>
   );

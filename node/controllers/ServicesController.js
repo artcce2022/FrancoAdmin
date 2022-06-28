@@ -83,7 +83,8 @@ export const saveServiceFile = async (req, res) => {
         filename: req.file.originalname,
         filetype:req.file.mimetype,
         description: req.body.description,
-        fileguid: req.body.uuid
+        fileguid: req.body.uuid,
+        visibilitycustomer: req.body.visibilitycustomer
     }); 
     try {
         console.log( req.files.file)
@@ -167,6 +168,30 @@ export const saveService = async (req, res) => {
     }
 
 };
+
+/*Insert Record*/
+export const insertServiceCommonFailure =async(req,res) =>{
+    try {
+       await ServiceFailuresModel.create(req.body);
+       res.json({'message':'Registro Creado Exitosamente'});
+    } catch (error) {
+        
+        res.json({message: error.message});
+    }
+
+};
+ 
+export const insertServiceDetail =async(req,res) =>{
+    try {
+       await ServiceDetailsModel.create(req.body);
+       res.json({'message':'Registro Creado Exitosamente'});
+    } catch (error) {
+        
+        res.json({message: error.message});
+    }
+
+};
+
 
 /* Update Record*/
 export const updateServiceCommonFailure = async (req, res) => {

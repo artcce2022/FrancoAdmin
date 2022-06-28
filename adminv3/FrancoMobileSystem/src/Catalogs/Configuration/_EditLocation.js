@@ -9,12 +9,14 @@ import i18next from 'i18next';
 
 const URI = ApiEndpoint + 'locations/';
 
-export default function EditLocation({ idLocation, closeModal }) {
-  //const [commonFailure] =useCommonFailures({idCommonFailure});
-  const [alertMessage, setAlertMessage] = useState('');
-  const [openAlert, setOpenAlert] = useState(false);
-  const [typeAlert, setTypeAlert] = useState('success');
-
+export default function EditLocation({
+  idLocation,
+  closeModal,
+  setOpenAlert,
+  setTypeAlert,
+  setAlertMessage
+}) {
+  const [validated, setValidated] = useState(false);
   const {
     control,
     handleSubmit,
@@ -48,9 +50,16 @@ export default function EditLocation({ idLocation, closeModal }) {
     });
   }, []);
 
-  const onSubmit = async data => {
-    console.log(location);
+  const onSubmit = (data, e) => {
+    const form = e.target;
+    if (form.checkValidity() === false) {
+      setValidated(true);
+      e.preventDefault();
+      e.stopPropagation();
+      return;
+    }
 
+    setValidated(true);
     if (idLocation > 0) {
       axios
         .put(URI + idLocation, {
@@ -99,17 +108,15 @@ export default function EditLocation({ idLocation, closeModal }) {
     setLocation({ ...location, [name]: value });
   };
 
-  const handleCloseAlert = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-    setOpenAlert(false);
-  };
   return (
     <>
       <Card style={{ width: '100%' }}>
         <Card.Body>
-          <Form onSubmit={handleSubmit(onSubmit)}>
+          <Form
+            noValidate
+            validated={validated}
+            onSubmit={handleSubmit(onSubmit)}
+          >
             <Form.Group className="mb-3" controlId="locationName">
               <FormInputText
                 label={i18next.t('label.LocationName')}
@@ -167,14 +174,6 @@ export default function EditLocation({ idLocation, closeModal }) {
           </Form>
         </Card.Body>
       </Card>
-      {openAlert && (
-        <AlertNotification
-          open={openAlert}
-          handleClose={handleCloseAlert}
-          type={typeAlert}
-          message={alertMessage}
-        />
-      )}
     </>
   );
 }

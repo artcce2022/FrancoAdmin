@@ -11,11 +11,16 @@ import ReactDatePicker from 'react-datepicker';
 
 const URI = ApiEndpoint + 'employees/';
 
-export default function EditEmployee({ idEmployee, closeModal }) {
+export default function EditEmployee({
+  idEmployee,
+  closeModal,
+  setOpenAlert,
+  setTypeAlert,
+  setAlertMessage
+}) {
   //const [commonFailure] =useCommonFailures({idCommonFailure});
-  const [alertMessage, setAlertMessage] = useState('');
-  const [openAlert, setOpenAlert] = useState(false);
-  const [typeAlert, setTypeAlert] = useState('success');
+
+  const [validated, setValidated] = useState(false);
 
   const {
     control,
@@ -56,34 +61,47 @@ export default function EditEmployee({ idEmployee, closeModal }) {
   });
   const [employee, setEmployee] = useState(values);
   const [selectedBirthDate, setSelectedBirthDate] = useState(new Date());
-  const [selectedHireDate, setSelectedHireDate] = useState(new Date());
+  const [selectedHireDate, setSelectedHireDate] = useState(null);
 
   useEffect(() => {
     axios.get(URI + idEmployee).then(response => {
       setEmployee(response.data);
-      if (response.hiredate != null) {
-        var timestamp = Date.parse(response.hiredate);
-        if (isNaN(timestamp) === false) {
+      if (response.data.hiredate != null) {
+        var timestamp = parseDate(response.data.hiredate);
+        if (isNaN(timestamp) === true) {
           timestamp = new Date();
         }
         setSelectedHireDate(timestamp);
       }
-      if (response.birthdate != null) {
-        var timestamp = Date.parse(response.birthdate);
-        if (isNaN(timestamp) === false) {
+      if (response.data.birthdate != null) {
+        var timestamp = parseDate(response.data.birthdate);
+        if (isNaN(timestamp) === true) {
           timestamp = new Date();
         }
-        selectedBirthDate(timestamp);
+        setSelectedBirthDate(timestamp);
       }
     });
   }, []); // empty array makes hook working once
 
   // const fields = ['warehousename', 'address',  'phone', 'manager'];
   // fields.forEach(field => setValue(field, warehouse[field]));
+  function parseDate(input) {
+    let parts = input.split('-');
 
-  const onSubmit = async data => {
-    console.log(employee);
+    // new Date(year, month [, day [, hours[, minutes[, seconds[, ms]]]]])
+    return new Date(parts[0], parts[1] - 1, parts[2]); // Note: months are 0-based
+  }
+  const onSubmit = (data, e) => {
+    const form = e.target;
+    if (form.checkValidity() === false) {
+      console.log('entre a submit 123');
+      setValidated(true);
+      e.preventDefault();
+      e.stopPropagation();
+      return;
+    }
 
+    setValidated(true);
     if (idEmployee > 0) {
       axios
         .put(URI + idEmployee, {
@@ -145,123 +163,131 @@ export default function EditEmployee({ idEmployee, closeModal }) {
     const { name, value } = event.target;
     setEmployee({ ...employee, [name]: value });
   };
-
-  const handleCloseAlert = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-    setOpenAlert(false);
-  };
   return (
     <>
       <Card style={{ width: '100%' }}>
         <Card.Body>
-          <Form onSubmit={handleSubmit(onSubmit)}>
-            <FormInputText
-              label={i18next.t('label.Name')}
-              changeHandler={onChange}
-              name={'firstname'}
-              control={control}
-              defaultValue={employee.firstname}
-            ></FormInputText>
-            <FormInputText
-              control={control}
-              label={i18next.t('label.LastName')}
-              name="lastname"
-              changeHandler={onChange}
-              defaultValue={employee.lastname}
-            ></FormInputText>
-            <Form.Group as={Col} className="mb-3" controlId="birthdate">
-              {/* <FormInputDate
-                control={control}
-                label={i18next.t('label.birthdate')}
-                name="birthdate"
-                changeHandler={onChange}
-                defaultValue={employee.birthdate}
-              ></FormInputDate> */}
-              <Form.Label>{i18next.t('label.BirthDate')}</Form.Label>
-              <ReactDatePicker
-                selected={selectedBirthDate}
-                onChange={date => setSelectedBirthDate(date)}
-                className="form-control"
-                placeholderText="Select Date"
-                dateFormat={'MM/dd/yyyy'}
-              />
-            </Form.Group>
-            <Form.Group as={Col} className="mb-3" controlId="ssn">
-              <FormInputText
-                control={control}
-                label={i18next.t('label.ssn')}
-                name="ssn"
-                changeHandler={onChange}
-                defaultValue={employee.ssn}
-              ></FormInputText>
-            </Form.Group>
-            <Form.Group as={Col} className="mb-3" controlId="address">
-              <FormInputText
-                control={control}
-                label={i18next.t('label.Address')}
-                name="address"
-                changeHandler={onChange}
-                defaultValue={employee.address}
-              ></FormInputText>
-            </Form.Group>
-            <Form.Group as={Col} className="mb-3" controlId="city">
-              <FormInputText
-                control={control}
-                label={i18next.t('label.City')}
-                name="city"
-                changeHandler={onChange}
-                defaultValue={employee.city}
-              ></FormInputText>
-            </Form.Group>
-            <Form.Group as={Col} className="mb-3" controlId="phone">
-              <FormInputText
-                control={control}
-                label={i18next.t('label.Phone')}
-                name="phone"
-                changeHandler={onChange}
-                defaultValue={employee.phone}
-              ></FormInputText>
-            </Form.Group>
-            <Form.Group as={Col} className="mb-3" controlId="email">
-              <FormInputText
-                control={control}
-                label={i18next.t('label.Email')}
-                name="email"
-                changeHandler={onChange}
-                defaultValue={employee.email}
-              ></FormInputText>
-            </Form.Group>
-            <Form.Group as={Col} className="mb-3" controlId="hiredate">
-              <Form.Label>{i18next.t('label.HireDate')}</Form.Label>
-              <ReactDatePicker
-                selected={selectedHireDate}
-                onChange={date => setSelectedHireDate(date)}
-                className="form-control"
-                placeholderText="Select Date"
-                dateFormat={'MM/dd/yyyy'}
-              />
-            </Form.Group>
-            <Button
-              type="submit"
-              onClick={handleSubmit(onSubmit)}
-              color="primary"
-              size="sm"
-            >
+          <Form
+            noValidate
+            validated={validated}
+            onSubmit={handleSubmit(onSubmit)}
+          >
+            <Row>
+              <Col>
+                <FormInputText
+                  label={i18next.t('label.Name')}
+                  changeHandler={onChange}
+                  name={'firstname'}
+                  control={control}
+                  defaultValue={employee.firstname}
+                ></FormInputText>
+              </Col>
+              <Col>
+                <FormInputText
+                  control={control}
+                  label={i18next.t('label.LastName')}
+                  name="lastname"
+                  changeHandler={onChange}
+                  defaultValue={employee.lastname}
+                ></FormInputText>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <Form.Group as={Col} className="mb-3" controlId="birthdate">
+                  <Form.Label>{i18next.t('label.BirthDate')}</Form.Label>
+                  <ReactDatePicker
+                    selected={selectedBirthDate}
+                    onChange={date => setSelectedBirthDate(date)}
+                    className="form-control"
+                    placeholderText="Select Date"
+                    dateFormat={'MM/dd/yyyy'}
+                  />
+                </Form.Group>
+              </Col>
+              <Col>
+                <Form.Group as={Col} className="mb-3" controlId="ssn">
+                  <FormInputText
+                    control={control}
+                    label={i18next.t('label.ssn')}
+                    name="ssn"
+                    changeHandler={onChange}
+                    defaultValue={employee.ssn}
+                  ></FormInputText>
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <Form.Group as={Col} className="mb-3" controlId="address">
+                  <FormInputText
+                    control={control}
+                    label={i18next.t('label.Address')}
+                    name="address"
+                    changeHandler={onChange}
+                    defaultValue={employee.address}
+                  ></FormInputText>
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <Form.Group as={Col} className="mb-3" controlId="city">
+                  <FormInputText
+                    control={control}
+                    label={i18next.t('label.City')}
+                    name="city"
+                    changeHandler={onChange}
+                    defaultValue={employee.city}
+                  ></FormInputText>
+                </Form.Group>
+              </Col>
+              <Col>
+                <Form.Group as={Col} className="mb-3" controlId="phone">
+                  <FormInputText
+                    control={control}
+                    label={i18next.t('label.Phone')}
+                    name="phone"
+                    changeHandler={onChange}
+                    defaultValue={employee.phone}
+                  ></FormInputText>
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <Form.Group as={Col} className="mb-3" controlId="email">
+                  <FormInputText
+                    control={control}
+                    label={i18next.t('label.Email')}
+                    name="email"
+                    type="email"
+                    changeHandler={onChange}
+                    defaultValue={employee.email}
+                  ></FormInputText>
+                </Form.Group>
+              </Col>
+              <Col>
+                <Form.Group as={Col} className="mb-3" controlId="hiredate">
+                  <Form.Label>{i18next.t('label.HireDate')}</Form.Label>
+                  <ReactDatePicker
+                    selected={selectedHireDate}
+                    value={selectedHireDate}
+                    onChange={date => setSelectedHireDate(date)}
+                    className="form-control"
+                    placeholderText="Select Date"
+                    dateFormat={'MM/dd/yyyy'}
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
+
+            <Button type="submit" color="primary" size="sm">
               {i18next.t('label.Save')}
             </Button>
           </Form>
         </Card.Body>
       </Card>
-      {openAlert && (
-        <AlertNotification
-          open={openAlert}
-          handleClose={handleCloseAlert}
-          type={typeAlert}
-          message={alertMessage}
-        />
-      )}
     </>
   );
 }

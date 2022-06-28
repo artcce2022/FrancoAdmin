@@ -7,8 +7,6 @@ import {
   OverlayTrigger,
   Tooltip
 } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
-import CardDropdown from 'components/common/CardDropdown';
 import AdvanceTableWrapper from 'components/common/advance-table/AdvanceTableWrapper';
 import GenericTableHeader from '../../form-components/TableHeaders/GenericTableHeader.js';
 import AdvanceTablePagination from 'components/common/advance-table/AdvanceTablePagination';
@@ -19,6 +17,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ApiEndpoint } from 'utils/ApiEndPont.js';
 import EditVendor from './_EditVendor.js';
 import ConfirmAction from 'form-components/ConfirmationModal.js';
+import AlertNotification from 'form-components/AlertNotification.js';
 // import EditCustomer from './_EditCustomer.js';
 
 const Vendors = () => {
@@ -26,6 +25,9 @@ const Vendors = () => {
   const [vendors, setVendors] = useState([]);
   const [openModal, setOpenModal] = useState(false);
   const [openConfirm, setOpenConfirm] = useState(null);
+  const [openAlert, setOpenAlert] = useState(false);
+  const [typeAlert, setTypeAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState(false);
   const [idVendorToDelete, setIdVendorToDelete] = useState(0);
   let [idVendor, setIdVendor] = useState(0);
   const handleClose = () => {
@@ -42,6 +44,9 @@ const Vendors = () => {
     console.log('DElete Accepted');
   };
 
+  const handleCloseAlert = () => {
+    setOpenAlert(false);
+  };
   useEffect(() => {
     console.log('openConfirm');
     console.log(openConfirm);
@@ -50,7 +55,6 @@ const Vendors = () => {
   useEffect(() => {
     getVendors();
   }, []);
-
   //mostrar companies
   const getVendors = async () => {
     const res = await axios.get(URI);
@@ -166,10 +170,23 @@ const Vendors = () => {
             i18next.t('label.Vendor')
           }
           openModal={openModal}
-          closeModal={handleClose}
         >
-          <EditVendor idVendor={idVendor} closeModal={handleClose} />
+          <EditVendor
+            idVendor={idVendor}
+            closeModal={handleClose}
+            setOpenAlert={setOpenAlert}
+            setTypeAlert={setTypeAlert}
+            setAlertMessage={setAlertMessage}
+          />
         </MyModal>
+      )}{' '}
+      {openAlert && (
+        <AlertNotification
+          open={openAlert}
+          handleClose={handleCloseAlert}
+          type={typeAlert}
+          message={alertMessage}
+        />
       )}
       {openConfirm && (
         <ConfirmAction

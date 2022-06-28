@@ -1,0 +1,9 @@
+endpoint https://apicac.ihct.mx/Suscription/refunds/9996501490
+Method: POST
+
+parametros
+IdTransaction=Ok|c6ced878-3908-46c0-9b13-5b64d18f3a74&ChargesId=88217433
+
+donde:
+IdTransaction = carrierId
+ChargesId= IdSuscripcion

@@ -4,12 +4,11 @@ import classNames from 'classnames';
 import AdvanceTable from 'components/common/advance-table/AdvanceTable';
 import AdvanceTablePagination from 'components/common/advance-table/AdvanceTablePagination';
 import AdvanceTableWrapper from 'components/common/advance-table/AdvanceTableWrapper';
-import CardDropdown from 'components/common/CardDropdown';
 import SoftBadge from 'components/common/SoftBadge';
 import ServicesTableHeader from 'form-components/TableHeaders/ServicesTableHeader';
 import i18next from 'i18next';
 import { useEffect, useState } from 'react';
-import { Card, Dropdown } from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { ApiEndpoint } from 'utils/ApiEndPont';
 
@@ -17,7 +16,7 @@ const URI = ApiEndpoint + 'services/';
 const columns = [
   {
     accessor: 'service',
-    Header: i18next.t('label.ServiceInfo'),
+    Header: 'Info',
     headerProps: { className: 'pe-1' },
     cellProps: {
       className: 'py-2'
@@ -28,7 +27,9 @@ const columns = [
           <Link to={'/ServiceDetail/' + rowData.row.original.serviceid}>
             <strong>{rowData.row.original.serviceid}</strong>
           </Link>{' '}
-          <p className="mb-0 text-500">{rowData.row.original.datecreate}</p>
+          <p className="mb-0 text-500">
+            {rowData.row.original.datecreate || ''}
+          </p>
           <strong>
             {rowData.row.original.vehicle.vin}-
             {rowData.row.original.vehicle.make}-
@@ -40,7 +41,8 @@ const columns = [
   },
   {
     accessor: 'customer',
-    Header: i18next.t('label.Customer'),
+    Header: 'Customer',
+    headerProps: { className: 'pe-7' },
     Cell: rowData => {
       return (
         <>
@@ -55,7 +57,8 @@ const columns = [
   },
   {
     accessor: 'locationName',
-    Header: i18next.t('label.locationName'),
+    Header: 'Location',
+    headerProps: { className: 'pe-7' },
     Cell: rowData => {
       return (
         <>
@@ -76,9 +79,6 @@ const columns = [
     },
     Cell: rowData => {
       const status = rowData.row.original.servicestatus.idservicestatus;
-      console.log('status');
-      console.log(status);
-      console.log(rowData.row.original.servicestatus);
       return (
         <SoftBadge
           pill
@@ -86,7 +86,8 @@ const columns = [
             success: status === 1,
             primary: status === 2,
             warning: status === 3,
-            secondary: status === 4
+            secondary: status === 4,
+            info: status === 5
           })}
           className="d-block"
         >
@@ -94,7 +95,7 @@ const columns = [
           {status === 2 && `${i18next.t('status.InLocation')}`}
           {status === 3 && `${i18next.t('status.InExternalService')}`}
           {status === 4 && `${i18next.t('status.Canceled')}`}
-          {status === 4 && `${i18next.t('status.Completed')}`}
+          {status === 5 && `${i18next.t('status.Completed')}`}
           <FontAwesomeIcon
             icon={classNames({
               check: status === `${i18next.t('status.Completed')}`,
@@ -117,20 +118,12 @@ const columns = [
     cellProps: {
       className: 'text-end'
     },
-    Cell: () => {
+    Cell: rowData => {
       return (
-        <CardDropdown iconClassName="fs--1">
-          <div className="py-2">
-            <Dropdown.Item href="#!">{i18next.t('label.completed')}</Dropdown.Item>
-            <Dropdown.Item href="#!">{i18next.t('status.InProccess')}</Dropdown.Item>
-            <Dropdown.Item href="#!">{i18next.t('label.onhold')}</Dropdown.Item>
-            <Dropdown.Item href="#!">{i18next.t('label.pending')}</Dropdown.Item>
-            <Dropdown.Divider as="div" />
-            <Dropdown.Item href="#!" className="text-danger">
-            {i18next.t('label.delete')}
-            </Dropdown.Item>
-          </div>
-        </CardDropdown>
+        <>
+          <strong>{rowData.row.original.location.locationName}</strong>
+          <p className="mb-0 text-500">{rowData.row.original.recibe}</p>
+        </>
       );
     }
   }
@@ -142,7 +135,6 @@ const ServicesList = () => {
   //mostrar companies
   const getServices = async () => {
     const res = await axios.get(URI);
-    console.log(res.data);
     setServices(res.data);
   };
 

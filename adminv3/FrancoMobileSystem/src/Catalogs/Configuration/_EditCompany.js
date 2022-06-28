@@ -9,11 +9,14 @@ import i18next from 'i18next';
 
 const URI = ApiEndpoint + 'companies/';
 
-export default function EditCompany({ idCompany, closeModal }) {
-  //const [commonFailure] =useCommonFailures({idCommonFailure});
-  const [alertMessage, setAlertMessage] = useState('');
-  const [openAlert, setOpenAlert] = useState(false);
-  const [typeAlert, setTypeAlert] = useState('success');
+export default function EditCompany({
+  idCompany,
+  closeModal,
+  setOpenAlert,
+  setTypeAlert,
+  setAlertMessage
+}) {
+  const [validated, setValidated] = useState(false);
 
   const {
     control,
@@ -43,9 +46,17 @@ export default function EditCompany({ idCompany, closeModal }) {
   // const fields = ['warehousename', 'address',  'phone', 'manager'];
   // fields.forEach(field => setValue(field, warehouse[field]));
 
-  const onSubmit = async data => {
-    console.log(company);
+  const onSubmit = (data, e) => {
+    const form = e.target;
+    if (form.checkValidity() === false) {
+      console.log('entre a submit 123');
+      setValidated(true);
+      e.preventDefault();
+      e.stopPropagation();
+      return;
+    }
 
+    setValidated(true);
     if (idCompany > 0) {
       axios
         .put(URI + idCompany, {
@@ -87,17 +98,15 @@ export default function EditCompany({ idCompany, closeModal }) {
     setCompany({ ...company, [name]: value });
   };
 
-  const handleCloseAlert = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-    setOpenAlert(false);
-  };
   return (
     <>
       <Card style={{ width: '100%' }}>
         <Card.Body>
-          <Form onSubmit={handleSubmit(onSubmit)}>
+          <Form
+            noValidate
+            validated={validated}
+            onSubmit={handleSubmit(onSubmit)}
+          >
             <Form.Group className="mb-3" controlId="companyName">
               <FormInputText
                 label={i18next.t('label.NomEmpresa')}
@@ -128,25 +137,12 @@ export default function EditCompany({ idCompany, closeModal }) {
               </Form.Group>
             </Row>
 
-            <Button
-              type="submit"
-              onClick={handleSubmit(onSubmit)}
-              color="primary"
-              size="sm"
-            >
+            <Button type="submit" color="primary" size="sm">
               {i18next.t('label.Save')}
             </Button>
           </Form>
         </Card.Body>
       </Card>
-      {openAlert && (
-        <AlertNotification
-          open={openAlert}
-          handleClose={handleCloseAlert}
-          type={typeAlert}
-          message={alertMessage}
-        />
-      )}
     </>
   );
 }

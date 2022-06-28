@@ -7,8 +7,6 @@ import {
   OverlayTrigger,
   Tooltip
 } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
-import CardDropdown from 'components/common/CardDropdown';
 import AdvanceTableWrapper from 'components/common/advance-table/AdvanceTableWrapper';
 import GenericTableHeader from '../../form-components/TableHeaders/GenericTableHeader.js';
 import AdvanceTablePagination from 'components/common/advance-table/AdvanceTablePagination';
@@ -17,13 +15,22 @@ import MyModal from 'shared/Modal.js';
 import i18next from 'i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import EditPartCategory from './_EditPartCategory.js';
+import AlertNotification from 'form-components/AlertNotification.js';
+import ConfirmAction from 'form-components/ConfirmationModal.js';
+import { ApiEndpoint } from 'utils/ApiEndPont.js';
 // import EditCustomer from './_EditCustomer.js';
 
-const URI = 'http://localhost:3001/partscategories/';
+const URI = ApiEndpoint + 'partscategories/';
 
 const PartsCategories = () => {
   const [partsCategories, setPartsCategories] = useState([]);
   const [openModal, setOpenModal] = useState(false);
+  const [openConfirm, setOpenConfirm] = useState(null);
+  const [openAlert, setOpenAlert] = useState(false);
+  const [typeAlert, setTypeAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState(false);
+  const [idPartCategoryDelete, setIdPartCategoryToDelete] = useState(0);
+
   let [idPartCategory, setIdPartCategory] = useState(0);
   const handleClose = () => {
     setOpenModal(false);
@@ -33,7 +40,17 @@ const PartsCategories = () => {
   useEffect(() => {
     getPartsCategoriesList();
   }, []);
+  const handleCloseConfirm = () => {
+    setOpenConfirm(false);
+    getPartsCategoriesList();
+  };
+  const DeleteConfirmed = isConfirmed => {
+    console.log('DElete Accepted');
+  };
 
+  const handleCloseAlert = () => {
+    setOpenAlert(false);
+  };
   //mostrar companies
   const getPartsCategoriesList = async () => {
     const res = await axios.get(URI);
@@ -81,8 +98,8 @@ const PartsCategories = () => {
                 variant="falcon-default"
                 size="sm"
                 onClick={() => {
-                  setIdPartCategory(idpartscategory);
-                  setOpenModal(true);
+                  setIdPartCategoryToDelete(idpartscategory);
+                  setOpenConfirm(true);
                 }}
               >
                 <FontAwesomeIcon icon="trash-alt" />
@@ -146,8 +163,28 @@ const PartsCategories = () => {
           <EditPartCategory
             idPartCategory={idPartCategory}
             closeModal={handleClose}
+            setOpenAlert={setOpenAlert}
+            setTypeAlert={setTypeAlert}
+            setAlertMessage={setAlertMessage}
           />
         </MyModal>
+      )}
+      {openAlert && (
+        <AlertNotification
+          open={openAlert}
+          handleClose={handleCloseAlert}
+          type={typeAlert}
+          message={alertMessage}
+        />
+      )}
+      {openConfirm && (
+        <ConfirmAction
+          message={'Desea eliminar el registro?'}
+          title={'Confirmacion'}
+          handleClose={handleCloseConfirm}
+          open={openConfirm}
+          ConfirmAction={DeleteConfirmed}
+        ></ConfirmAction>
       )}
     </>
   );
