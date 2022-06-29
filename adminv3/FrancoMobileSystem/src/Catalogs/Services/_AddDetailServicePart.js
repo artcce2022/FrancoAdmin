@@ -10,14 +10,14 @@ import { FormInputText } from 'form-components/FormInputText';
 const URI = ApiEndpoint + 'scategories/';
 const URIFailures = ApiEndpoint + 'failures/';
 
-export default function EditServiceParts({
-  action,
+export default function AddServiceParts({
   closeModal,
-  idsymptomcategorydefault,
   failureList,
   setOpenAlert,
   setTypeAlert,
-  setAlertMessage
+  setAlertMessage,
+  idService,
+  idVehicle
 }) {
   const [selectedPartStr, setSelectedPartStr] = useState('');
   const [partsList, setPartsList] = useState([]);
@@ -25,11 +25,11 @@ export default function EditServiceParts({
   const [employeeList, setEmployeeList] = useState([]);
   const [idWarehouse, setIdWarehouse] = useState(0);
   const [idEmployee, setIdEmployee] = useState(0);
+  const [idLocation, setIdLocation] = useState(0);
   const [chargetoCustomer, setChargetoCustomer] = useState(0);
   const [idPart, setIdPart] = useState(0);
   const [open, setOpen] = useState(false);
   const [validated, setValidated] = useState(false);
-  const [part, setPart] = useState([]);
 
   const {
     register,
@@ -50,6 +50,16 @@ export default function EditServiceParts({
       chargetoCustomer: ''
     }
   });
+  const [values, setValues] = useState({
+    idWarehouse: '',
+    idEmployee: '',
+    idPart: '',
+    price: '0',
+    serialnumber: '',
+    quantity: '',
+    chargetoCustomer: ''
+  });
+  const [partService, setPartService] = useState(values);
 
   useEffect(() => {
     const uriParts = ApiEndpoint + 'parts/';
@@ -91,29 +101,76 @@ export default function EditServiceParts({
   }, []);
 
   const onSubmit = async (data, e) => {
-    e.preventDefault();
-    console.log(data);
-    if (data.idcommonfailures > 0) {
-      let newData = data;
-      newData.rowId = uuidv4();
-      failureList.push(newData);
-      setSelectedPartStr('');
-      reset();
-
-      setAlertMessage(i18next.t('SuccessfulRecord'));
-      setTypeAlert('success');
-      setOpenAlert(true);
-    } else {
-      setAlertMessage(i18next.t('label.ErrorSelectValid'));
-      setTypeAlert('warning');
-      setOpenAlert(true);
+    const form = e.target;
+    if (form.checkValidity() === false) {
+      console.log('entre a submit 123');
+      setValidated(true);
+      e.preventDefault();
+      e.stopPropagation();
+      return;
     }
-    //action(newData);
+
+    setValidated(true);
+    const uriParts = ApiEndpoint + 'services/parts/' + idService;
+    console.log('partService');
+    console.log({
+      idservice: idService,
+      idwarehouse: idWarehouse,
+      idemployee: idEmployee,
+      idpart: idPart,
+      price: partService.price,
+      serialnumber: partService.serial,
+      quantity: partService.quantity,
+      chargetocustomer: chargetoCustomer,
+      idvehicle: idVehicle
+    });
+    axios
+      .post(uriParts, {
+        idservice: idService,
+        idwarehouse: idWarehouse,
+        idemployee: idEmployee,
+        idpart: idPart,
+        price: partService.price,
+        serialnumber: partService.serial,
+        quantity: partService.quantity,
+        chargetocustomer: chargetoCustomer,
+        idvehicle: idVehicle
+      })
+      .then(function (response) {
+        setAlertMessage(i18next.t('label.SuccessfulRecord'));
+        setTypeAlert('success');
+        setOpenAlert(true);
+        console.log(response);
+        closeModal();
+      })
+      .catch(function (error) {
+        console.log(error);
+        setAlertMessage(i18next.t('label.ErrorSelectValid'));
+        setTypeAlert('warning');
+        setOpenAlert(true);
+      });
   };
 
   const onChange = event => {
     const { name, value } = event.target;
-    setPart({ ...part, [name]: value });
+    setPartService({ ...partService, [name]: value });
+  };
+
+  const onChangePart = value => {
+    console.log(value);
+    setPartService({ ...partService, ['idPart']: value });
+    setIdPart(value);
+    const uriParts = ApiEndpoint + 'parts/' + value;
+    console.log(uriParts);
+    axios(uriParts).then(({ data }) => {
+      console.log(data);
+      setPartService({ ...partService, ['price']: data.price });
+      setPartService({ ...partService, ['serial']: data.serial });
+    });
+  };
+
+  const onChangeIsVisible = event => {
+    setChargetoCustomer(!chargetoCustomer);
   };
   return (
     <div>
@@ -123,32 +180,34 @@ export default function EditServiceParts({
             noValidate
             validated={validated}
             onSubmit={handleSubmit(onSubmit)}
-          > <Row>
-          <Col>
-            <Form.Group className="mb-3" controlId="companyName">
-              <Form.Select
-                aria-label="Default select"
-                name="patio"
-                style={{ minWidth: '250px' }}
-                onChange={selectedOption => {
-                  setIdWarehouse(`${selectedOption.target.value}`);
-                  console.log(`${selectedOption.target.value}`);
-                  //onChange(selectedOption);
-                }}
-              >
-                <option key={'location_0'} value={0}>
-                  {i18next.t('label.SelectSomeValue')}
-                </option>
-                {!!employeeList?.length &&
-                  employeeList.map(({ label, value }) => (
-                    <option key={value} value={value}>
-                      {label}
+          >
+            {' '}
+            <Row>
+              <Col>
+                <Form.Group className="mb-3" controlId="employee">
+                  <Form.Select
+                    aria-label="Default select"
+                    name="employee"
+                    style={{ minWidth: '250px' }}
+                    onChange={selectedOption => {
+                      onChange(selectedOption);
+                      setIdEmployee(`${selectedOption.target.value}`);
+                      console.log(`${selectedOption.target.value}`);
+                    }}
+                  >
+                    <option key={'location_0'} value={0}>
+                      {i18next.t('label.SelectSomeValue')}
                     </option>
-                  ))}
-              </Form.Select>
-            </Form.Group>
-          </Col>
-        </Row>
+                    {!!employeeList?.length &&
+                      employeeList.map(({ label, value }) => (
+                        <option key={value} value={value}>
+                          {label}
+                        </option>
+                      ))}
+                  </Form.Select>
+                </Form.Group>
+              </Col>
+            </Row>
             <Row>
               <Col>
                 <Form.Group className="mb-3" controlId="warehouse">
@@ -159,7 +218,7 @@ export default function EditServiceParts({
                     onChange={selectedOption => {
                       setIdWarehouse(`${selectedOption.target.value}`);
                       console.log(`${selectedOption.target.value}`);
-                      //onChange(selectedOption);
+                      onChange(selectedOption);
                     }}
                   >
                     <option key={'location_0'} value={0}>
@@ -177,22 +236,22 @@ export default function EditServiceParts({
             </Row>
             <Row>
               <Col>
-                <Form.Group className="mb-3" controlId="patio">
+                <Form.Group className="mb-3" controlId="idPart">
                   <Form.Select
                     aria-label="Default select"
-                    name="patio"
+                    name="idPart"
                     style={{ minWidth: '250px' }}
                     onChange={selectedOption => {
-                      setIdWarehouse(`${selectedOption.target.value}`);
+                      onChangePart(`${selectedOption.target.value}`);
                       console.log(`${selectedOption.target.value}`);
-                      //onChange(selectedOption);
+                      onChange(selectedOption);
                     }}
                   >
                     <option key={'location_0'} value={0}>
                       {i18next.t('label.SelectSomeValue')}
                     </option>
-                    {!!employeeList?.length &&
-                      employeeList.map(({ label, value }) => (
+                    {!!partsList?.length &&
+                      partsList.map(({ label, value }) => (
                         <option key={value} value={value}>
                           {label}
                         </option>
@@ -200,30 +259,17 @@ export default function EditServiceParts({
                   </Form.Select>
                 </Form.Group>
               </Col>
-            </Row>
+            </Row>{' '}
             <Row>
               <Col>
-                <Form.Group className="mb-3" controlId="companyName">
-                  <Form.Select
-                    aria-label="Default select"
-                    name="patio"
-                    style={{ minWidth: '250px' }}
-                    onChange={selectedOption => {
-                      setIdWarehouse(`${selectedOption.target.value}`);
-                      console.log(`${selectedOption.target.value}`);
-                      //onChange(selectedOption);
-                    }}
-                  >
-                    <option key={'location_0'} value={0}>
-                      {i18next.t('label.SelectSomeValue')}
-                    </option>
-                    {!!employeeList?.length &&
-                      employeeList.map(({ label, value }) => (
-                        <option key={value} value={value}>
-                          {label}
-                        </option>
-                      ))}
-                  </Form.Select>
+                <Form.Group className="mb-3" controlId="quantity">
+                  <FormInputText
+                    label={i18next.t('label.Quantity')}
+                    changeHandler={onChange}
+                    name={'quantity'}
+                    control={control}
+                    defaultValue={partService.quantity}
+                  ></FormInputText>
                 </Form.Group>
               </Col>
             </Row>
@@ -235,7 +281,7 @@ export default function EditServiceParts({
                     changeHandler={onChange}
                     name={'price'}
                     control={control}
-                    defaultValue={part.companyName}
+                    defaultValue={partService.price}
                   ></FormInputText>
                 </Form.Group>
               </Col>
@@ -248,27 +294,33 @@ export default function EditServiceParts({
                     changeHandler={onChange}
                     name={'serial'}
                     control={control}
-                    defaultValue={part.serial}
+                    defaultValue={partService.serial}
                   ></FormInputText>
                 </Form.Group>
+              </Col>
+              <Col>
+                <Form.Check
+                  type="switch"
+                  id="isVisible"
+                  label={i18next.t('label.VisibleToCustomer')}
+                  value={chargetoCustomer}
+                  onChange={onChangeIsVisible}
+                />
               </Col>
             </Row>
             <Row>
               <Col>
-                <Form.Group className="mb-3" controlId="quantity">
-                  <FormInputText
-                    label={i18next.t('label.Quantity')}
-                    changeHandler={onChange}
-                    name={'quantity'}
-                    control={control}
-                    defaultValue={part.quantity}
-                  ></FormInputText>
-                </Form.Group>
+                {' '}
+                <Button
+                  type="submit"
+                  onClick={handleSubmit(onSubmit)}
+                  color="primary"
+                  size="sm"
+                >
+                  {i18next.t('label.Save')}
+                </Button>
               </Col>
             </Row>
-            <Button variant="contained" color="secondary" onClick={closeModal}>
-              {i18next.t('label.Cancel')}
-            </Button>
           </Form>
         </Card.Body>
       </Card>

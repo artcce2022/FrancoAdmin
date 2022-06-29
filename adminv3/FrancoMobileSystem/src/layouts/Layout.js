@@ -16,6 +16,7 @@ import Vendors from 'Catalogs/Warehouse/Vendors';
 import NewService from 'Catalogs/Services/NewService';
 import ServicesList from 'Catalogs/Services/ListServices';
 import DetailService from 'Catalogs/Services/DetailService';
+import PartsCatalog from 'Catalogs/Warehouse/Parts';
 
 const Layout = () => {
   const HTMLClassList = document.getElementsByTagName('html')[0].classList;
@@ -58,6 +59,7 @@ const Layout = () => {
           <Route path="/Configuration/Employees" element={<Employees />} />
           <Route path="/Configuration/Companies" element={<Companies />} />
           <Route path="/Configuration/Vendors" element={<Vendors />} />
+          <Route path="/Warehouse/Parts" element={<PartsCatalog />} />
           <Route path="/Services/NewService" element={<NewService />} />
           <Route path="/Services/Services" element={<ServicesList />} />
           <Route path="/ServiceDetail/:id" element={<DetailService />} />

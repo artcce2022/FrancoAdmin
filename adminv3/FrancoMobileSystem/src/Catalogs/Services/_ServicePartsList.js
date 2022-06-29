@@ -5,12 +5,32 @@ import { ApiEndpoint } from 'utils/ApiEndPont.js';
 import { Button, Card, Table } from 'react-bootstrap';
 import GenericTableHeader from 'form-components/TableHeaders/GenericTableHeader.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import AlertNotification from 'form-components/AlertNotification.js';
+import AddServiceParts from './_AddDetailServicePart.js';
+import MyModal from 'shared/Modal.js';
 
-const ServicePartsList = ({ idService, setOpenModal, serviceGuid }) => {
+const ServicePartsList = ({
+  idService,
+  setOpenModal,
+  serviceGuid,
+  idVehicle
+}) => {
   const [serviceParts, setServiceParts] = useState([]);
   const [refreshParts, setRefreshParts] = useState(false);
   const [openModalPart, setOpenModalPart] = useState(false);
+  const [openAlert, setOpenAlert] = useState(false);
+  const [typeAlert, setTypeAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState(false);
   const URI = ApiEndpoint + 'services/parts/';
+
+  const handleClose = () => {
+    setOpenModalPart(false);
+    getServiceParts();
+  };
+  const handleCloseAlert = () => {
+    setOpenAlert(false);
+  };
+
   useEffect(() => {
     getServiceParts();
   }, []);
@@ -26,6 +46,7 @@ const ServicePartsList = ({ idService, setOpenModal, serviceGuid }) => {
     console.log(URI + idService);
     axios.get(URI + idService).then(response => {
       let parts = response.data;
+      console.log('parts');
       console.log(parts);
       setServiceParts(parts);
       // setIdsymptomcategory(response.data.idsymptomcategory);
@@ -37,7 +58,7 @@ const ServicePartsList = ({ idService, setOpenModal, serviceGuid }) => {
       <Card className="mb-3">
         <Card.Header>
           <GenericTableHeader
-            label={i18next.t('label.Failures')}
+            label={i18next.t('label.Parts')}
             newFunction={() => {
               setOpenModalPart(true);
             }}
@@ -58,10 +79,10 @@ const ServicePartsList = ({ idService, setOpenModal, serviceGuid }) => {
               <tbody>
                 {serviceParts.map((part, index) => (
                   <tr>
-                    <td>{part.parts.partcode}</td>
-                    <td>{part.parts.description}</td>
-                    <td>{part.parts.partcode}</td>
-                    <td>{part.quantity}</td>
+                    <td>{part.part.partcode}</td>
+                    <td>{part.part.description}</td>
+                    <td>{part.part.partcode}</td>
+                    <td>{part.part.quantity}</td>
                     <td>
                       <Button
                         variant="falcon-default"
@@ -79,7 +100,32 @@ const ServicePartsList = ({ idService, setOpenModal, serviceGuid }) => {
             </Table>
           </div>
         </Card.Body>
-      </Card>
+      </Card>{' '}
+      {openAlert && (
+        <AlertNotification
+          open={openAlert}
+          handleClose={handleCloseAlert}
+          type={typeAlert}
+          message={alertMessage}
+        />
+      )}{' '}
+      {openModalPart && (
+        <MyModal
+          id="id_myModal"
+          title={i18next.t('label.Parts')}
+          openModal={openModalPart}
+          closeModal={handleClose}
+        >
+          <AddServiceParts
+            setOpenAlert={setOpenAlert}
+            setTypeAlert={setTypeAlert}
+            setAlertMessage={setAlertMessage}
+            closeModal={handleClose}
+            idService={idService}
+            idVehicle={idVehicle}
+          />
+        </MyModal>
+      )}
     </>
   );
 };

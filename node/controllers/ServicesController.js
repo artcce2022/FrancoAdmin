@@ -73,6 +73,19 @@ export const getServiceParts = async (req, res) => {
     }
 };
 
+export const insertServiceParts =async(req,res) =>{
+    console.log("entre insertServiceParts")
+    console.log(req.body)
+    try {
+       await ServicePartsModel.create(req.body);
+       res.json({'message':'Registro Creado Exitosamente'});
+    } catch (error) {
+        
+        res.json({message: error.message});
+    }
+
+};
+
 export const saveServiceFile = async (req, res) => {
     console.log("entre a saveServiceFile"); 
     console.log(req.body); 

@@ -25,6 +25,7 @@ export const getPart =async (req, res)=>{
 
 /*Insert Record*/
 export const insertPart =async(req,res) =>{
+    console.log(req.body);
     try {
        await PartsModel.create(req.body);
        res.json({'message':'Registro Creado Exitosamente'});

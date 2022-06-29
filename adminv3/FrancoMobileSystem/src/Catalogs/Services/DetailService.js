@@ -12,11 +12,13 @@ import AddServiceFile from './_AddServiceFile';
 import ServiceDetailsList from './_ServiceDetailsList';
 import ServiceFailureList from './_ServiceFailureList';
 import ServiceFilesList from './_ServiceFilesList';
+import ServicePartsList from './_ServicePartsList';
 
 const DetailService = () => {
   const [service, setService] = useState([]);
   const [openModal, setOpenModal] = useState(false);
   const [idService, setIdService] = useState(null);
+  const [idVehicle, setIdVehicle] = useState(null);
 
   let { id } = useParams();
   const URI = ApiEndpoint + 'services/' + id;
@@ -34,9 +36,9 @@ const DetailService = () => {
   const getService = () => {
     axios.get(URI).then(response => {
       let serviceNew = response.data[0];
-      console.log(serviceNew);
       setIdService(serviceNew.idservice);
       setService(serviceNew);
+      setIdVehicle(serviceNew.idvehicle);
       // setIdsymptomcategory(response.data.idsymptomcategory);
     });
   };
@@ -85,13 +87,27 @@ const DetailService = () => {
         </Col>
       </Row>
       <Row>
-        <Col lg={12}>
+        <Col lg={8}>
           <FalconComponentCard
             noGuttersBottom
             style={{ minHeight: 500, maxHeight: 500, overflow: 'auto' }}
           >
             {idService && (
               <ServiceFilesList serviceGuid={id} idService={idService} />
+            )}
+          </FalconComponentCard>
+        </Col>
+        <Col lg={4}>
+          <FalconComponentCard
+            noGuttersBottom
+            style={{ minHeight: 500, maxHeight: 500, overflow: 'auto' }}
+          >
+            {idService && (
+              <ServicePartsList
+                serviceGuid={id}
+                idService={idService}
+                idVehicle={idVehicle}
+              />
             )}
           </FalconComponentCard>
         </Col>

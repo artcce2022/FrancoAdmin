@@ -95,5 +95,27 @@ export const configurationRoutes = {
     }
   ]
 };
-
-export default [dashboardRoutes, administrationRoutes, configurationRoutes];
+export const warehouseRoutes = {
+  label: 'Warehouse', //`${i18next.t('label.Administration')}`,
+  labelDisable: true,
+  children: [
+    {
+      name: 'Warehouse', // `${i18next.t('label.Administration')}`,
+      active: true,
+      icon: 'chart-pie',
+      children: [
+        {
+          name: 'Parts', // `${i18next.t('label.Customer')}`,
+          to: '/Warehouse/Parts',
+          active: true
+        }
+      ]
+    }
+  ]
+};
+export default [
+  dashboardRoutes,
+  administrationRoutes,
+  configurationRoutes,
+  warehouseRoutes
+];

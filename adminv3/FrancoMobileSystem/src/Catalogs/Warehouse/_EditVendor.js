@@ -138,7 +138,7 @@ export default function EditVendor({
           >
             <Form.Group className="mb-3" controlId="name">
               <FormInputText
-                label={'Vendedor'}
+                label={i18next.t('label.Vendor')}
                 changeHandler={onChange}
                 name={i18next.t('label.Name')}
                 control={control}
