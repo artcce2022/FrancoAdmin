@@ -146,7 +146,7 @@ export default function EditLocation({
             </Form.Group>
             <Form.Group className="mb-3" controlId="schedule">
               <FormInputText
-                label={i18next.t('label.Schedule')}
+                label={i18next.t('label.schedule')}
                 changeHandler={onChange}
                 name={'schedule'}
                 control={control}
@@ -155,7 +155,7 @@ export default function EditLocation({
             </Form.Group>
             <Form.Group className="mb-3" controlId="manager">
               <FormInputText
-                label={i18next.t('label.Manager')}
+                label={i18next.t('label.manager')}
                 changeHandler={onChange}
                 name={'manager'}
                 control={control}

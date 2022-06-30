@@ -41,7 +41,7 @@ const Vendors = () => {
   };
 
   const DeleteConfirmed = isConfirmed => {
-    console.log('DElete Accepted');
+    console.log('Delete Accepted');
   };
 
   const handleCloseAlert = () => {
@@ -64,7 +64,7 @@ const Vendors = () => {
   const columns = [
     {
       accessor: 'name',
-      Header: `${i18next.t('label.name')}`,
+      Header: `${i18next.t('label.Name')}`,
       headerProps: { style: { minWidth: '200px' }, className: 'ps-5' },
       cellProps: { className: 'ps-5' }
     },
@@ -76,7 +76,7 @@ const Vendors = () => {
     },
     {
       accessor: 'phone',
-      Header: `${i18next.t('label.phone')}`
+      Header: `${i18next.t('label.Phone')}`
     },
     {
       accessor: 'none',

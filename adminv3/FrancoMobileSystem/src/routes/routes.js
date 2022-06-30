@@ -1,4 +1,6 @@
+import ReactDOM from 'react-dom'
 import i18next from 'i18next';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import { v4 as uuidv4 } from 'uuid';
 export const dashboardRoutes = {

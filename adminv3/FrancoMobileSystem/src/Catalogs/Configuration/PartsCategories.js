@@ -60,7 +60,7 @@ const PartsCategories = () => {
   const columns = [
     {
       accessor: 'category',
-      Header: `${i18next.t('label.category')}`,
+      Header: `${i18next.t('label.Categoria')}`,
       headerProps: { style: { minWidth: '200px' }, className: 'ps-5' },
       cellProps: { className: 'ps-5' }
     },

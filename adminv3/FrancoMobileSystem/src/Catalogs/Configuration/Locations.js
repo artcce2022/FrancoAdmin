@@ -60,7 +60,7 @@ const Locations = () => {
     },
     {
       accessor: 'address',
-      Header: `${i18next.t('label.address')}`,
+      Header: `${i18next.t('label.Address')}`,
       headerProps: { style: { minWidth: '200px' }, className: 'ps-5' },
       cellProps: { className: 'ps-5' }
     },

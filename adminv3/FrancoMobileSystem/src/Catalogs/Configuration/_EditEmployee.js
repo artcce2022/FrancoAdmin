@@ -185,7 +185,7 @@ export default function EditEmployee({
               <Col>
                 <FormInputText
                   control={control}
-                  label={i18next.t('label.LastName')}
+                  label={i18next.t('label.Lastname')}
                   name="lastname"
                   changeHandler={onChange}
                   defaultValue={employee.lastname}
@@ -195,7 +195,7 @@ export default function EditEmployee({
             <Row>
               <Col>
                 <Form.Group as={Col} className="mb-3" controlId="birthdate">
-                  <Form.Label>{i18next.t('label.BirthDate')}</Form.Label>
+                  <Form.Label>{i18next.t('label.birthdate')}</Form.Label>
                   <ReactDatePicker
                     selected={selectedBirthDate}
                     onChange={date => setSelectedBirthDate(date)}
