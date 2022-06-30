@@ -96,7 +96,7 @@ const ServiceFilesList = ({ idService, setOpenModal, serviceGuid }) => {
       <Card className="mb-3">
         <Card.Header>
           <GenericTableHeader
-            label={i18next.t('label.Files')}
+            label={i18next.t('label.AttachedFiles')}
             newFunction={() => {
               setOpenModalFile(true);
             }}

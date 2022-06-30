@@ -80,7 +80,7 @@ const EditGeneralInfoService = () => {
           ))}
       </Form.Select>
       <FormInputText
-        label={i18next.t('label.Recibe')}
+        label={i18next.t('label.Receives')}
         name={'recibe'}
         control={control}
         defaultValue={recibe}
