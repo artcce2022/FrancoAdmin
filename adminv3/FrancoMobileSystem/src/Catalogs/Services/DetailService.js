@@ -1,9 +1,11 @@
 import axios from 'axios';
+import ServiceOrder from 'Catalogs/Formatos/ServiceOrder';
 import FalconComponentCard from 'components/common/FalconComponentCard';
+import IconButton from 'components/common/IconButton';
 import PageHeader from 'components/common/PageHeader';
 import i18next from 'i18next';
 import React, { useEffect, useState } from 'react';
-import { Col, Row } from 'react-bootstrap';
+import { Button, Col, Row } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 import MyModal from 'shared/Modal';
@@ -20,10 +22,12 @@ const DetailService = () => {
   const [idService, setIdService] = useState(null);
   const [idVehicle, setIdVehicle] = useState(null);
 
+  const [openModalOrder, setOpenModalOrder] = useState(false);
   let { id } = useParams();
   const URI = ApiEndpoint + 'services/' + id;
   const handleClose = () => {
     setOpenModal(false);
+    setOpenModalOrder(false);
     getService();
   };
 
@@ -58,6 +62,24 @@ const DetailService = () => {
         <div>
           <strong className="me-2">{i18next.t('label.Location')} </strong>
           <p className="fs--1 mt-1">{service.location?.locationName}</p>
+        </div>
+        <div>
+          <IconButton
+            variant="falcon-default"
+            size="sm"
+            icon="print"
+            iconClassName="me-1"
+            className="me-1 mb-2 mb-sm-0"
+          >
+            <Button
+              onClick={() => {
+                setOpenModalOrder(true);
+              }}
+              variant="contained"
+            >
+              {i18next.t('label.Print')}
+            </Button>
+          </IconButton>
         </div>
       </PageHeader>
       <Row className="g-3 mb-3">
@@ -112,6 +134,20 @@ const DetailService = () => {
           </FalconComponentCard>
         </Col>
       </Row>
+      {openModalOrder && (
+        <MyModal
+          id="id_myModal"
+          closeModal={handleClose}
+          title={i18next.t('label.Print')}
+          openModal={openModalOrder}
+        >
+          <ServiceOrder
+            service={service}
+            idService={idService}
+            closeModal={handleClose}
+          />
+        </MyModal>
+      )}
     </>
   );
 };

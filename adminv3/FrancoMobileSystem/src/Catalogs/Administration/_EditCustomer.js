@@ -71,8 +71,8 @@ export default function EditCustomer({
     if (idCustomer > 0) {
       axios.get(URI + idCustomer).then(response => {
         setCustomer(response.data);
+        console.log('response.data');
         console.log(response.data);
-
         const zipsList = [];
         zipsList.push({
           value: `${response.data['zipcode']}`,
@@ -142,17 +142,17 @@ export default function EditCustomer({
       axios
         .put(URI, {
           idCustomer: idCustomer,
-          shortname: data.shortname,
-          company: data.company,
-          firstname: data.firstname,
-          lastname: data.lastname,
-          address: data.address,
-          zipcode: selectedZipCode,
-          city: data.city,
-          state: data.state,
-          phone: data.phone,
-          mobilephone: data.mobilephone,
-          email: data.email
+          shortname: customer.shortname,
+          company: customer.company,
+          firstname: customer.firstname,
+          lastname: customer.lastname,
+          address: customer.address,
+          zipcode: customer.zipcode,
+          city: customer.city,
+          state: customer.state,
+          phone: customer.phone,
+          mobilephone: customer.mobilephone,
+          email: customer.email
         })
         .then(function (response) {
           console.log(response);
@@ -165,17 +165,18 @@ export default function EditCustomer({
       const URI = ApiEndpoint + 'customers/';
       axios
         .post(URI, {
-          shortname: data.shortname,
-          company: data.company,
-          firstname: data.firstname,
-          lastname: data.lastname,
-          address: data.address,
-          zipcode: selectedZipCode,
-          city: data.city,
-          state: data.state,
-          phone: data.phone,
-          mobilephone: data.mobilephone,
-          email: data.email
+          idCustomer: idCustomer,
+          shortname: customer.shortname,
+          company: customer.company,
+          firstname: customer.firstname,
+          lastname: customer.lastname,
+          address: customer.address,
+          zipcode: customer.zipcode,
+          city: customer.city,
+          state: customer.state,
+          phone: customer.phone,
+          mobilephone: customer.mobilephone,
+          email: customer.email
         })
         .then(function (response) {
           console.log(response);
