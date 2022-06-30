@@ -16,7 +16,7 @@ const URI = ApiEndpoint + 'services/';
 const columns = [
   {
     accessor: 'service',
-    Header: 'Info',
+    Header: `${i18next.t('label.serviceorder')}`, //Header: 'Info'
     headerProps: { className: 'pe-1' },
     cellProps: {
       className: 'py-2'

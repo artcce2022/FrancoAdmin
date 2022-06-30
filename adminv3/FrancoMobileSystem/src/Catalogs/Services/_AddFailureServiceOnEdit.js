@@ -151,7 +151,7 @@ const AddFailureServiceOnEdit = ({
           <Row>
             <Col md={6} lg={4} className="mb-4 mb-lg-0">
               <h5 className="mb-3 fs-0">
-                {i18next.t('label.ShortDescription')}
+                {i18next.t('label.shortDescription')}
               </h5>
               <p className="fs--1 mt-1">
                 {selectedCommonFailure?.shortdescription}
