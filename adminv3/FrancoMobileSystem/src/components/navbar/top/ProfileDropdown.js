@@ -2,8 +2,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Dropdown } from 'react-bootstrap';
-import team3 from 'assets/img/team/3.jpg';
+import team3 from 'assets/img/team/12.jpg';
 import Avatar from 'components/common/Avatar';
+import i18next from 'i18next';
 
 const ProfileDropdown = () => {
   return (
@@ -19,22 +20,22 @@ const ProfileDropdown = () => {
 
       <Dropdown.Menu className="dropdown-caret dropdown-menu-card  dropdown-menu-end">
         <div className="bg-white rounded-2 py-2 dark__bg-1000">
-          <Dropdown.Item className="fw-bold text-warning" href="#!">
-            <FontAwesomeIcon icon="crown" className="me-1" />
-            <span>Go Pro</span>
+          <Dropdown.Item className="fw-bold text-warning" href="https://nexusdigitalmkt.com.mx/">
+            <FontAwesomeIcon icon="fa-solid fa-crown" className="me-1" />
+            <span>ERP-NexusDIgital</span>
           </Dropdown.Item>
           <Dropdown.Divider />
-          <Dropdown.Item href="#!">Set status</Dropdown.Item>
+         {/* <Dropdown.Item href="https://nexusdigitalmkt.com.mx/">Set status</Dropdown.Item>*/}
           <Dropdown.Item as={Link} to="/user/profile">
-            Profile &amp; account
+          {i18next.t('label.Profile')} &amp; {i18next.t('label.Account')}
           </Dropdown.Item>
-          <Dropdown.Item href="#!">Feedback</Dropdown.Item>
+          {/*<Dropdown.Item href="https://nexusdigitalmkt.com.mx/">Feedback</Dropdown.Item>*/}
           <Dropdown.Divider />
           <Dropdown.Item as={Link} to="/user/settings">
-            Settings
-          </Dropdown.Item>
+          {i18next.t('label.Settings')}
+  </Dropdown.Item>
           <Dropdown.Item as={Link} to="/authentication/card/logout">
-            Logout
+          {i18next.t('label.Logout')}
           </Dropdown.Item>
         </div>
       </Dropdown.Menu>

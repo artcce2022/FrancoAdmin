@@ -57,13 +57,13 @@ const Employees = () => {
   const columns = [
     {
       accessor: 'firstname',
-      Header: `${i18next.t('label.FirstName')}`,
+      Header: `${i18next.t('label.Name')}`,
       headerProps: { style: { minWidth: '200px' }, className: 'ps-5' },
       cellProps: { className: 'ps-5' }
     },
     {
       accessor: 'lastname',
-      Header: `${i18next.t('label.LastName')}`,
+      Header: `${i18next.t('label.Lastname')}`,
       headerProps: { style: { minWidth: '200px' }, className: 'ps-5' },
       cellProps: { className: 'ps-5' }
     },

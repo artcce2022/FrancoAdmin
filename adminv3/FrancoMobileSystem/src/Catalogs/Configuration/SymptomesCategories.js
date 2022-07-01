@@ -47,7 +47,7 @@ const SymptomCategories = () => {
   };
 
   const DeleteConfirmed = isConfirmed => {
-    console.log('DElete Accepted');
+    console.log('Delete Accepted');
   };
 
   const handleCloseAlert = () => {
@@ -62,7 +62,7 @@ const SymptomCategories = () => {
   const columns = [
     {
       accessor: 'category',
-      Header: `${i18next.t('label.category')}`,
+      Header: `${i18next.t('label.Categoria')}`,
       headerProps: { style: { minWidth: '200px' }, className: 'ps-5' },
       cellProps: { className: 'ps-5' }
     },

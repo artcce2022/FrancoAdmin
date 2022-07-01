@@ -7,6 +7,7 @@ import { isIterableArray } from 'helpers/utils';
 import useFakeFetch from 'hooks/useFakeFetch';
 import FalconCardHeader from 'components/common/FalconCardHeader';
 import Notification from 'components/notification/Notification';
+import i18next from 'i18next';
 
 const NotificationDropdown = () => {
   // State
@@ -68,7 +69,7 @@ const NotificationDropdown = () => {
         >
           <FalconCardHeader
             className="card-header"
-            title="Notifications"
+            title={i18next.t('label.Notifications')}
             titleTag="h6"
             light={false}
             endEl={
@@ -77,7 +78,7 @@ const NotificationDropdown = () => {
                 to="#!"
                 onClick={markAsRead}
               >
-                Mark all as read
+                {i18next.t('label.MarkallRead')}
               </Link>
             }
           />
@@ -86,14 +87,14 @@ const NotificationDropdown = () => {
             className="fw-normal fs--1 scrollbar"
             style={{ maxHeight: '19rem' }}
           >
-            <div className="list-group-title">NEW</div>{' '}
+            <div className="list-group-title">{i18next.t('label.New')}</div>{' '}
             {isIterableArray(newNotifications) &&
               newNotifications.map(notification => (
                 <ListGroup.Item key={notification.id} onClick={handleToggle}>
                   <Notification {...notification} flush />
                 </ListGroup.Item>
               ))}
-            <div className="list-group-title">EARLIER</div>
+            {/*<div className="list-group-title">EARLIER</div>*/}
             {isIterableArray(earlierNotifications) &&
               earlierNotifications.map(notification => (
                 <ListGroup.Item key={notification.id} onClick={handleToggle}>
@@ -106,7 +107,7 @@ const NotificationDropdown = () => {
             onClick={handleToggle}
           >
             <Link className="card-link d-block" to="#!">
-              View all
+            {i18next.t('label.ViewAll')} 
             </Link>
           </div>
         </Card>

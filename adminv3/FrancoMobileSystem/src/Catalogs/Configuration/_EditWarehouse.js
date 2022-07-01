@@ -136,7 +136,7 @@ export default function EditWarehouse({
               </Form.Group>
               <Form.Group as={Col} className="mb-3" controlId="manager">
                 <FormInputText
-                  label={i18next.t('label.Manager')}
+                  label={i18next.t('label.manager')}
                   changeHandler={onChange}
                   name={'manager'}
                   control={control}

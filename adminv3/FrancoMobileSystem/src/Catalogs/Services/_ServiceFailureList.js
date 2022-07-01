@@ -65,7 +65,7 @@ const ServiceFailureList = ({ idService }) => {
                 <tr>
                   <th scope="col">{i18next.t('label.Description')}</th>
                   <th scope="col">{i18next.t('label.Categoria')}</th>
-                  <th scope="col">{i18next.t('label.Status')}</th>
+                  <th scope="col">{i18next.t('status.status')}</th>
                   <th scope="col">{i18next.t('label.Comments')}</th>
                   <th scope="col">{i18next.t('label.Actions')}</th>
                 </tr>

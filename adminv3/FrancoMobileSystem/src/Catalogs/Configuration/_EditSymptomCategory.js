@@ -106,7 +106,7 @@ export default function EditSymptomCategory({
           >
             <Form.Group className="mb-3" controlId="category">
               <FormInputText
-                label={i18next.t('label.Category')}
+                label={i18next.t('label.Categoria')}
                 changeHandler={onChange}
                 name={'category'}
                 control={control}

@@ -20,7 +20,7 @@ const ServicesTableHeader = () => {
           </IconButton>
           <IconButton
             variant="falcon-default"
-            size="sm"
+            size="sm"costo vs precioicon="external-link-alt"
             icon="filter"
             transform="shrink-3"
             className="mx-2"

@@ -43,7 +43,7 @@ const Companies = () => {
   };
 
   const DeleteConfirmed = isConfirmed => {
-    console.log('DElete Accepted');
+    console.log('Delete Accepted');
   };
 
   console.log('entre ahora a 2');

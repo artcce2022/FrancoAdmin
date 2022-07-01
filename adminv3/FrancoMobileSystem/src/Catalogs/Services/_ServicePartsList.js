@@ -70,8 +70,8 @@ const ServicePartsList = ({
               <thead>
                 <tr>
                   <th scope="col">{i18next.t('label.PartName')}</th>
-                  <th scope="col">{i18next.t('label.Descripcion')}</th>
-                  <th scope="col">{i18next.t('label.Warehouse')}</th>
+                  <th scope="col">{i18next.t('label.Description')}</th>
+                  <th scope="col">{i18next.t('label.WarehouseName')}</th>
                   <th scope="col">{i18next.t('label.Quantity')}</th>
                   <th scope="col">{i18next.t('label.Actions')}</th>
                 </tr>

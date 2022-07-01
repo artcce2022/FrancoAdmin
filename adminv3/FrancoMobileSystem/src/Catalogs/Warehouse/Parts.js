@@ -40,7 +40,7 @@ const PartsCatalog = () => {
   };
 
   const DeleteConfirmed = isConfirmed => {
-    console.log('DElete Accepted');
+    console.log('Delete Accepted');
   };
 
   const handleCloseAlert = () => {

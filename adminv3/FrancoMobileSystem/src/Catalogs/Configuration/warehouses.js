@@ -53,7 +53,7 @@ const Warehouses = () => {
   };
 
   const DeleteConfirmed = isConfirmed => {
-    console.log('DElete Accepted');
+    console.log('Delete Accepted');
   };
 
   const handleCloseAlert = () => {
@@ -62,13 +62,13 @@ const Warehouses = () => {
   const columns = [
     {
       accessor: 'warehousename',
-      Header: `${i18next.t('label.name')}`,
+      Header: `${i18next.t('label.Name')}`,
       headerProps: { style: { minWidth: '200px' }, className: 'ps-5' },
       cellProps: { className: 'ps-5' }
     },
     {
       accessor: 'address',
-      Header: `${i18next.t('label.address')}`,
+      Header: `${i18next.t('label.Address')}`,
       headerProps: { style: { minWidth: '200px' }, className: 'ps-5' },
       cellProps: { className: 'ps-5' }
     },
