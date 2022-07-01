@@ -71,7 +71,7 @@ const ServicePartsList = ({
                 <tr>
                   <th scope="col">{i18next.t('label.PartName')}</th>
                   <th scope="col">{i18next.t('label.Description')}</th>
-                  <th scope="col">{i18next.t('label.warehousename')}</th>
+                  <th scope="col">{i18next.t('label.WarehouseName')}</th>
                   <th scope="col">{i18next.t('label.Quantity')}</th>
                   <th scope="col">{i18next.t('label.Actions')}</th>
                 </tr>
