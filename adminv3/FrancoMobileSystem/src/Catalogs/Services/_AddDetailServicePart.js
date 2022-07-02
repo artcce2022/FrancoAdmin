@@ -185,6 +185,7 @@ export default function AddServiceParts({
             <Row>
               <Col>
                 <Form.Group className="mb-3" controlId="employee">
+                  <Form.Label>{i18next.t('label.Thecnician')}</Form.Label>
                   <Form.Select
                     aria-label="Default select"
                     name="employee"
@@ -211,6 +212,7 @@ export default function AddServiceParts({
             <Row>
               <Col>
                 <Form.Group className="mb-3" controlId="warehouse">
+                  <Form.Label>{i18next.t('label.Warehouse')}</Form.Label>
                   <Form.Select
                     aria-label="Default select"
                     name="warehouse"
@@ -237,6 +239,7 @@ export default function AddServiceParts({
             <Row>
               <Col>
                 <Form.Group className="mb-3" controlId="idPart">
+                  <Form.Label>{i18next.t('label.Part')}</Form.Label>
                   <Form.Select
                     aria-label="Default select"
                     name="idPart"
@@ -272,8 +275,6 @@ export default function AddServiceParts({
                   ></FormInputText>
                 </Form.Group>
               </Col>
-            </Row>
-            <Row>
               <Col>
                 <Form.Group className="mb-3" controlId="price">
                   <FormInputText

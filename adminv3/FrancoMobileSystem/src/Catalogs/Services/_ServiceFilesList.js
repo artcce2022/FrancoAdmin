@@ -102,7 +102,7 @@ const ServiceFilesList = ({ idService, setOpenModal, serviceGuid }) => {
             }}
           />
         </Card.Header>
-        <Card.Body className="p-0">
+        <Card.Body className="p-0" style={{ height: 350 }}>
           <div class="table-responsive scrollbar">
             <table class="table table-hover">
               <thead>

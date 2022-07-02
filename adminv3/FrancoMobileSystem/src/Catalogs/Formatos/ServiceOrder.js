@@ -5,6 +5,8 @@ import SimpleBarReact from 'simplebar-react';
 import logoInvoice from 'assets/img/logo.png';
 import axios from 'axios';
 import { ApiEndpoint } from 'utils/ApiEndPont';
+import Logo from 'components/common/Logo';
+
 const ServiceOrder = ({ service, idService }) => {
   const [serviceFailures, setServiceFailures] = useState(null);
   const [serviceParts, setServiceParts] = useState(null);
@@ -21,6 +23,8 @@ const ServiceOrder = ({ service, idService }) => {
     console.log(URI + idService);
     axios.get(URI + idService).then(response => {
       let failures = response.data;
+      console.log('failures');
+      console.log(failures);
       setServiceFailures(failures);
     });
   };
@@ -42,7 +46,9 @@ const ServiceOrder = ({ service, idService }) => {
         <Card.Body>
           <Row className="justify-content-between align-items-center">
             <Col md>
-              <h5 className="mb-2 mb-md-0">Order #AD20294</h5>
+              <h5 className="mb-2 mb-md-0">
+                Orde1r #COT-{String('0000000' + idService).slice(-7)}{' '}
+              </h5>
             </Col>
             <Col xs="auto">
               <IconButton
@@ -80,7 +86,7 @@ const ServiceOrder = ({ service, idService }) => {
         <Card.Body>
           <Row className="align-items-center text-center mb-3">
             <Col sm={2} className="text-sm-start">
-              <img src={logoInvoice} alt="invoice" width={150} />
+              <Logo at="navbar-vertical" width={100} />
             </Col>
             <Col sm={6} className="text-sm-end mt-3 mt-sm-0">
               <p className="fs--1 mb-0">
@@ -139,7 +145,6 @@ const ServiceOrder = ({ service, idService }) => {
                   <tbody>
                     <tr>
                       <td colSpan={5}>
-                        {' '}
                         {service.vehicle.year}-{service.vehicle.make}-
                         {service.vehicle.model}
                       </td>
@@ -229,52 +234,23 @@ const ServiceOrder = ({ service, idService }) => {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td className="align-middle">
-                        <h6 className="mb-0 text-nowrap">
-                          Platinum web hosting package
-                        </h6>
-                        <p className="mb-0">Down 35mb, Up 100mb</p>
-                      </td>
-                      <td className="align-middle text-center">2</td>
-                      <td className="align-middle text-end">$65.00</td>
-                      <td className="align-middle text-end">$130.00</td>
-                    </tr>
-                    <tr>
-                      <td className="align-middle">
-                        <h6 className="mb-0 text-nowrap">
-                          2 Page website design
-                        </h6>
-                        <p className="mb-0">
-                          Includes basic wireframes and responsive templates
-                        </p>
-                      </td>
-                      <td className="align-middle text-center">1</td>
-                      <td className="align-middle text-end">$2,100.00</td>
-                      <td className="align-middle text-end">$2,100.00</td>
-                    </tr>
-                    <tr>
-                      <td className="align-middle">
-                        <h6 className="mb-0 text-nowrap">
-                          Mobile App Development
-                        </h6>
-                        <p className="mb-0">Includes responsive navigation</p>
-                      </td>
-                      <td className="align-middle text-center">8</td>
-                      <td className="align-middle text-end">$5,00.00</td>
-                      <td className="align-middle text-end">$4,000.00</td>
-                    </tr>
-                    <tr>
-                      <td className="align-middle">
-                        <h6 className="mb-0 text-nowrap">
-                          Web App Development
-                        </h6>
-                        <p className="mb-0">Includes react spa</p>
-                      </td>
-                      <td className="align-middle text-center">6</td>
-                      <td className="align-middle text-end">$2,00.00</td>
-                      <td className="align-middle text-end">$12,000.00</td>
-                    </tr>
+                    {serviceFailures &&
+                      serviceFailures.map(failure => (
+                        <tr>
+                          <td colSpan={5} className="align-middle">
+                            <h6 className="mb-0 text-nowrap">
+                              {failure.commonfailure.shortdescription}
+                            </h6>
+                            <p className="mb-0">
+                              {failure.comments ||
+                                failure.commonfailure.symtomdescription}
+                            </p>
+                          </td>
+                          <td className="align-middle text-end">
+                            ${failure.commonfailure.price}
+                          </td>
+                        </tr>
+                      ))}
                   </tbody>
                 </Table>
               </SimpleBarReact>

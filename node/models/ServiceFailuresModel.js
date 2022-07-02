@@ -12,7 +12,8 @@ const ServiceFailuresModel =  db.define('servicefailures',{
         idservice:{ type: DataTypes.INTEGER},
         idcommonfailures:{ type: DataTypes.INTEGER},
         idcommonfailurestatus:{ type: DataTypes.INTEGER},
-        comments:{ type: DataTypes.STRING}
+        comments:{ type: DataTypes.STRING},
+        price:{ type: DataTypes.DECIMAL}
 },{
     timestamps: false,freezeTableName: true
 });

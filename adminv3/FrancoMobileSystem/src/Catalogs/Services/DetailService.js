@@ -6,7 +6,6 @@ import PageHeader from 'components/common/PageHeader';
 import i18next from 'i18next';
 import React, { useEffect, useState } from 'react';
 import { Button, Col, Row } from 'react-bootstrap';
-import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 import MyModal from 'shared/Modal';
 import { ApiEndpoint } from 'utils/ApiEndPont';
@@ -21,6 +20,9 @@ const DetailService = () => {
   const [openModal, setOpenModal] = useState(false);
   const [idService, setIdService] = useState(null);
   const [idVehicle, setIdVehicle] = useState(null);
+  const [openAlert, setOpenAlert] = useState(false);
+  const [typeAlert, setTypeAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState(false);
 
   const [openModalOrder, setOpenModalOrder] = useState(false);
   let { id } = useParams();
@@ -54,36 +56,46 @@ const DetailService = () => {
         titleTag="h5"
         className="mb-3"
       >
-        <p className="fs--1 mt-1">{service.customer?.shortname}</p>
-        <div>
-          <strong className="me-2">{i18next.t('label.Vehicle')} </strong>
-          <p className="fs--1 mt-1">{service.vehicle?.vin}</p>
-        </div>
-        <div>
-          <strong className="me-2">{i18next.t('label.Location')} </strong>
-          <p className="fs--1 mt-1">{service.location?.locationName}</p>
-        </div>
-        <div>
-          <IconButton
-            variant="falcon-default"
-            size="sm"
-            icon="print"
-            iconClassName="me-1"
-            className="me-1 mb-2 mb-sm-0"
-          >
-            <Button
+        <Row>
+          <Col md>
+            <p className="fs--1 mt-1">{service.customer?.shortname}</p>
+            <div>
+              <strong className="me-2">{i18next.t('label.Vehicle')} </strong>
+              <p className="fs--1 mt-1">{service.vehicle?.vin}</p>
+            </div>
+            <div>
+              <strong className="me-2">{i18next.t('label.Location')} </strong>
+              <p className="fs--1 mt-1">{service.location?.locationName}</p>
+            </div>
+          </Col>{' '}
+          <Col md></Col>
+          <Col xs="auto">
+            <IconButton
+              variant="falcon-default"
+              size="sm"
+              icon="arrow-down"
+              className="me-1 mb-2 mb-sm-0"
+              iconClassName="me-1"
               onClick={() => {
                 setOpenModalOrder(true);
               }}
-              variant="contained"
             >
-              {i18next.t('label.Print')}
-            </Button>
-          </IconButton>
-        </div>
+              Cotizacion
+            </IconButton>
+            <IconButton
+              variant="falcon-default"
+              size="sm"
+              icon="print"
+              iconClassName="me-1"
+              className="me-1 mb-2 mb-sm-0"
+            >
+              Invoice
+            </IconButton>
+          </Col>
+        </Row>
       </PageHeader>
       <Row className="g-3 mb-3">
-        <Col lg={8}>
+        <Col lg={12}>
           <FalconComponentCard
             noGuttersBottom
             style={{ minHeight: 500, maxHeight: 500, overflow: 'auto' }}
@@ -91,6 +103,42 @@ const DetailService = () => {
             <FalconComponentCard.Body
               children={
                 idService && <ServiceFailureList idService={idService} />
+              }
+            />
+          </FalconComponentCard>
+        </Col>
+      </Row>
+      <Row>
+        <Col lg={12}>
+          <FalconComponentCard
+            noGuttersBottom
+            style={{ minHeight: 500, maxHeight: 500, overflow: 'auto' }}
+          >
+            <FalconComponentCard.Body
+              children={
+                idService && (
+                  <ServicePartsList
+                    serviceGuid={id}
+                    idService={idService}
+                    idVehicle={idVehicle}
+                  />
+                )
+              }
+            />
+          </FalconComponentCard>
+        </Col>
+      </Row>
+      <Row>
+        <Col lg={8}>
+          <FalconComponentCard
+            noGuttersBottom
+            style={{ minHeight: 500, maxHeight: 500, overflow: 'auto' }}
+          >
+            <FalconComponentCard.Body
+              children={
+                idService && (
+                  <ServiceFilesList serviceGuid={id} idService={idService} />
+                )
               }
             />
           </FalconComponentCard>
@@ -108,38 +156,13 @@ const DetailService = () => {
           </FalconComponentCard>
         </Col>
       </Row>
-      <Row>
-        <Col lg={8}>
-          <FalconComponentCard
-            noGuttersBottom
-            style={{ minHeight: 500, maxHeight: 500, overflow: 'auto' }}
-          >
-            {idService && (
-              <ServiceFilesList serviceGuid={id} idService={idService} />
-            )}
-          </FalconComponentCard>
-        </Col>
-        <Col lg={4}>
-          <FalconComponentCard
-            noGuttersBottom
-            style={{ minHeight: 500, maxHeight: 500, overflow: 'auto' }}
-          >
-            {idService && (
-              <ServicePartsList
-                serviceGuid={id}
-                idService={idService}
-                idVehicle={idVehicle}
-              />
-            )}
-          </FalconComponentCard>
-        </Col>
-      </Row>
       {openModalOrder && (
         <MyModal
           id="id_myModal"
           closeModal={handleClose}
           title={i18next.t('label.Print')}
           openModal={openModalOrder}
+          isFullScreen={true}
         >
           <ServiceOrder
             service={service}

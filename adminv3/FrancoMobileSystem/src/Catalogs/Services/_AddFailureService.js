@@ -60,12 +60,6 @@ const AddFailureService = ({ closeModal, idSymptomCategoryDefault }) => {
   //   });
   // }, [idsymptomcategory]); // empty array makes hook working once
 
-  const handleCloseAlert = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-  };
-
   const onSubmit = async (data, e) => {
     e.preventDefault();
     console.log(commonFailure);
@@ -105,6 +99,7 @@ const AddFailureService = ({ closeModal, idSymptomCategoryDefault }) => {
     axios.get(URIFailures + selectedFailureStr).then(response => {
       console.log(response.data);
       setCommonFailure(response.data);
+      setComments(response.data.shortdescription);
       setIdsymptomcategory(response.data['idsymptomcategory']);
     });
   }, [selectedFailureStr]);
@@ -173,7 +168,7 @@ const AddFailureService = ({ closeModal, idSymptomCategoryDefault }) => {
             name={'comments'}
             control={control}
             changeHandler={onChange}
-            defaultValue={commonFailure.shortdescription}
+            defaultValue={comments}
           ></FormInputText>
           <Button onClick={handleSubmit(onSubmit)} variant="contained">
             {i18next.t('label.Add')}

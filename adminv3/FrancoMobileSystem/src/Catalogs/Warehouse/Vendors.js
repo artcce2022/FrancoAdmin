@@ -164,6 +164,7 @@ const Vendors = () => {
       {openModal && (
         <MyModal
           id="id_myModal"
+          closeModal={handleClose}
           title={
             (idVendor > 0 ? i18next.t('label.Edit') : i18next.t('label.Add')) +
             ' ' +

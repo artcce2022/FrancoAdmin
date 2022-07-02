@@ -64,7 +64,7 @@ const ServicePartsList = ({
             }}
           />
         </Card.Header>
-        <Card.Body>
+        <Card.Body className="p-0" style={{ height: 350 }}>
           <div className="table-responsive fs--1">
             <Table responsive striped hover>
               <thead>
@@ -73,6 +73,7 @@ const ServicePartsList = ({
                   <th scope="col">{i18next.t('label.Description')}</th>
                   <th scope="col">{i18next.t('label.WarehouseName')}</th>
                   <th scope="col">{i18next.t('label.Quantity')}</th>
+                  <th scope="col">{i18next.t('label.Price')}</th>
                   <th scope="col">{i18next.t('label.Actions')}</th>
                 </tr>
               </thead>
@@ -82,7 +83,8 @@ const ServicePartsList = ({
                     <td>{part.part.partcode}</td>
                     <td>{part.part.description}</td>
                     <td>{part.part.partcode}</td>
-                    <td>{part.part.quantity}</td>
+                    <td>{part.quantity}</td>
+                    <td>{part.price}</td>
                     <td>
                       <Button
                         variant="falcon-default"

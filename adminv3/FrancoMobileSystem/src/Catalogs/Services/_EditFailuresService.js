@@ -1,9 +1,12 @@
 import axios from 'axios';
+import classNames from 'classnames';
+import IconButton from 'components/common/IconButton';
 import { ServiceContext } from 'context/Context';
 import GenericTableHeader from 'form-components/TableHeaders/GenericTableHeader';
+import createMarkup from 'helpers/createMarkup';
 import i18next from 'i18next';
 import React, { useContext, useEffect, useState } from 'react';
-import { Button, Card, Table } from 'react-bootstrap';
+import { Button, Card, Col, Row, Table } from 'react-bootstrap';
 import MyModal from 'shared/Modal';
 import { ApiEndpoint } from 'utils/ApiEndPont';
 import AddFailureService from './_AddFailureService';
@@ -41,12 +44,36 @@ const EditFailuresService = () => {
       {' '}
       <Card className="mb-3">
         <Card.Header>
-          <GenericTableHeader
-            label={i18next.t('label.Failures')}
-            newFunction={() => {
-              setIdFailure(0);
-              setOpenModalFailure(true);
-            }}
+          <Row className="flex-between-center">
+            <Col xs={4} sm="auto" className="d-flex align-items-center pe-0">
+              <h5 className="fs-0 mb-0 text-nowrap py-2 py-xl-0">
+                {i18next.t('label.Failures')}
+              </h5>
+            </Col>
+            <Col xs={8} sm="auto" className="ms-auto text-end ps-0">
+              <div id="orders-actions">
+                <IconButton
+                  variant="falcon-default"
+                  size="sm"
+                  icon="plus"
+                  transform="shrink-3"
+                  onClick={() => {
+                    setIdFailure(0);
+                    setOpenModalFailure(true);
+                  }}
+                >
+                  <span className="d-none d-sm-inline-block ms-1">
+                    {i18next.t('label.Add')}
+                  </span>
+                </IconButton>
+              </div>
+            </Col>
+          </Row>{' '}
+          <p
+            className={classNames('mt-2', 'mb-0')}
+            dangerouslySetInnerHTML={createMarkup(
+              'Add Known Failures or Details '
+            )}
           />
         </Card.Header>
         <Card.Body className="p-0">
@@ -56,6 +83,7 @@ const EditFailuresService = () => {
                 <th scope="col">{i18next.t('label.Description')}</th>
                 <th scope="col">{i18next.t('label.Categoria')}</th>
                 <th scope="col">{i18next.t('label.Detalle')}</th>
+                <th scope="col">{i18next.t('label.Price')}</th>
                 <th scope="col">{i18next.t('label.Actions')}</th>
               </tr>
             </thead>
@@ -67,7 +95,7 @@ const EditFailuresService = () => {
                     {failure.symptomscategory?.category}
                   </td>
                   <td className="text-nowrap">{failure.symtomdescription}</td>
-
+                  <td className="text-nowrap">{failure.price}</td>
                   <td className="text-end">
                     <Button
                       variant="outlined"

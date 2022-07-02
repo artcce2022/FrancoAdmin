@@ -21,6 +21,7 @@ const ServiceFailureList = ({ idService }) => {
   const [openModalStatus, setOpenModalStatus] = useState(false);
   const [openModalFailure, setOpenModalFailure] = useState(false);
   const [idCommonFailureService, setIdCommonFailureService] = useState(0);
+  const [idCommonFailure, setIdCommonFailure] = useState(0);
   const [idCommonFailureStatus, setIdCommonFailureStatus] = useState('0');
   const handleClose = () => {
     setOpenModalStatus(false);
@@ -58,7 +59,7 @@ const ServiceFailureList = ({ idService }) => {
             }}
           />
         </Card.Header>
-        <Card.Body className="p-0">
+        <Card.Body className="p-0" style={{ height: 350 }}>
           <div className="table-responsive fs--1">
             <Table responsive striped hover>
               <thead>
@@ -67,6 +68,7 @@ const ServiceFailureList = ({ idService }) => {
                   <th scope="col">{i18next.t('label.Categoria')}</th>
                   <th scope="col">{i18next.t('status.status')}</th>
                   <th scope="col">{i18next.t('label.Comments')}</th>
+                  <th scope="col">{i18next.t('label.Price')}</th>
                   <th scope="col">{i18next.t('label.Actions')}</th>
                 </tr>
               </thead>
@@ -84,12 +86,14 @@ const ServiceFailureList = ({ idService }) => {
                     </td>
 
                     <td className="text-nowrap">{failure.comments}</td>
+                    <td className="text-nowrap">{failure.price}</td>
                     <td className="text-end">
                       {failure.idcommonfailurestatus !== 3 &&
                         failure.idcommonfailurestatus !== 2 && (
                           <Button
                             variant="falcon-default"
                             size="sm"
+                            title={i18next.t('label.RejectFailure')}
                             onClick={() => {
                               setIdCommonFailureService(
                                 failure.idservicefailures
@@ -106,6 +110,7 @@ const ServiceFailureList = ({ idService }) => {
                           <Button
                             variant="falcon-default"
                             size="sm"
+                            title={i18next.t('label.DelayFailure')}
                             onClick={() => {
                               setIdCommonFailureService(
                                 failure.idservicefailures
@@ -122,11 +127,13 @@ const ServiceFailureList = ({ idService }) => {
                         failure.idcommonfailurestatus !== 2 && (
                           <Button
                             variant="falcon-default"
+                            title={i18next.t('label.ConfirmFailure')}
                             size="sm"
                             onClick={() => {
                               setIdCommonFailureService(
                                 failure.idservicefailures
                               );
+                              setIdCommonFailure(failure.idcommonfailures);
                               setIdCommonFailureStatus('2');
                               setOpenModalStatus(true);
                             }}
@@ -153,7 +160,7 @@ const ServiceFailureList = ({ idService }) => {
       {openModalStatus && (
         <MyModal
           id="id_myModal"
-          title={i18next.t('label.EditFailure')}
+          title={i18next.t('label.EditFailureStatus')}
           openModal={openModalStatus}
           closeModal={handleClose}
         >
@@ -164,6 +171,7 @@ const ServiceFailureList = ({ idService }) => {
             setOpenAlert={setOpenAlert}
             setTypeAlert={setTypeAlert}
             setAlertMessage={setAlertMessage}
+            idCommonFailure={idCommonFailure}
           />
         </MyModal>
       )}

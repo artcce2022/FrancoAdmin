@@ -150,11 +150,14 @@ const Locations = () => {
           }
           openModal={openModal}
           closeModal={handleClose}
-          setOpenAlert={setOpenAlert}
-          setTypeAlert={setTypeAlert}
-          setAlertMessage={setAlertMessage}
         >
-          <EditLocation idLocation={idLocation} closeModal={handleClose} />
+          <EditLocation
+            idLocation={idLocation}
+            closeModal={handleClose}
+            setOpenAlert={setOpenAlert}
+            setTypeAlert={setTypeAlert}
+            setAlertMessage={setAlertMessage}
+          />
         </MyModal>
       )}{' '}
       {openAlert && (

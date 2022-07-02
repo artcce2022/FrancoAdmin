@@ -18,7 +18,7 @@ export default function EditVehicle({
   setAlertMessage
 }) {
   const [validated, setValidated] = useState(false);
-
+  const [years, setYears] = useState(values);
   const {
     control,
     handleSubmit,
@@ -51,10 +51,19 @@ export default function EditVehicle({
   const [vehicle, setVehicle] = useState(values);
 
   useEffect(() => {
+    let yearList = [];
+
+    for (let year = new Date().getFullYear() + 1; year > 1980; year--) {
+      yearList.push(year);
+    }
+    setYears(yearList);
+  }, []);
+
+  useEffect(() => {
     axios.get(URI + idVehicle).then(response => {
       setVehicle(response.data);
     });
-  }, []); // empty array makes hook working once
+  }, []);
 
   // const fields = ['warehousename', 'address',  'phone', 'manager'];
   // fields.forEach(field => setValue(field, warehouse[field]));
@@ -70,6 +79,7 @@ export default function EditVehicle({
     }
 
     setValidated(true);
+    console.log(vehicle);
     if (idVehicle > 0) {
       axios
         .put(URI + idVehicle, {
@@ -123,7 +133,9 @@ export default function EditVehicle({
     const { name, value } = event.target;
     setVehicle({ ...vehicle, [name]: value });
   };
-
+  const onChangeYear = selectedOption => {
+    setVehicle({ ...vehicle, year: `${selectedOption.target.value}` });
+  };
   return (
     <>
       <Card style={{ width: '100%' }}>
@@ -159,19 +171,27 @@ export default function EditVehicle({
             </Row>
             <Row>
               <Col>
-                {' '}
-                <Form.Group as={Col} className="mb-3" controlId="year">
-                  <FormInputText
-                    control={control}
-                    label={i18next.t('label.Year')}
-                    name="year"
-                    changeHandler={onChange}
-                    defaultValue={vehicle.year}
-                  ></FormInputText>
-                </Form.Group>
+                <Form.Label>{i18next.t('label.Year')} </Form.Label>
+                <Form.Select
+                  aria-label="Default select"
+                  name="idVehicle"
+                  style={{ minWidth: '250px' }}
+                  onChange={selectedOption => {
+                    onChangeYear(selectedOption);
+                  }}
+                >
+                  <option key={'vehicle_0'} value={0}>
+                    {i18next.t('label.SelectSomeValue')}
+                  </option>
+                  {!!years?.length &&
+                    years.map(year => (
+                      <option key={year} value={year}>
+                        {year}
+                      </option>
+                    ))}
+                </Form.Select>
               </Col>
               <Col>
-                {' '}
                 <Form.Group as={Col} className="mb-3" controlId="make">
                   <FormInputText
                     control={control}
@@ -229,7 +249,7 @@ export default function EditVehicle({
                     label={i18next.t('label.Memo')}
                     name="memo"
                     changeHandler={onChange}
-                    defaultValue={vehicle.v}
+                    defaultValue={vehicle.memo}
                   ></FormInputText>
                 </Form.Group>
               </Col>

@@ -140,7 +140,7 @@ export default function EditVendor({
               <FormInputText
                 label={i18next.t('label.Vendor')}
                 changeHandler={onChange}
-                name={i18next.t('label.Name')}
+                name={'name'}
                 control={control}
                 defaultValue={vendor.name}
               ></FormInputText>

@@ -136,9 +136,9 @@ export default function EditCustomer({
       return;
     }
 
+    const URI = ApiEndpoint + 'customers/' + idCustomer;
     setValidated(true);
     if (idCustomer > 0) {
-      const URI = ApiEndpoint + 'customers/' + idCustomer;
       axios
         .put(URI, {
           idCustomer: idCustomer,
@@ -162,7 +162,6 @@ export default function EditCustomer({
           console.log(error);
         });
     } else {
-      const URI = ApiEndpoint + 'customers/';
       axios
         .post(URI, {
           idCustomer: idCustomer,

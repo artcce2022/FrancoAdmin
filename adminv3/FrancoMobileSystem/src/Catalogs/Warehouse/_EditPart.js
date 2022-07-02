@@ -207,6 +207,7 @@ export default function EditPart({
             <Row>
               <Col>
                 <Form.Group className="mb-3" controlId="warehouse">
+                  <Form.Label>{i18next.t('label.Warehouse')}</Form.Label>
                   <Form.Select
                     aria-label="Default select"
                     name="warehouse"
@@ -234,6 +235,7 @@ export default function EditPart({
             <Row>
               <Col>
                 <Form.Group className="mb-3" controlId="idpartcategory">
+                  <Form.Label>{i18next.t('label.Category')}</Form.Label>
                   <Form.Select
                     aria-label="Default select"
                     name="idpartcategory"

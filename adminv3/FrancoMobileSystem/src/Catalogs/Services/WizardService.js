@@ -49,6 +49,9 @@ function WizardService() {
   let currentId = queryString.parse(location.search);
   const [completed, setCompleted] = useState({});
   const [values, setValues] = useState({});
+  const [openAlert, setOpenAlert] = useState(false);
+  const [typeAlert, setTypeAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState(false);
 
   const [validated, setValidated] = useState(false);
   const { isRTL } = useContext(AppContext);
@@ -186,7 +189,12 @@ function WizardService() {
             //<AccountForm register={register} errors={errors} watch={watch} />
           )}
           {step === 2 && (
-            <EditVehicleService action={setVehicleId} />
+            <EditVehicleService
+              action={setVehicleId}
+              setOpenAlert={setOpenAlert}
+              setTypeAlert={setTypeAlert}
+              setAlertMessage={setAlertMessage}
+            />
             // <PersonalForm
             //   register={register}
             //   errors={errors}

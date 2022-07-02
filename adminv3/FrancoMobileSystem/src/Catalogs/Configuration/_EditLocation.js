@@ -64,7 +64,7 @@ export default function EditLocation({
       axios
         .put(URI + idLocation, {
           idLocation: idLocation,
-          idCompany: 1,
+          idCompany: location.idCompany,
           locationName: location.locationName,
           address: location.address,
           phone: location.phone,
@@ -84,7 +84,7 @@ export default function EditLocation({
     } else {
       axios
         .post(URI, {
-          idCompany: location.idCompany,
+          idCompany: 1,
           locationName: location.locationName,
           address: location.address,
           phone: location.phone,

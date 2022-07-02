@@ -3,8 +3,10 @@ import axios from 'axios';
 import {
   Button,
   Card,
+  Col,
   Dropdown,
   OverlayTrigger,
+  Row,
   Tooltip
 } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
@@ -105,21 +107,6 @@ const Companies = () => {
                 <FontAwesomeIcon icon="pencil-alt" />
               </Button>
             </OverlayTrigger>
-            <OverlayTrigger
-              placement="top"
-              overlay={<Tooltip>{i18next.t('label.Delete')}</Tooltip>}
-            >
-              <Button
-                variant="falcon-default"
-                size="sm"
-                onClick={() => {
-                  setIdCompanyToDelete(idCompany);
-                  setOpenConfirm(true);
-                }}
-              >
-                <FontAwesomeIcon icon="trash-alt" />
-              </Button>
-            </OverlayTrigger>
           </>
         );
       }
@@ -137,13 +124,15 @@ const Companies = () => {
       >
         <Card className="mb-3">
           <Card.Header>
-            <GenericTableHeader
-              label={i18next.t('label.Companies')}
-              newFunction={() => {
-                setIdCompany(0);
-                setOpenModal(true);
-              }}
-            />
+            <Row className="flex-between-center">
+              <Col xs={4} sm="auto" className="d-flex align-items-center pe-0">
+                <h5 className="fs-0 mb-0 text-nowrap py-2 py-xl-0">
+                  {' '}
+                  label={i18next.t('label.Companies')}
+                </h5>
+              </Col>
+              <Col xs={8} sm="auto" className="ms-auto text-end ps-0"></Col>
+            </Row>
           </Card.Header>
           <Card.Body className="p-0">
             <AdvanceTable

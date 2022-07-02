@@ -50,7 +50,7 @@ const ServiceDetailsList = ({ idService }) => {
             }}
           />
         </Card.Header>
-        <Card.Body className="p-0">
+        <Card.Body className="p-0" style={{ height: 350 }}>
           <ul class="list-group">
             {detailList.map((detail, index) => (
               <li
@@ -59,7 +59,7 @@ const ServiceDetailsList = ({ idService }) => {
               >
                 {detail.detail}
               </li>
-            ))}{' '}
+            ))}
           </ul>
         </Card.Body>
       </Card>
@@ -78,7 +78,7 @@ const ServiceDetailsList = ({ idService }) => {
             idService={idService}
           />
         </MyModal>
-      )}{' '}
+      )}
       {openAlert && (
         <AlertNotification
           open={openAlert}

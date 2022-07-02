@@ -59,6 +59,7 @@ const EditGeneralInfoService = () => {
   };
   return (
     <>
+      <Form.Label> {i18next.t('label.Location')}</Form.Label>
       <Form.Select
         aria-label="Default select"
         name="patio"

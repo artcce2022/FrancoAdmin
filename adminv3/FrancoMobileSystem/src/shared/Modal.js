@@ -1,3 +1,4 @@
+import { faLessThanEqual } from '@fortawesome/free-solid-svg-icons';
 import { Button, CloseButton, Modal } from 'react-bootstrap';
 
 const MyModal = ({
@@ -8,7 +9,8 @@ const MyModal = ({
   closeModal,
   children,
   isConfirm,
-  onConfirm
+  onConfirm,
+  isFullScreen = false
 }) => {
   const handleClose = () => closeModal(false);
   const style = {
@@ -25,6 +27,7 @@ const MyModal = ({
         size="lg"
         aria-labelledby="contained-modal-title-vcenter"
         centered
+        fullscreen={isFullScreen}
       >
         <Modal.Header>
           <Modal.Title id="contained-modal-title-vcenter"> {title}</Modal.Title>
