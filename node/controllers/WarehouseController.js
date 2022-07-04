@@ -1,4 +1,5 @@
 //Importamos el model
+import PartsModel from "../models/PartsModel.js";
 import WarehouseModel from "../models/WarehouseModel.js";
 
 //**Metodos para el CRUD */
@@ -51,7 +52,13 @@ export const updateWarehouse = async (req, res) =>{
 /* Delete Record*/
 export const deleteWarehouse = async (req, res) =>{
     try {
-        WarehouseModel.destroy(req.body, {
+        let countRef=await PartsModel.count({where: {idwarehouse:req.params.id}});
+        console.log(countRef)
+        if(countRef>0){
+            res.json({message:"El Registro no se puede eliminar", error:true});
+            return;
+        }
+        WarehouseModel.destroy( {
             where: {idwarehouse:req.params.id}
         });   
         res.json({message:"Registro Eliminado Exitosamente"});

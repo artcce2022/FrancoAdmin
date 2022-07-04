@@ -1,4 +1,5 @@
 //Importamos el model
+import CommonFailuresModel from "../models/CommonFailuresModel.js";
 import SymptomsCategoriesModel from "../models/SymptomsCategoriesModel.js";
 
 //**Metodos para el CRUD */
@@ -49,9 +50,14 @@ export const updateSymptomCategory = async (req, res) =>{
 
 /* Delete Record*/
 export const deleteSymptomCategory = async (req, res) =>{
-    try {
-        SymptomsCategoriesModel.destroy(req.body, {
-            where: {idSymptomCategory:req.params.id}
+    try {  let countRef=await CommonFailuresModel.count({where: {idsymptomcategory:req.params.id}});
+    console.log(countRef)
+    if(countRef>0){
+        res.json({message:"El Registro no se puede eliminar", error:true});
+        return;
+    }
+        SymptomsCategoriesModel.destroy( {
+            where: {idsymptomCategory:req.params.id}
         });   
         res.json({message:"Registro Eliminado Exitosamente"});
     } catch (error) {

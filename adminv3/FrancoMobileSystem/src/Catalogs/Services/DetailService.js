@@ -9,7 +9,6 @@ import { Button, Col, Row } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import MyModal from 'shared/Modal';
 import { ApiEndpoint } from 'utils/ApiEndPont';
-import AddServiceFile from './_AddServiceFile';
 import ServiceDetailsList from './_ServiceDetailsList';
 import ServiceFailureList from './_ServiceFailureList';
 import ServiceFilesList from './_ServiceFilesList';
@@ -20,9 +19,6 @@ const DetailService = () => {
   const [openModal, setOpenModal] = useState(false);
   const [idService, setIdService] = useState(null);
   const [idVehicle, setIdVehicle] = useState(null);
-  const [openAlert, setOpenAlert] = useState(false);
-  const [typeAlert, setTypeAlert] = useState(false);
-  const [alertMessage, setAlertMessage] = useState(false);
 
   const [openModalOrder, setOpenModalOrder] = useState(false);
   let { id } = useParams();

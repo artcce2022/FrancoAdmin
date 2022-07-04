@@ -1,4 +1,5 @@
 //Importamos el model
+import ServicesModel from "../models/ServicesModel.js";
 import VehiclesModel from "../models/VehiclesModel.js";
 
 //**Metodos para el CRUD */
@@ -61,7 +62,13 @@ export const updateVehicle = async (req, res) =>{
 /* Delete Record*/
 export const deleteVehicle = async (req, res) =>{
     try {
-        VehiclesModel.destroy(req.body, {
+        let countRef=await ServicesModel.count({where: {idvehicle:req.params.id}});
+        console.log(countRef)
+        if(countRef>0){
+            res.json({message:"El Registro no se puede eliminar", error:true});
+            return;
+        }
+        VehiclesModel.destroy( {
             where: {idVehicle:req.params.id}
         });   
         res.json({message:"Registro Eliminado Exitosamente"});

@@ -29,6 +29,7 @@ const PartsCatalog = () => {
   const [typeAlert, setTypeAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState(false);
   let [idPart, setIdPart] = useState(0);
+  let [idPartToDelete, setIdPartToDelete] = useState(0);
   const handleClose = () => {
     setOpenModal(false);
     getParts();
@@ -39,17 +40,33 @@ const PartsCatalog = () => {
     getParts();
   };
 
-  const DeleteConfirmed = isConfirmed => {
-    console.log('Delete Accepted');
+  const DeleteConfirmed = isConfirmed => { 
+    if (!isConfirmed) {
+      return;
+    }
+    axios
+      .delete(URI + idPartToDelete)
+      .then(function (response) {
+        if (response.data.error) {
+          setAlertMessage(i18next.t('label.Error'));
+          setTypeAlert('warning');
+          setOpenAlert(true);
+          return;
+        }
+        setAlertMessage(i18next.t('label.SuccessfulDeletedRecord'));
+        setTypeAlert('success');
+        setOpenAlert(true);
+        getParts();
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
 
   const handleCloseAlert = () => {
     setOpenAlert(false);
   };
-  useEffect(() => {
-    console.log('openConfirm');
-    console.log(openConfirm);
-  }, [openConfirm]);
+  useEffect(() => {}, [openConfirm]);
 
   useEffect(() => {
     getParts();
@@ -85,7 +102,6 @@ const PartsCatalog = () => {
         className: 'text-end'
       },
       Cell: rowData => {
-        console.log(rowData.row.original);
         let idPart = rowData.row.original.idparts;
         return (
           <>
@@ -112,6 +128,7 @@ const PartsCatalog = () => {
                 variant="falcon-default"
                 size="sm"
                 onClick={() => {
+                  setIdPartToDelete(idPart);
                   setOpenConfirm(true);
                 }}
               >

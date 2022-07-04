@@ -16,6 +16,7 @@ import EditDetailsService from './_EditDetailsService';
 import EditGeneralInfoService from './_EditGeneralService';
 import axios from 'axios';
 import { ApiEndpoint } from 'utils/ApiEndPont';
+import { useNavigate } from 'react-router-dom';
 
 const navItems = [
   {
@@ -86,6 +87,7 @@ function WizardService() {
   } = useForm();
 
   const [modal, setModal] = useState(false);
+  let navigate = useNavigate();
 
   useEffect(() => {
     setServiceId(`${currentId.id}`);
@@ -150,12 +152,14 @@ function WizardService() {
     axios
       .post(URI, dataToSubmit)
       .then(function (response) {
-        console.log(response);
+        let path = `/ServiceDetail/` + currentId.id;
+        navigate(path);
       })
       .catch(function (error) {
         console.log(error);
       });
   };
+
   return (
     <>
       {' '}

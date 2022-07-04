@@ -43,7 +43,27 @@ const CustomerContactsList = () => {
   };
 
   const DeleteConfirmed = isConfirmed => {
-    console.log('DElete Accepted');
+    if (!isConfirmed) {
+      return;
+    }
+    const URIDelete = ApiEndpoint + 'customercontacts/';
+    axios
+      .delete(URIDelete + idCustomerToDelete)
+      .then(function (response) {
+        if (response.data.error) {
+          setAlertMessage(i18next.t('label.Error'));
+          setTypeAlert('warning');
+          setOpenAlert(true);
+          return;
+        }
+        setAlertMessage(i18next.t('label.SuccessfulDeletedRecord'));
+        setTypeAlert('success');
+        setOpenAlert(true);
+        getCustomerContacts();
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
 
   const handleCloseAlert = () => {

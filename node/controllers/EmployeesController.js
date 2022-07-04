@@ -50,8 +50,8 @@ export const updateEmployee = async (req, res) =>{
 /* Delete Record*/
 export const deleteEmployee = async (req, res) =>{
     try {
-        EmployeeModel.destroy(req.body, {
-            where: {idEmployee:req.params.id}
+        EmployeeModel.destroy(  {
+            where: {idemployee:req.params.id}
         });   
         res.json({message:"Registro Eliminado Exitosamente"});
     } catch (error) {

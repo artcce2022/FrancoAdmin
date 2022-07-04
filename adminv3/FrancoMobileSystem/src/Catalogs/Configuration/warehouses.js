@@ -53,7 +53,26 @@ const Warehouses = () => {
   };
 
   const DeleteConfirmed = isConfirmed => {
-    console.log('Delete Accepted');
+    if (!isConfirmed) {
+      return;
+    }
+    axios
+      .delete(URI + idWarehouseToDelete)
+      .then(function (response) {
+        if (response.data.error) {
+          setAlertMessage(i18next.t('label.Error'));
+          setTypeAlert('warning');
+          setOpenAlert(true);
+          return;
+        }
+        setAlertMessage(i18next.t('label.SuccessfulDeletedRecord'));
+        setTypeAlert('success');
+        setOpenAlert(true);
+        getWarehouses();
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
 
   const handleCloseAlert = () => {

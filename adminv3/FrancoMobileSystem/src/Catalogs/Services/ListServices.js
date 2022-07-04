@@ -26,7 +26,7 @@ const columns = [
         <>
           <Link to={'/ServiceDetail/' + rowData.row.original.serviceid}>
             <strong>{rowData.row.original.serviceid}</strong>
-          </Link>{' '}
+          </Link>
           <p className="mb-0 text-500">
             {rowData.row.original.datecreate || ''}
           </p>

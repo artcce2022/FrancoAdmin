@@ -45,7 +45,26 @@ const PartsCategories = () => {
     getPartsCategoriesList();
   };
   const DeleteConfirmed = isConfirmed => {
-    console.log('DElete Accepted');
+    if (!isConfirmed) {
+      return;
+    }
+    axios
+      .delete(URI + idPartCategoryDelete)
+      .then(function (response) {
+        if (response.data.error) {
+          setAlertMessage(i18next.t('label.Error'));
+          setTypeAlert('warning');
+          setOpenAlert(true);
+          return;
+        }
+        setAlertMessage(i18next.t('label.SuccessfulDeletedRecord'));
+        setTypeAlert('success');
+        setOpenAlert(true);
+        getPartsCategoriesList();
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
 
   const handleCloseAlert = () => {

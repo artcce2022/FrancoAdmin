@@ -1,5 +1,6 @@
 //Importamos el model
 import CommonFailuresModel from "../models/CommonFailuresModel.js";
+import ServiceFailuresModel from "../models/ServiceFailuresModel.js";
 import SymptomsCategoriesModel from "../models/SymptomsCategoriesModel.js";
 
 //**Metodos para el CRUD */
@@ -51,7 +52,13 @@ export const updateCommonFailure = async (req, res) =>{
 /* Delete Record*/
 export const deleteCommonFailure = async (req, res) =>{
     try {
-        CommonFailuresModel.destroy(req.body, {
+        let countRef=await ServiceFailuresModel.count({where: {idcommonfailures:req.params.id}});
+        console.log(countRef)
+        if(countRef>0){
+            res.json({message:"El Registro no se puede eliminar", error:true});
+            return;
+        }
+        CommonFailuresModel.destroy({
             where: {idcommonfailures:req.params.id}
         });   
         res.json({message:"Registro Eliminado Exitosamente"});

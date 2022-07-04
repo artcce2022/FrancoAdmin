@@ -10,7 +10,7 @@ const AlertNotification = ({ open, handleClose, type, message }) => {
           delay={3000}
           autohide
         >
-          <Toast.Header className="bg-primary text-white">
+          <Toast.Header className={'bg-' + type + ' text-white'}>
             <strong className="me-auto">Aviso</strong>
             {/* <small>11 mins ago</small> */}
           </Toast.Header>

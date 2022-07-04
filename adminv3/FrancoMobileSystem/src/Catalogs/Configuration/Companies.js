@@ -4,13 +4,10 @@ import {
   Button,
   Card,
   Col,
-  Dropdown,
   OverlayTrigger,
   Row,
   Tooltip
 } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
-import CardDropdown from 'components/common/CardDropdown';
 import AdvanceTableWrapper from 'components/common/advance-table/AdvanceTableWrapper';
 import GenericTableHeader from '../../form-components/TableHeaders/GenericTableHeader.js';
 import AdvanceTablePagination from 'components/common/advance-table/AdvanceTablePagination';
@@ -42,10 +39,6 @@ const Companies = () => {
   const handleCloseConfirm = () => {
     setOpenConfirm(false);
     getCompanyList();
-  };
-
-  const DeleteConfirmed = isConfirmed => {
-    console.log('Delete Accepted');
   };
 
   console.log('entre ahora a 2');
@@ -127,8 +120,7 @@ const Companies = () => {
             <Row className="flex-between-center">
               <Col xs={4} sm="auto" className="d-flex align-items-center pe-0">
                 <h5 className="fs-0 mb-0 text-nowrap py-2 py-xl-0">
-                  {' '}
-                  label={i18next.t('label.Companies')}
+                  {i18next.t('label.Companies')}
                 </h5>
               </Col>
               <Col xs={8} sm="auto" className="ms-auto text-end ps-0"></Col>
@@ -175,15 +167,6 @@ const Companies = () => {
           type={typeAlert}
           message={alertMessage}
         />
-      )}
-      {openConfirm && (
-        <ConfirmAction
-          message={'Desea eliminar el registro?'}
-          title={'Confirmacion'}
-          handleClose={handleCloseConfirm}
-          open={openConfirm}
-          ConfirmAction={DeleteConfirmed}
-        ></ConfirmAction>
       )}
     </>
   );

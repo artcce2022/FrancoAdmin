@@ -51,7 +51,27 @@ const CustomerVehicleList = () => {
   };
 
   const DeleteConfirmed = isConfirmed => {
-    console.log('DElete Accepted');
+    if (!isConfirmed) {
+      return;
+    }
+    const URIDelete = ApiEndpoint + 'vehicles/';
+    axios
+      .delete(URIDelete + idVehicleToDelete)
+      .then(function (response) {
+        if (response.data.error) {
+          setAlertMessage(i18next.t('label.Error'));
+          setTypeAlert('warning');
+          setOpenAlert(true);
+          return;
+        }
+        setAlertMessage(i18next.t('label.SuccessfulDeletedRecord'));
+        setTypeAlert('success');
+        setOpenAlert(true);
+        getVehicles();
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
 
   const handleCloseAlert = () => {

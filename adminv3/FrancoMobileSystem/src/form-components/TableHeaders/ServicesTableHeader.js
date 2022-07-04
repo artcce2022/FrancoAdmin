@@ -1,6 +1,8 @@
 import IconButton from 'components/common/IconButton';
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
 
 const ServicesTableHeader = () => {
   return (
@@ -16,11 +18,19 @@ const ServicesTableHeader = () => {
             icon="plus"
             transform="shrink-3"
           >
-            <span className="d-none d-sm-inline-block ms-1">New</span>
+            <Link
+              className="d-none d-sm-inline-block ms-1"
+              to={'/Services/NewService/?id=' + uuidv4()}
+            >
+              <strong>New</strong>
+            </Link>
           </IconButton>
-          <IconButton
+          {/* <IconButton
             variant="falcon-default"
-            size="sm"costo vs precioicon="external-link-alt"
+            size="sm"
+            costo
+            vs
+            precioicon="external-link-alt"
             icon="filter"
             transform="shrink-3"
             className="mx-2"
@@ -34,7 +44,7 @@ const ServicesTableHeader = () => {
             transform="shrink-3"
           >
             <span className="d-none d-sm-inline-block ms-1">Export</span>
-          </IconButton>
+          </IconButton> */}
         </div>
       </Col>
     </Row>

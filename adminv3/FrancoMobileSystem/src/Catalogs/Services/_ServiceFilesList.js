@@ -21,6 +21,8 @@ const ServiceFilesList = ({ idService, setOpenModal, serviceGuid }) => {
   const [openAlert, setOpenAlert] = useState(false);
   const [typeAlert, setTypeAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState(false);
+  const [idToChangeVisibility, setIdToChangeVisibility] = useState(false);
+  const [fileVisibility, setFileVisibility] = useState(false);
   const URI = ApiEndpoint + 'services/files/';
   const URIFiles = ApiEndpoint + 'services/getfile';
   const handleClose = () => {
@@ -33,6 +35,19 @@ const ServiceFilesList = ({ idService, setOpenModal, serviceGuid }) => {
   }, []);
 
   useEffect(() => {
+    if (idToChangeVisibility && idToChangeVisibility > 0) {
+      const URIVis = ApiEndpoint + 'services/filevisibility/';
+      axios
+        .put(URIVis + idToChangeVisibility, {
+          visibilitycustomer: fileVisibility
+        })
+        .then(response => {
+          setRefreshFiles(true);
+        });
+    }
+  }, [idToChangeVisibility]);
+
+  useEffect(() => {
     if (refreshFiles) {
       getServiceFiles();
       setRefreshFiles(false);
@@ -43,8 +58,6 @@ const ServiceFilesList = ({ idService, setOpenModal, serviceGuid }) => {
     console.log(URI + idService);
     axios.get(URI + idService).then(response => {
       let details = response.data;
-      console.log(details);
-      console.log('details');
       setServiceFiles(details);
     });
   };
@@ -107,8 +120,8 @@ const ServiceFilesList = ({ idService, setOpenModal, serviceGuid }) => {
             <table class="table table-hover">
               <thead>
                 <tr>
+                  <th scope="col"></th>
                   <th scope="col">{i18next.t('label.FileName')}</th>
-                  <th scope="col">{i18next.t('label.Description')}</th>
                   <th scope="col">{i18next.t('label.VisibleToCustomer')}</th>
                   <th scope="col"> </th>
                 </tr>
@@ -154,16 +167,24 @@ const ServiceFilesList = ({ idService, setOpenModal, serviceGuid }) => {
                               }
                             })()}
                           </div>
-                          <div class="ms-2">{file.filename}</div>
                         </div>
                       </td>
-                      <td class="align-middle text-nowrap">
-                        {file.description}
+                      <td>
+                        <h6 className="mb-1">
+                          <span className="  fw-semi-bold">
+                            {file.filename}
+                          </span>
+                        </h6>
+                        <div className="fs--1">
+                          <span className="fw-semi-bold">
+                            {file.description}
+                          </span>
+                        </div>
                       </td>
                       <td class="align-middle text-nowrap">
                         {file.visibilitycustomer ? 'visible' : 'No Visible'}
                       </td>
-                      <td class="w-auto">
+                      <td>
                         <Button
                           variant="falcon-default"
                           size="sm"
@@ -185,6 +206,25 @@ const ServiceFilesList = ({ idService, setOpenModal, serviceGuid }) => {
                           }}
                         >
                           <FontAwesomeIcon icon="trash-alt" />
+                        </Button>
+                        <Button
+                          variant="falcon-default"
+                          size="sm"
+                          title={
+                            file.visibilitycustomer
+                              ? i18next.t('label.MakeHidden')
+                              : i18next.t('label.MakeVisible')
+                          }
+                          onClick={() => {
+                            setFileVisibility(file.visibilitycustomer);
+                            setIdToChangeVisibility(file.idservicefile);
+                          }}
+                        >
+                          {file.visibilitycustomer ? (
+                            <FontAwesomeIcon icon={['fa', 'eye']} />
+                          ) : (
+                            <FontAwesomeIcon icon={['fa', 'eye']} />
+                          )}
                         </Button>
                       </td>
                     </tr>

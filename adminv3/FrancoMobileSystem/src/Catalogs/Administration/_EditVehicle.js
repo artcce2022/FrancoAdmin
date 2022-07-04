@@ -254,12 +254,7 @@ export default function EditVehicle({
                 </Form.Group>
               </Col>
             </Row>
-            <Button
-              type="submit"
-              onClick={handleSubmit(onSubmit)}
-              color="primary"
-              size="sm"
-            >
+            <Button type="submit" color="primary" size="sm">
               {i18next.t('label.Save')}
             </Button>
           </Form>

@@ -62,7 +62,7 @@ export const updateCustomerContact = async (req, res) =>{
 /* Delete Record*/
 export const deleteCustomerContact = async (req, res) =>{
     try {
-        CustomerContactsModel.destroy(req.body, {
+        CustomerContactsModel.destroy({
             where: {idcustomercontact:req.params.id}
         });   
         res.json({message:"Registro Eliminado Exitosamente"});

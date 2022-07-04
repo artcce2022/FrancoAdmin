@@ -49,7 +49,26 @@ const CommonFailures = () => {
   };
 
   const DeleteConfirmed = isConfirmed => {
-    console.log('DElete Accepted');
+    if (!isConfirmed) {
+      return;
+    }
+    axios
+      .delete(URI + idCommonFailureToDelete)
+      .then(function (response) {
+        if (response.data.error) {
+          setAlertMessage(i18next.t('label.Error'));
+          setTypeAlert('warning');
+          setOpenAlert(true);
+          return;
+        }
+        setAlertMessage(i18next.t('label.SuccessfulDeletedRecord'));
+        setTypeAlert('success');
+        setOpenAlert(true);
+        getCommonFailuresList();
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
 
   //mostrar companies

@@ -1,5 +1,6 @@
 //Importamos el model
 import PartsModel from "../models/PartsModel.js";
+import ServicePartsModel from "../models/ServicePartsModel.js";
 
 //**Metodos para el CRUD */
 export const getParts = async  (req, res)=> {
@@ -51,12 +52,18 @@ export const updatePart = async (req, res) =>{
 /* Delete Record*/
 export const deleteParts = async (req, res) =>{
     try {
-        PartsModel.destroy(req.body, {
+        let countRef=await ServicePartsModel.count({where: {idpart:req.params.id}});
+        console.log(countRef)
+        if(countRef>0){
+            res.json({message:"El Registro no se puede eliminar", error:true});
+            return;
+        }
+        PartsModel.destroy({
             where: {idParts:req.params.id}
         });   
         res.json({message:"Registro Eliminado Exitosamente"});
     } catch (error) {
         
-        res.json({message: error.message});
+        res.json({message: error.message, error:true});
     }
 };

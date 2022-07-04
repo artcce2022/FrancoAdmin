@@ -50,7 +50,7 @@ export const updateVendor = async (req, res) =>{
 /* Delete Record*/
 export const deleteVendor = async (req, res) =>{
     try {
-        VendorModel.destroy(req.body, {
+        VendorModel.destroy(  {
             where: {idvendor:req.params.id}
         });   
         res.json({message:"Registro Eliminado Exitosamente"});

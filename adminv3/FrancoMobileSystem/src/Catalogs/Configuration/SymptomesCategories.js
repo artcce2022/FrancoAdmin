@@ -47,7 +47,26 @@ const SymptomCategories = () => {
   };
 
   const DeleteConfirmed = isConfirmed => {
-    console.log('Delete Accepted');
+    if (!isConfirmed) {
+      return;
+    }
+    axios
+      .delete(URI + idSymptomCategoryToDelete)
+      .then(function (response) {
+        if (response.data.error) {
+          setAlertMessage(i18next.t('label.Error'));
+          setTypeAlert('warning');
+          setOpenAlert(true);
+          return;
+        }
+        setAlertMessage(i18next.t('label.SuccessfulDeletedRecord'));
+        setTypeAlert('success');
+        setOpenAlert(true);
+        getSymptomCategoriesList();
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
 
   const handleCloseAlert = () => {

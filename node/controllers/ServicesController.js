@@ -134,6 +134,20 @@ export const saveServiceFile = async (req, res) => {
     //     });
 };
 
+export const updateServiceFileVisibility = async (req, res) => {
+  
+  
+    try {
+ 
+    await ServiceFilesModel.update( { visibilitycustomer: !req.body.visibilitycustomer}, {
+        where: {idservicefile:req.params.id}
+    }); 
+    } catch (error) {
+        res.send(error.message);
+    }
+    
+};
+
 /*Insert Record*/
 export const insertService = async (req, res) => {
     try {

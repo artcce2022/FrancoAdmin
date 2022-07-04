@@ -38,7 +38,29 @@ const MyModal = ({
         </Modal.Header>
         <Modal.Body>{children}</Modal.Body>
         <Modal.Footer>
-          <Button onClick={() => handleClose()}>Close</Button>
+          {!isConfirm && <Button onClick={() => handleClose()}>Close</Button>}
+          {isConfirm && (
+            <>
+              {' '}
+              <Button
+                variant="contained"
+                onClick={() => {
+                  handleClose();
+                }}
+              >
+                No
+              </Button>
+              <Button
+                variant="contained"
+                onClick={() => {
+                  onConfirm();
+                  handleClose();
+                }}
+              >
+                Yes
+              </Button>
+            </>
+          )}
         </Modal.Footer>
       </Modal>
     </>
