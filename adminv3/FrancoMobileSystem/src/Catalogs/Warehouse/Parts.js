@@ -122,7 +122,7 @@ const PartsCatalog = () => {
             </OverlayTrigger>
             <OverlayTrigger
               placement="top"
-              overlay={<Tooltip>{i18next.t('label.Delete')}</Tooltip>}
+              overlay={<Tooltip>{i18next.t('label.delete')}</Tooltip>}
             >
               <Button
                 variant="falcon-default"

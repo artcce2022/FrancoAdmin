@@ -9,11 +9,13 @@ export const dashboardRoutes = {
   children: [
     {
       name: 'Services', // `${i18next.t('label.CommonFailures')}`,
+      icon: 'file-alt',
       to: '/Services/Services',
       active: true
     },
     {
       name: 'NewService', // `${i18next.t('label.CommonFailures')}`,
+      icon:'flag',
       to: '/Services/NewService/?id=' + uuidv4(),
       active: true
     }
@@ -21,13 +23,13 @@ export const dashboardRoutes = {
 };
 
 export const administrationRoutes = {
-  label: 'Administration', //`${i18next.t('label.Administration')}`,
-  labelDisable: true,
+  label: 'Módulo Administration', //`${i18next.t('label.Administration')}`,
+  labelDisable: false,
   children: [
     {
       name: 'Administration', // `${i18next.t('label.Administration')}`,
       active: true,
-      icon: 'chart-pie',
+      icon: 'layer-group',
       children: [
         {
           name: 'Customers', // `${i18next.t('label.Customer')}`,
@@ -45,13 +47,13 @@ export const administrationRoutes = {
 };
 
 export const configurationRoutes = {
-  label: 'Configuration', // `${i18next.t('label.Configuration')}`,
-  labelDisable: true,
+  label: 'Moldulo de Configuración', // `${i18next.t('label.Configuration')}`,
+  labelDisable: false,
   children: [
     {
       name: 'Configuration', // `${i18next.t('label.Configuration')}`,
       active: true,
-      icon: 'chart-pie',
+      icon: 'gear',
       children: [
         {
           name: 'Warehouse', //  `${i18next.t('label.Warehouse')}`,
@@ -98,16 +100,16 @@ export const configurationRoutes = {
   ]
 };
 export const warehouseRoutes = {
-  label: 'Warehouse', //`${i18next.t('label.Administration')}`,
-  labelDisable: true,
+  label: 'Módulo de Almacenes', //`${i18next.t('label.Administration')}`,
+  labelDisable: false,
   children: [
     {
       name: 'Warehouse', // `${i18next.t('label.Administration')}`,
       active: true,
-      icon: 'chart-pie',
+      icon: 'tools',
       children: [
         {
-          name: 'Parts', // `${i18next.t('label.Customer')}`,
+          name: 'Refacciones', // `${i18next.t('label.Customer')}`,
           to: '/Warehouse/Parts',
           active: true
         }
