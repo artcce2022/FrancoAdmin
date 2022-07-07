@@ -2,7 +2,7 @@ import axios from 'axios';
 import classNames from 'classnames';
 import IconButton from 'components/common/IconButton';
 import { ServiceContext } from 'context/Context';
-import GenericTableHeader from 'form-components/TableHeaders/GenericTableHeader';
+import ConfirmAction from 'form-components/ConfirmationModal';
 import createMarkup from 'helpers/createMarkup';
 import i18next from 'i18next';
 import React, { useContext, useEffect, useState } from 'react';
@@ -10,23 +10,35 @@ import { Button, Card, Col, Row, Table } from 'react-bootstrap';
 import MyModal from 'shared/Modal';
 import { ApiEndpoint } from 'utils/ApiEndPont';
 import AddFailureService from './_AddFailureService';
+import DetailFailureService from './_DetailFailureService';
 const URI = ApiEndpoint + 'failures/';
 const EditFailuresService = () => {
   const [openModalFailure, setOpenModalFailure] = useState(false);
+  const [openEditModalFailure, setOpenEditModalFailure] = useState(false);
   const [idFailure, setIdFailure] = useState(0);
   const [failure, setFailure] = useState([]);
   const [indexToDelete, setIndexToDelete] = useState(-1);
+  const [editFailure, setEditFailure] = useState(null);
+  const [openConfirm, setOpenConfirm] = useState(null);
   const { serviceId, failuresList, setFailuresList } =
     useContext(ServiceContext);
 
   const handleClose = () => {
     setOpenModalFailure(false);
+    setOpenEditModalFailure(false);
+    setFailure(null);
+    setEditFailure(null);
   };
 
   const deleteFailure = rowId => {
+    setOpenConfirm(true);
     setIndexToDelete(rowId);
   };
-  useEffect(() => {
+
+  const DeleteConfirmed = isConfirmed => {
+    if (!isConfirmed) {
+      return;
+    }
     if (indexToDelete) {
       const dataDelete = [...failuresList];
       const index = failuresList
@@ -38,7 +50,19 @@ const EditFailuresService = () => {
       dataDelete.splice(index, 1);
       setFailuresList([...dataDelete]);
     }
-  }, [indexToDelete]);
+  };
+
+  const handleCloseConfirm = () => {
+    setOpenConfirm(false);
+    setIndexToDelete(0);
+  };
+
+  useEffect(() => {
+    if (editFailure) {
+      setOpenEditModalFailure(true);
+    }
+  }, [editFailure]);
+
   return (
     <>
       {' '}
@@ -94,16 +118,24 @@ const EditFailuresService = () => {
                   <td className="text-nowrap">
                     {failure.symptomscategory?.category}
                   </td>
-                  <td className="text-nowrap">{failure.symtomdescription}</td>
+                  <td className="text-nowrap">{failure.comments}</td>
                   <td className="text-nowrap">{failure.price}</td>
                   <td className="text-end">
+                    <Button
+                      variant="outlined"
+                      onClick={() => {
+                        setEditFailure(failure);
+                      }}
+                    >
+                      {i18next.t('label.Edit')}
+                    </Button>
                     <Button
                       variant="outlined"
                       onClick={() => {
                         deleteFailure(failure.rowId);
                       }}
                     >
-                      Eliminar
+                      {i18next.t('label.Delete')}
                     </Button>
                   </td>
                 </tr>
@@ -131,6 +163,31 @@ const EditFailuresService = () => {
             closeModal={handleClose}
           />
         </MyModal>
+      )}
+      {openEditModalFailure && (
+        <MyModal
+          id="id_myModal"
+          title={
+            i18next.t('label.Edit') + ' ' + i18next.t('label.CommnonFailure')
+          }
+          openModal={openEditModalFailure}
+          closeModal={handleClose}
+        >
+          <DetailFailureService
+            idSymptomCategoryDefault={0}
+            failure={editFailure}
+            closeModal={handleClose}
+          />
+        </MyModal>
+      )}
+      {openConfirm && (
+        <ConfirmAction
+          message={'Desea eliminar el registro?'}
+          title={'Confirmacion'}
+          handleClose={handleCloseConfirm}
+          open={openConfirm}
+          ConfirmAction={DeleteConfirmed}
+        ></ConfirmAction>
       )}
     </>
   );

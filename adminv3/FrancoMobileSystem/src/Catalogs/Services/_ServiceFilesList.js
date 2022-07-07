@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import GenericTableHeader from 'form-components/TableHeaders/GenericTableHeader';
 import i18next from 'i18next';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Button, Card } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import MyModal from 'shared/Modal';
@@ -10,24 +10,34 @@ import { ApiEndpoint } from 'utils/ApiEndPont';
 import AddServiceFile from './_AddServiceFile';
 import pdfImg from '../../assets/img/icons/pdf.png';
 import genericFile from '../../assets/img/icons/genericFile.png';
+import { EditServiceContext } from 'context/Context';
 
 const ServiceFilesList = ({ idService, setOpenModal, serviceGuid }) => {
+  const {
+    openAlert,
+    setOpenAlert,
+    typeAlert,
+    setTypeAlert,
+    alertMessage,
+    setAlertMessage,
+    setHandleCloseAlert
+  } = useContext(EditServiceContext);
   const [serviceFiles, setServiceFiles] = useState([]);
   const { control } = useForm();
   const [confirmOpen, setConfirmOpen] = useState(null);
   const [file, setFile] = useState(null);
   const [openModalFile, setOpenModalFile] = useState(false);
   const [refreshFiles, setRefreshFiles] = useState(false);
-  const [openAlert, setOpenAlert] = useState(false);
-  const [typeAlert, setTypeAlert] = useState(false);
-  const [alertMessage, setAlertMessage] = useState(false);
+  const [confirmVisible, setConfirmVisible] = useState(false);
   const [idToChangeVisibility, setIdToChangeVisibility] = useState(false);
+  const [idPreToChangeVisibility, setIdPreToChangeVisibility] = useState(false);
   const [fileVisibility, setFileVisibility] = useState(false);
   const URI = ApiEndpoint + 'services/files/';
   const URIFiles = ApiEndpoint + 'services/getfile';
   const handleClose = () => {
     setOpenModalFile(false);
     getServiceFiles();
+    setConfirmVisible(false);
   };
 
   useEffect(() => {
@@ -216,8 +226,9 @@ const ServiceFilesList = ({ idService, setOpenModal, serviceGuid }) => {
                               : i18next.t('label.MakeVisible')
                           }
                           onClick={() => {
+                            setConfirmVisible(true);
                             setFileVisibility(file.visibilitycustomer);
-                            setIdToChangeVisibility(file.idservicefile);
+                            setIdPreToChangeVisibility(file.idservicefile);
                           }}
                         >
                           {file.visibilitycustomer ? (
@@ -234,14 +245,26 @@ const ServiceFilesList = ({ idService, setOpenModal, serviceGuid }) => {
             </table>
           </div>{' '}
         </Card.Body>
-      </Card>{' '}
+      </Card>
+      {confirmVisible && (
+        <MyModal
+          id="id_myModal"
+          title={i18next.t('label.ConfirmChangeVisibility')}
+          openModal={confirmVisible}
+          isConfirm={true}
+          closeModal={handleClose}
+          onConfirm={() => {
+            setIdToChangeVisibility(idPreToChangeVisibility);
+          }}
+        ></MyModal>
+      )}
       {confirmOpen && (
         <MyModal
           id="id_myModal"
           title={i18next.t('label.ConfirmDelete')}
           openModal={confirmOpen}
           isConfirm={true}
-          closeModal={setConfirmOpen}
+          closeModal={handleClose}
           onConfirm={() => {
             handleDeleteFile(
               file.path + file.filename,

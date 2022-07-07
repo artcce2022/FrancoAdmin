@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import i18next from 'i18next';
@@ -6,16 +6,16 @@ import { ApiEndpoint } from 'utils/ApiEndPont';
 import { Button, Card, Col, Form, Row } from 'react-bootstrap';
 import { FormInputText } from 'form-components/FormInputText';
 import Divider from 'components/common/Divider';
+import { EditServiceContext } from 'context/Context';
 
 export default function EditServiceFailureStatus({
   closeModal,
   idCommonFailureService,
   idCommonFailureStatus,
-  idCommonFailure,
-  setOpenAlert,
-  setTypeAlert,
-  setAlertMessage
+  idCommonFailure
 }) {
+  const { setOpenAlert, setTypeAlert, setAlertMessage } =
+    useContext(EditServiceContext);
   const [comments, setComments] = useState('');
   const [validated, setValidated] = useState(false);
   const [labelDescription, setLabelDescription] = useState('');

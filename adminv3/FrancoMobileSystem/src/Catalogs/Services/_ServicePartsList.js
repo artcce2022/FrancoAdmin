@@ -1,13 +1,13 @@
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import i18next from '../../utils/locales/i18n.js';
 import { ApiEndpoint } from 'utils/ApiEndPont.js';
 import { Button, Card, Table } from 'react-bootstrap';
 import GenericTableHeader from 'form-components/TableHeaders/GenericTableHeader.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import AlertNotification from 'form-components/AlertNotification.js';
 import AddServiceParts from './_AddDetailServicePart.js';
 import MyModal from 'shared/Modal.js';
+import { EditServiceContext } from 'context/Context.js';
 
 const ServicePartsList = ({
   idService,
@@ -18,17 +18,11 @@ const ServicePartsList = ({
   const [serviceParts, setServiceParts] = useState([]);
   const [refreshParts, setRefreshParts] = useState(false);
   const [openModalPart, setOpenModalPart] = useState(false);
-  const [openAlert, setOpenAlert] = useState(false);
-  const [typeAlert, setTypeAlert] = useState(false);
-  const [alertMessage, setAlertMessage] = useState(false);
   const URI = ApiEndpoint + 'services/parts/';
 
   const handleClose = () => {
     setOpenModalPart(false);
     getServiceParts();
-  };
-  const handleCloseAlert = () => {
-    setOpenAlert(false);
   };
 
   useEffect(() => {
@@ -102,15 +96,7 @@ const ServicePartsList = ({
             </Table>
           </div>
         </Card.Body>
-      </Card>{' '}
-      {openAlert && (
-        <AlertNotification
-          open={openAlert}
-          handleClose={handleCloseAlert}
-          type={typeAlert}
-          message={alertMessage}
-        />
-      )}{' '}
+      </Card>
       {openModalPart && (
         <MyModal
           id="id_myModal"
@@ -119,9 +105,6 @@ const ServicePartsList = ({
           closeModal={handleClose}
         >
           <AddServiceParts
-            setOpenAlert={setOpenAlert}
-            setTypeAlert={setTypeAlert}
-            setAlertMessage={setAlertMessage}
             closeModal={handleClose}
             idService={idService}
             idVehicle={idVehicle}

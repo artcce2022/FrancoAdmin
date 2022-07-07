@@ -12,6 +12,7 @@ export const FeedContext = createContext({ feeds: [] });
 export const AuthWizardContext = createContext({ user: {} });
 
 export const ServiceContext = createContext();
+export const EditServiceContext = createContext();
 
 export const KanbanContext = createContext({
   KanbanColumns: [],

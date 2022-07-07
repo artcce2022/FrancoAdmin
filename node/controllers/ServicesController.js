@@ -182,7 +182,10 @@ export const saveService = async (req, res) => {
 
         newIdService = result.idservice;
         data.FailureList.map((failure) => {
-            ServiceFailuresModel.create({ idservice: newIdService, idcommonfailures: failure.idcommonfailures });
+            ServiceFailuresModel.create({ idservice: newIdService
+                , idcommonfailures: failure.idcommonfailures
+                , comments:failure.comments
+                , price: failure.price });
         });
 
         data.DetailList.map((detail) => {

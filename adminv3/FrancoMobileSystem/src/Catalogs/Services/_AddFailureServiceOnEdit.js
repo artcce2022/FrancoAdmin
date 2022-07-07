@@ -72,6 +72,7 @@ const AddFailureServiceOnEdit = ({
     console.log(selectedCommonFailure.idcommonfailures);
     if (selectedCommonFailure.idcommonfailures > 0) {
       saveServiceCommonFailure();
+      setSelectedFailureStr(0);
       reset();
     } else {
       setAlertMessage(i18next.t('label.ErrorSelectValid'));
@@ -196,11 +197,11 @@ const AddFailureServiceOnEdit = ({
             changeHandler={onChange}
             defaultValue={comments}
           ></FormInputText>
-          <Button onClick={handleSubmit(onSubmit)} variant="contained">
+          {/* <Button onClick={handleSubmit(onSubmit)} variant="contained">
             {i18next.t('label.Add')}
-          </Button>
+          </Button> */}
           <Button onClick={handleSubmit(onSubmitAndClose)} variant="contained">
-            {i18next.t('label.AddAndClose')}
+            {i18next.t('label.Add')}
           </Button>
           <Button variant="contained" color="secondary" onClick={closeModal}>
             {i18next.t('label.Cancel')}

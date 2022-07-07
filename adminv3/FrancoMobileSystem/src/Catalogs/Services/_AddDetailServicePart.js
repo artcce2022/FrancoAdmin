@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
@@ -6,6 +6,7 @@ import i18next from 'i18next';
 import { ApiEndpoint } from 'utils/ApiEndPont';
 import { Button, Card, Col, Form, Row } from 'react-bootstrap';
 import { FormInputText } from 'form-components/FormInputText';
+import { EditServiceContext } from 'context/Context';
 
 const URI = ApiEndpoint + 'scategories/';
 const URIFailures = ApiEndpoint + 'failures/';
@@ -13,12 +14,11 @@ const URIFailures = ApiEndpoint + 'failures/';
 export default function AddServiceParts({
   closeModal,
   failureList,
-  setOpenAlert,
-  setTypeAlert,
-  setAlertMessage,
   idService,
   idVehicle
 }) {
+  const { setOpenAlert, setTypeAlert, setAlertMessage } =
+    useContext(EditServiceContext);
   const [selectedPartStr, setSelectedPartStr] = useState('');
   const [partsList, setPartsList] = useState([]);
   const [warehouseList, setWarehouseList] = useState([]);

@@ -9,7 +9,6 @@ import classNames from 'classnames';
 import IconButton from 'components/common/IconButton';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import EditCustomerService from './_EditCustomerService';
-import ServiceContextProvider from 'context/_ServiceContextProvider';
 import EditVehicleService from './_EditVehicleService';
 import EditFailuresService from './_EditFailuresService';
 import EditDetailsService from './_EditDetailsService';
@@ -50,9 +49,6 @@ function WizardService() {
   let currentId = queryString.parse(location.search);
   const [completed, setCompleted] = useState({});
   const [values, setValues] = useState({});
-  const [openAlert, setOpenAlert] = useState(false);
-  const [typeAlert, setTypeAlert] = useState(false);
-  const [alertMessage, setAlertMessage] = useState(false);
 
   const [validated, setValidated] = useState(false);
   const { isRTL } = useContext(AppContext);
@@ -70,11 +66,8 @@ function WizardService() {
     detailList,
     setDetailList,
     locationId,
-    setLocationId,
     recibe,
-    setRecibe,
-    comments,
-    setComments
+    comments
   } = useContext(ServiceContext);
   const {
     register,
@@ -192,43 +185,10 @@ function WizardService() {
             />
             //<AccountForm register={register} errors={errors} watch={watch} />
           )}
-          {step === 2 && (
-            <EditVehicleService
-              action={setVehicleId}
-              setOpenAlert={setOpenAlert}
-              setTypeAlert={setTypeAlert}
-              setAlertMessage={setAlertMessage}
-            />
-            // <PersonalForm
-            //   register={register}
-            //   errors={errors}
-            //   setValue={setValue}
-            // />
-          )}
-          {step === 3 && (
-            <EditFailuresService />
-            // <BillingForm
-            //   register={register}
-            //   errors={errors}
-            //   setValue={setValue}
-            // />
-          )}
-          {step === 4 && (
-            <EditDetailsService />
-            // <BillingForm
-            //   register={register}
-            //   errors={errors}
-            //   setValue={setValue}
-            // />
-          )}
-          {step === 5 && (
-            <EditGeneralInfoService />
-            // <BillingForm
-            //   register={register}
-            //   errors={errors}
-            //   setValue={setValue}
-            // />
-          )}
+          {step === 2 && <EditVehicleService action={setVehicleId} />}
+          {step === 3 && <EditFailuresService />}
+          {step === 4 && <EditDetailsService />}
+          {step === 5 && <EditGeneralInfoService />}
           {
             step === 6 && (
               <>

@@ -11,9 +11,6 @@ import AddDetailServiceOnEdit from './_AddDetailServiceOnEdit';
 const ServiceDetailsList = ({ idService }) => {
   const [detailList, setDetailList] = useState([]);
   const [openModalDetail, setOpenModalDetail] = useState(0);
-  const [openAlert, setOpenAlert] = useState(false);
-  const [typeAlert, setTypeAlert] = useState(false);
-  const [alertMessage, setAlertMessage] = useState(false);
 
   const URI = ApiEndpoint + 'services/details/';
   useEffect(() => {
@@ -33,10 +30,6 @@ const ServiceDetailsList = ({ idService }) => {
   const handleClose = () => {
     setOpenModalDetail(false);
     getServiceDetails();
-  };
-
-  const handleCloseAlert = () => {
-    setOpenAlert(false);
   };
 
   return (
@@ -71,21 +64,10 @@ const ServiceDetailsList = ({ idService }) => {
           closeModal={handleClose}
         >
           <AddDetailServiceOnEdit
-            setOpenAlert={setOpenAlert}
-            setTypeAlert={setTypeAlert}
-            setAlertMessage={setAlertMessage}
             closeModal={handleClose}
             idService={idService}
           />
         </MyModal>
-      )}
-      {openAlert && (
-        <AlertNotification
-          open={openAlert}
-          handleClose={handleCloseAlert}
-          type={typeAlert}
-          message={alertMessage}
-        />
       )}
     </>
   );

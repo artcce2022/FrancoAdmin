@@ -11,17 +11,19 @@ import { useForm } from 'react-hook-form';
 import MyModal from 'shared/Modal';
 import createMarkup from 'helpers/createMarkup.js';
 import { ApiEndpoint } from 'utils/ApiEndPont';
-import CustomerDetail from './_CustomerDetail';
 import VehicleDetail from './_VehicleDetail';
-function EditVehicleService({
-  action,
-  setOpenAlert,
-  setTypeAlert,
-  setAlertMessage
-}) {
+function EditVehicleService({ action }) {
   const [vehicles, setVehicles] = useState([]);
-  const { customerId, serviceId, setServiceId, vehicleId, setVehicleId } =
-    useContext(ServiceContext);
+  const {
+    customerId,
+    serviceId,
+    setServiceId,
+    vehicleId,
+    setVehicleId,
+    setOpenAlert,
+    setTypeAlert,
+    setAlertMessage
+  } = useContext(ServiceContext);
   const [openModalVehicle, setOpenModalVehicle] = useState(false);
   let [refreshData, setRefreshData] = useState(false);
   const [values, setValues] = useState({

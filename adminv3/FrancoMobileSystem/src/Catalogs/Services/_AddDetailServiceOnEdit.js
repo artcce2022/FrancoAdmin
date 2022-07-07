@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ServiceContext } from 'context/Context';
+import { EditServiceContext, ServiceContext } from 'context/Context';
 import { FormInputText } from 'form-components/FormInputText';
 import i18next from 'i18next';
 import React, { useContext, useEffect, useState } from 'react';
@@ -9,13 +9,9 @@ import { useForm } from 'react-hook-form';
 import { ApiEndpoint } from 'utils/ApiEndPont';
 import { v4 as uuidv4 } from 'uuid';
 const URI = ApiEndpoint + 'services/adddetail';
-const AddDetailServiceOnEdit = ({
-  closeModal,
-  idService,
-  setOpenAlert,
-  setTypeAlert,
-  setAlertMessage
-}) => {
+const AddDetailServiceOnEdit = ({ closeModal, idService }) => {
+  const { setOpenAlert, setTypeAlert, setAlertMessage } =
+    useContext(EditServiceContext);
   const [description, setDescription] = useState('');
   const [validated, setValidated] = useState(false);
   const {

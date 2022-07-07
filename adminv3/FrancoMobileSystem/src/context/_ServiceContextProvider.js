@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { ServiceContext } from './Context';
+import AlertNotification from 'form-components/AlertNotification';
 
 const ServiceContextProvider = ({ children }) => {
   const [step, setStep] = useState(1);
@@ -12,6 +13,9 @@ const ServiceContextProvider = ({ children }) => {
   const [locationId, setLocationId] = useState(0);
   const [recibe, setRecibe] = useState('');
   const [comments, setComments] = useState('');
+  const [openAlert, setOpenAlert] = useState(false);
+  const [typeAlert, setTypeAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState(false);
 
   const value = {
     step,
@@ -31,10 +35,26 @@ const ServiceContextProvider = ({ children }) => {
     recibe,
     setRecibe,
     comments,
-    setComments
+    setComments,
+    openAlert,
+    setOpenAlert,
+    typeAlert,
+    setTypeAlert,
+    alertMessage,
+    setAlertMessage
+  };
+  const handleCloseAlert = () => {
+    setOpenAlert(false);
   };
   return (
-    <ServiceContext.Provider value={value}>{children}</ServiceContext.Provider>
+    <ServiceContext.Provider value={value}>{children}{openAlert && (
+        <AlertNotification
+          open={openAlert}
+          handleClose={handleCloseAlert}
+          type={typeAlert}
+          message={alertMessage}
+        />
+      )}</ServiceContext.Provider>
   );
 };
 

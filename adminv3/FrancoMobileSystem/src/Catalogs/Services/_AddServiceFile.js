@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form';
 import { ApiEndpoint } from 'utils/ApiEndPont';
 import FileUpload from 'utils/FileUpload';
 import { v4 as uuidv4 } from 'uuid';
+import { FileUploader } from 'react-drag-drop-files';
 
 const AddServiceFile = ({
   action,
@@ -20,7 +21,7 @@ const AddServiceFile = ({
   const [description, setDescription] = useState('');
   const [attachment, setAttachment] = useState(null);
   const [isVisibleToCustomer, setIsVisibleToCustomer] = useState(false);
-
+  const fileTypes = ['JPG', 'PNG', 'GIF', 'MP4', '3GP'];
   const URISaveFile = ApiEndpoint + 'service/savefile/';
   const {
     register,
@@ -70,16 +71,14 @@ const AddServiceFile = ({
       .catch(err => alert('File Upload Error'));
   }, []);
 
-  const handleChangeFile = event => {
-    const files = Array.from(event.target.files);
-    const [file] = files;
+  const handleChangeFile = file => {
     setAttachment(file);
     const formData = new FormData();
     formData.append('name', 'ServiceFile');
     formData.append('description', description);
     formData.append('uuid', serviceGuid);
     formData.append('visibilitycustomer', isVisibleToCustomer);
-    formData.append('ServiceFile', files[0]);
+    formData.append('ServiceFile', file);
     formData.append('idService', idService);
     axios
       .post(URISaveFile, formData, {
@@ -138,12 +137,20 @@ const AddServiceFile = ({
           value={isVisibleToCustomer}
           onChange={onChangeIsVisible}
         />
-        <input
+        {description && (
+          <FileUploader
+            handleChange={handleChangeFile}
+            name="ServiceFile"
+            id={'ServiceFile'}
+            types={fileTypes}
+          />
+        )}
+        {/* <input
           type="file"
           onChange={handleChangeFile}
           name={'ServiceFile'}
           id={'ServiceFile'}
-        />
+        /> */}
       </Form>
     </>
   );
