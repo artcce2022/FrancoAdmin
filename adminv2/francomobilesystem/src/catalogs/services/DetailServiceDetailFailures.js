@@ -92,7 +92,7 @@ const ServiceFailuresList = ({ idService }) => {
                     </Table>
                 </TableContainer>
             </MainCard>
-            {openModalStatus && <MyModal id="id_myModal" title={i18next.t('label.EditFailure')} openModal={openModalStatus} closeModal={handleClose} >
+            {openModalStatus && <MyModal id="id_myModal" title={i18next.t('label.FailureEdit')} openModal={openModalStatus} closeModal={handleClose} >
                     <EditServiceFailure idCommonFailureService={idCommonFailureService} idCommonFailureStatus={idCommonFailureStatus} closeModal={handleClose} />
                 </MyModal>}
         </>
