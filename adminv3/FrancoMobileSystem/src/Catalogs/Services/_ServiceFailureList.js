@@ -47,7 +47,7 @@ const ServiceFailureList = ({ idService }) => {
       <Card className="mb-3">
         <Card.Header>
           <GenericTableHeader
-            label={i18next.t('label.Failures')}
+            label={i18next.t('label.FailuresReported')}
             newFunction={() => {
               setIdFailure(0);
               setOpenModalFailure(true);

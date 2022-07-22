@@ -17,6 +17,7 @@ import NewService from 'Catalogs/Services/NewService';
 import ServicesList from 'Catalogs/Services/ListServices';
 import DetailService from 'Catalogs/Services/DetailService';
 import PartsCatalog from 'Catalogs/Warehouse/Parts';
+import DetailCommonFailure from 'Catalogs/Administration/DetailFailure';
 
 const Layout = () => {
   const HTMLClassList = document.getElementsByTagName('html')[0].classList;
@@ -46,6 +47,10 @@ const Layout = () => {
             element={<CommonFailures />}
           />
           <Route path="CustomerDetail/:id" element={<DetailCustomer />} />
+          <Route
+            path="CommonFailureDetail/:id"
+            element={<DetailCommonFailure />}
+          />
           <Route path="/Configuration/warehouses" element={<Warehouses />} />
           <Route
             path="/Configuration/partscategories"

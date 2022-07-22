@@ -1,5 +1,5 @@
 import express from 'express'
-import { getCommonFailures, getCommonFailure, insertCommonFailure, updateCommonFailure, deleteCommonFailure } from '../controllers/CommonFailuresController.js'
+import { getCommonFailures, getCommonFailure, insertCommonFailure, updateCommonFailure, deleteCommonFailure, getCommonFailureLabors, getCommonFailureParts, insertCommonFailureLabor, updateCommonFailureLabor, deleteCommonFailureLabor, insertCommonFailurePart, updateCommonFailurePart, deleteCommonFailurePart, getCommonFailureLabor, getCommonFailurePart } from '../controllers/CommonFailuresController.js'
 import { deleteCompany, getCompanies, getCompany, insertCompany, updateCompany } from '../controllers/CompanyController.js'
 import { deleteCustomerContact, getAllContacts, getCustomerContact, getCustomerContacts, insertCustomerContact, updateCustomerContact } from '../controllers/CustomerContactsController.js'
 import { deleteCustomer, getCustomer, getCustomers, insertCustomer, updateCustomer } from '../controllers/CustomersController.js'
@@ -47,6 +47,16 @@ router.get('/failures/:id',getCommonFailure)
 router.post('/failures/', insertCommonFailure )
 router.put('/failures/:id', updateCommonFailure )
 router.delete('/failures/:id', deleteCommonFailure )
+router.get('/failureslabors/:id', getCommonFailureLabors )
+router.get('/failureslabor/:id', getCommonFailureLabor )
+router.post('/failureslabors/', insertCommonFailureLabor )
+router.put('/failureslabor/:id', updateCommonFailureLabor )
+router.delete('/failureslabor/:id', deleteCommonFailureLabor )
+router.get('/failuresparts/:id', getCommonFailureParts )
+router.get('/failurespart/:id', getCommonFailurePart )
+router.post('/failuresparts/', insertCommonFailurePart )
+router.put('/failuresparts/:id', updateCommonFailurePart )
+router.delete('/failurespart/:id', deleteCommonFailurePart)
 
 
 router.get('/zipcodesall/', getZipCodes)
