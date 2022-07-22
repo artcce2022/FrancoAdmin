@@ -18,6 +18,7 @@ import EditCommonFailure from './_EditCommonFailure.js';
 import { ApiEndpoint } from 'utils/ApiEndPont.js';
 import AlertNotification from 'form-components/AlertNotification.js';
 import ConfirmAction from 'form-components/ConfirmationModal.js';
+import { Link, useNavigate } from 'react-router-dom';
 // import EditCustomer from './_EditCustomer.js';
 
 const URI = ApiEndpoint + 'failures/';
@@ -32,6 +33,12 @@ const CommonFailures = () => {
   let [idCommonFailure, setIdCommonFailure] = useState(0);
   const [idCommonFailureToDelete, setIdCommonFailureToDelete] = useState(0);
   const [idSymptomCategoryDefault, setIdSymptomCategoryDefault] = useState(0);
+  let navigate = useNavigate();
+  const routeChange = idCommonFailureDetail => {
+    console.log(idCommonFailureDetail);
+    let path = `/CommonFailureDetail/` + idCommonFailureDetail;
+    navigate(path);
+  };
   const handleClose = () => {
     setOpenModal(false);
     getCommonFailuresList();
@@ -102,6 +109,22 @@ const CommonFailures = () => {
         let idsymptomcategory = rowData.row.original.idsymptomcategory;
         return (
           <>
+            {' '}
+            <OverlayTrigger
+              placement="top"
+              overlay={<Tooltip>{i18next.t('label.Detail')}</Tooltip>}
+            >
+              <Button
+                variant="falcon-default"
+                size="sm"
+                onClick={() => {
+                  setIdCommonFailure(idcommonfailures);
+                  routeChange(idcommonfailures);
+                }}
+              >
+                <FontAwesomeIcon icon="info" />
+              </Button>
+            </OverlayTrigger>
             <OverlayTrigger
               placement="top"
               overlay={<Tooltip>{i18next.t('label.Edit')}</Tooltip>}

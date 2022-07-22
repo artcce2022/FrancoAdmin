@@ -21,7 +21,7 @@ const AddServiceFile = ({
   const [description, setDescription] = useState('');
   const [attachment, setAttachment] = useState(null);
   const [isVisibleToCustomer, setIsVisibleToCustomer] = useState(false);
-  const fileTypes = ['JPG', 'PNG', 'GIF', 'MP4', '3GP'];
+  const fileTypes = ['JPG', 'PNG', 'GIF', 'PDF', 'JPEG', 'MP4', '3GP'];
   const URISaveFile = ApiEndpoint + 'service/savefile/';
   const {
     register,
