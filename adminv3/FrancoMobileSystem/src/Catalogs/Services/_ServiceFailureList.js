@@ -164,7 +164,7 @@ const ServiceFailureList = ({ idService }) => {
       {openModalFailure && (
         <MyModal
           id="id_myModal"
-          title={i18next.t('label.EditFailure')}
+          title={i18next.t('label.FailureEdit')}
           openModal={openModalFailure}
           closeModal={handleClose}
         >
