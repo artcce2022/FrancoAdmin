@@ -146,5 +146,7 @@ export const TRANSLATIONS_ES = {
     'label.Notifications': 'Notificaciones',
     'label.MarkallRead': 'Marcar todo Leído',
     'label.New':'NUEVO',
-    'label.ViewAll': 'Ver todo' 
+    'label.ViewAll': 'Ver todo',
+    'label.Suppliers': 'Proveedores',
+    'label.Supplier': 'Proveedor' 
    }

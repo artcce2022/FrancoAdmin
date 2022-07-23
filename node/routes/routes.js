@@ -13,6 +13,7 @@ import { getAllServiceStatus, getServiceStatus } from '../controllers/ServiceSta
 import { deleteSymptomCategory, getSymptomCategory, getSymptomsCategories, insertSymptomCategory, updateSymptomCategory } from '../controllers/SymptomsCategoriesController.js'
 import { deleteVehicle, getAllVehicles, getVehicle, getVehicles, insertVehicle, updateVehicle } from '../controllers/VehiclesController.js'
 import { deleteVendor, getVendor, getVendors, insertVendor, updateVendor } from '../controllers/VendorController.js'
+import { deleteSuppliers, getSupplier, getSuppliers, insertSuppliers, updateSuppliers } from '../controllers/SuppliersController.js'
 import { deleteWarehouse, getWarehouse, getWarehouses, insertWarehouse, updateWarehouse } from '../controllers/WarehouseController.js'
 import { deleteZipCode, getFilterZipCodes, getPaginatedZipCodes, getZipCode, getZipCodes, insertZipCode, updateZipCode } from '../controllers/ZipCodesController.js'
 import uploadfile from './uploadfile.js'
@@ -107,6 +108,12 @@ router.get('/vendors/:id',getVendor)
 router.post('/vendors/', insertVendor )
 router.put('/vendors/:id', updateVendor )
 router.delete('/vendors/:id', deleteVendor )
+
+router.get('/suppliers/', getSuppliers) 
+router.get('/suppliers/:id',getSupplier)
+router.post('/suppliers/', insertSuppliers )
+router.put('/suppliers/:id', updateSuppliers )
+router.delete('/suppliers/:id', deleteSuppliers )
 
 router.get('/parts/', getParts) 
 router.get('/parts/:id',getPart)

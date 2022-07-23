@@ -143,5 +143,7 @@ export const TRANSLATIONS_EN = {
     'label.Logout' :'Logout',
     'label.Notifications': 'Notifications',
     'label.MarkallRead': 'Mark all as read', 
-    'label.ViewAll': 'View all' 
+    'label.ViewAll': 'View all',
+    'label.Suppliers': 'Suppliers',
+    'label.Supplier': 'Supplier'  
    }

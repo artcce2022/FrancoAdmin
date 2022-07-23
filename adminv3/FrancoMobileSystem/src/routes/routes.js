@@ -112,6 +112,11 @@ export const warehouseRoutes = {
           name: 'Refacciones', // `${i18next.t('label.Customer')}`,
           to: '/Warehouse/Parts',
           active: true
+        },
+        {
+          name: 'Proveedores', // `${i18next.t('label.Customer')}`,
+          to: '/Warehouse/Suppliers',
+          active: true
         }
       ]
     }

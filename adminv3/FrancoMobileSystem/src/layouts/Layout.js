@@ -13,6 +13,7 @@ import Locations from 'Catalogs/Configuration/Locations';
 import Employees from 'Catalogs/Configuration/Employees.js';
 import Companies from 'Catalogs/Configuration/Companies';
 import Vendors from 'Catalogs/Warehouse/Vendors';
+import Suppliers from 'Catalogs/Warehouse/Suppliers';
 import NewService from 'Catalogs/Services/NewService';
 import ServicesList from 'Catalogs/Services/ListServices';
 import DetailService from 'Catalogs/Services/DetailService';
@@ -64,6 +65,7 @@ const Layout = () => {
           <Route path="/Configuration/Employees" element={<Employees />} />
           <Route path="/Configuration/Companies" element={<Companies />} />
           <Route path="/Configuration/Vendors" element={<Vendors />} />
+          <Route path="/Warehouse/Suppliers" element={<Suppliers />} />
           <Route path="/Warehouse/Parts" element={<PartsCatalog />} />
           <Route path="/Services/NewService" element={<NewService />} />
           <Route path="/Services/Services" element={<ServicesList />} />
