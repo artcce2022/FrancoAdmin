@@ -16,8 +16,8 @@ export const getSuppliers = async  (req, res)=> {
 /* Get Record*/
 export const getSupplier =async (req, res)=>{
     try {
-        const vendor =await SuppliersModel.findAll({where:{idvendor:req.params.id}});
-        res.json(vendor[0]);
+        const suppliers =await SuppliersModel.findAll({where:{idsuppliers:req.params.id}});
+        res.json(suppliers[0]);
     } catch (error) {
         res.json({message: error.message});
     }
@@ -38,7 +38,7 @@ export const insertSuppliers =async(req,res) =>{
 export const updateSuppliers = async (req, res) =>{
     try {
         SuppliersModel.update(req.body, {
-            where: {idvendor:req.params.id}
+            where: {idsuppliers:req.params.id}
         });   
         res.json({'message':"Registro Actualizado Exitosamente"});
     } catch (error) {
@@ -51,7 +51,7 @@ export const updateSuppliers = async (req, res) =>{
 export const deleteSuppliers = async (req, res) =>{
     try {
         SuppliersModel.destroy(  {
-            where: {idvendor:req.params.id}
+            where: {idsuppliers:req.params.id}
         });   
         res.json({message:"Registro Eliminado Exitosamente"});
     } catch (error) {
