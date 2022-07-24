@@ -8,7 +8,7 @@ import { deleteLocation, getLocation, getLocations, insertLocation, updateLocati
 import { getMovementType, getMovementTypes } from '../controllers/MovementTypesController.js'
 import { deletePartCategory, getPartcategory, getPartsCategories, insertPartCategory, updatePartCategory } from '../controllers/PartsCategoryController.js'
 import { deleteParts, getPart, getParts, insertPart, updatePart } from '../controllers/PartsController.js'
-import { deleteFileService, getAllServices, getFile, getService, getServiceDetails, getServiceFailures, getServiceFiles, getServiceParts, insertService, insertServiceCommonFailure, insertServiceDetail, insertServiceParts, saveService, saveServiceFile, updateService, updateServiceCommonFailure, updateServiceFileVisibility } from '../controllers/ServicesController.js'
+import { deleteFileService, deleteServiceLabor, getAllServices, getFile, getService, getServiceDetails, getServiceFailures, getServiceFiles, getServiceLabor, getServiceLabors, getServiceParts, insertService, insertServiceCommonFailure, insertServiceDetail, insertServiceLabor, insertServiceParts, saveService, saveServiceFile, updateService, updateServiceCommonFailure, updateServiceFileVisibility, updateServiceLabor } from '../controllers/ServicesController.js'
 import { getAllServiceStatus, getServiceStatus } from '../controllers/ServiceStatusController.js'
 import { deleteSymptomCategory, getSymptomCategory, getSymptomsCategories, insertSymptomCategory, updateSymptomCategory } from '../controllers/SymptomsCategoriesController.js'
 import { deleteVehicle, getAllVehicles, getVehicle, getVehicles, insertVehicle, updateVehicle } from '../controllers/VehiclesController.js'
@@ -130,6 +130,11 @@ router.get('/services/failures/:id',getServiceFailures)
 router.put('/services/failures/:id',updateServiceCommonFailure)
 router.get('/services/details/:id',getServiceDetails)
 router.get('/services/files/:id',getServiceFiles)
+router.get('/services/labors/:id',getServiceLabors)
+router.get('/services/labor/:id',getServiceLabor)
+router.post('/services/labor/',insertServiceLabor)
+router.put('/services/labor/',updateServiceLabor)
+router.delete('/services/labor/:id',deleteServiceLabor)
 router.get('/services/parts/:id',getServiceParts)
 router.post('/services/parts/:id',insertServiceParts)
 router.post('/service/savefile/',uploadfile, saveServiceFile )

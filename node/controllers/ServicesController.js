@@ -5,6 +5,7 @@ import ServiceDetailsModel from "../models/ServiceDetailsModel.js";
 import ServiceFilesModel from "../models/ServiceFilesModel.js";
 import fs from 'fs'
 import ServicePartsModel from "../models/ServicePartsModel.js";
+import ServiceLaborsModel from "../models/ServiceLaborsModel.js";
 //**Metodos para el CRUD */
 export const getAllServices = async (req, res) => {
     console.log("entre a getAllServices");
@@ -61,6 +62,66 @@ export const getServiceFiles= async (req, res)=>{
     }
 }
 
+export const getServiceLabor = async (req, res) => {
+    console.log("entre a getServiceLabors");
+    try {
+        const serviceLabor = await ServiceLaborsModel.findAll({ where: { idservicelabor: req.params.id }, include: { all: true } });
+        res.json(serviceLabor[0]);
+    } catch (error) {
+        console.log(error.message);
+        res.json({ message: error.message });
+    }
+};
+
+export const getServiceLabors = async (req, res) => {
+    console.log("entre a getServiceLabors");
+    try {
+        const serviceLabors = await ServiceLaborsModel.findAll({ where: { idservice: req.params.id }, include: { all: true } });
+        res.json(serviceLabors);
+    } catch (error) {
+        console.log(error.message);
+        res.json({ message: error.message });
+    }
+};
+
+export const insertServiceLabor =async(req,res) =>{
+    console.log("entre insertServiceLabor")
+    console.log(req.body)
+    try {
+       await ServiceLaborsModel.create(req.body);
+       res.json({'message':'Registro Creado Exitosamente'});
+    } catch (error) {
+        
+        res.json({message: error.message});
+    }
+}; 
+
+/* Update Record*/
+export const updateServiceLabor = async (req, res) => {
+    try {
+        ServiceLaborsModel.update(req.body, {
+            where: { idservicelabor: req.params.id }
+        });
+        res.json({ 'message': "Registro Actualizado Exitosamente" });
+    } catch (error) {
+
+        res.json({ message: error.message });
+    }
+};
+
+/* Delete Record*/
+export const deleteServiceLabor = async (req, res) => {
+    try {
+        ServiceLaborsModel.destroy( {
+            where: {idservicelabor:req.params.id}
+        });   
+        
+        res.json({message:"Registro Eliminado Exitosamente"});
+    } catch (error) {
+        
+        res.json({message: error.message});
+    } 
+};
 
 export const getServiceParts = async (req, res) => {
     console.log("entre a getServiceParts");
