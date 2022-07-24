@@ -49,7 +49,7 @@ export default function EditSuppliers({
     limits: '100',
     comments: ''
   });
-  const [suppliers, setSuppliers] = useState(values);
+  const [supplier, setSuppliers] = useState(values);
 
   useEffect(() => {
     axios.get(URI + idSuppliers).then(response => {
@@ -65,24 +65,24 @@ export default function EditSuppliers({
       return;
     }
 
-    setSuppliers(true);
+    setValidated(true);
 
     if (idSuppliers > 0) {
       const URI = URI + idSuppliers;
       axios
         .put(URI, {
           idSuppliers: idSuppliers,
-          name: suppliers.name,
-          contact: suppliers.contact,
-          address: suppliers.address,
-          phone: suppliers.phone,
-          zipcode: suppliers.zipcode,
-          extension: suppliers.extension,
-          fax: suppliers.fax,
-          email: suppliers.email,
-          terms: suppliers.terms,
-          limits: suppliers.limits,
-          comments: suppliers.comments
+          name: supplier.name,
+          contact: supplier.contact,
+          address: supplier.address,
+          phone: supplier.phone,
+          zipcode: supplier.zipcode,
+          extension: supplier.extension,
+          fax: supplier.fax,
+          email: supplier.email,
+          terms: supplier.terms,
+          limits: supplier.limits,
+          comments: supplier.comments
         })
         .then(function (response) {
           setAlertMessage(i18next.t('label.SuccessfulRecord'));
@@ -98,17 +98,17 @@ export default function EditSuppliers({
       axios
         .post(URI, {
           idSuppliers: idSuppliers ,
-          name: suppliers.name,
-          contact: suppliers.contact,
-          address: suppliers.address,
-          phone: suppliers.phone,
-          zipcode: suppliers.zipcode,
-          extension: suppliers.extension,
-          fax: suppliers.fax,
-          email: suppliers.email,
-          terms: suppliers.terms,
-          limits: suppliers.limits,
-          comments: suppliers.comments
+          name: supplier.name,
+          contact: supplier.contact,
+          address: supplier.address,
+          phone: supplier.phone,
+          zipcode: supplier.zipcode,
+          extension: supplier.extension,
+          fax: supplier.fax,
+          email: supplier.email,
+          terms: supplier.terms,
+          limits: supplier.limits,
+          comments: supplier.comments
         })
         .then(function (response) {
           setAlertMessage(i18next.t('label.SuccessfulRecord'));
@@ -124,7 +124,7 @@ export default function EditSuppliers({
   };
   const onChange = event => {
     const { name, value } = event.target;
-    setSuppliers({ ...suppliers, [name]: value });
+    setSuppliers({ ...supplier, [name]: value });
   };
 
   return (
@@ -142,7 +142,7 @@ export default function EditSuppliers({
                 changeHandler={onChange}
                 name={'name'}
                 control={control}
-                defaultValue={suppliers.name}
+                defaultValue={supplier.name}
               ></FormInputText>
             </Form.Group>
             <Form.Group className="mb-3" controlId="address">
@@ -151,7 +151,7 @@ export default function EditSuppliers({
                 label={i18next.t('label.Address')}
                 name="address"
                 changeHandler={onChange}
-                defaultValue={suppliers.address}
+                defaultValue={supplier.address}
               ></FormInputText>
             </Form.Group>
             <Row className="mb-3">
@@ -161,7 +161,7 @@ export default function EditSuppliers({
                   label={i18next.t('label.ZipCode')}
                   name="zipcode"
                   changeHandler={onChange}
-                  defaultValue={suppliers.zipcode}
+                  defaultValue={supplier.zipcode}
                 ></FormInputText>
               </Form.Group>
               <Form.Group as={Col} className="mb-3" controlId="contact">
@@ -169,7 +169,7 @@ export default function EditSuppliers({
                   control={control}
                   label={i18next.t('label.ContactName')}
                   changeHandler={onChange}
-                  defaultValue={suppliers.contact}
+                  defaultValue={supplier.contact}
                   name="contact"
                 ></FormInputText>
               </Form.Group>
@@ -181,7 +181,7 @@ export default function EditSuppliers({
                 label={i18next.t('label.Phone')}
                 changeHandler={onChange}
                 name="phone"
-                defaultValue={suppliers.phone}
+                defaultValue={supplier.phone}
               ></FormInputText>
             </Form.Group>
             <Row className="mb-3">
@@ -191,7 +191,7 @@ export default function EditSuppliers({
                   label={i18next.t('label.Extension')}
                   changeHandler={onChange}
                   name={'extension'}
-                  defaultValue={suppliers.extension}
+                  defaultValue={supplier.extension}
                 ></FormInputText>
               </Form.Group>
               <Form.Group as={Col} className="mb-3" controlId="fax">
@@ -200,7 +200,7 @@ export default function EditSuppliers({
                   label={i18next.t('label.Fax')}
                   changeHandler={onChange}
                   name={'fax'}
-                  defaultValue={suppliers.fax}
+                  defaultValue={supplier.fax}
                 ></FormInputText>
               </Form.Group>
             </Row>
@@ -211,7 +211,7 @@ export default function EditSuppliers({
                   label={i18next.t('label.Email')}
                   name={'email'}
                   changeHandler={onChange}
-                  defaultValue={suppliers.email}
+                  defaultValue={supplier.email}
                 ></FormInputText>
               </Form.Group>
             </Row>
@@ -222,7 +222,7 @@ export default function EditSuppliers({
                   label={i18next.t('label.Terms')}
                   name={'terms'}
                   changeHandler={onChange}
-                  defaultValue={suppliers.terms}
+                  defaultValue={supplier.terms}
                 ></FormInputText>
               </Form.Group>
               <Form.Group as={Col} className="mb-3" controlId="limits">
@@ -231,7 +231,7 @@ export default function EditSuppliers({
                   label={i18next.t('label.Limits')}
                   name={'limits'}
                   changeHandler={onChange}
-                  defaultValue={suppliers.limits}
+                  defaultValue={supplier.limits}
                 ></FormInputText>
               </Form.Group>{' '}
               <Form.Group as={Col} className="mb-3" controlId="comments">
@@ -240,7 +240,7 @@ export default function EditSuppliers({
                   label={i18next.t('label.Comments')}
                   name={'comments'}
                   changeHandler={onChange}
-                  defaultValue={suppliers.comments}
+                  defaultValue={supplier.comments}
                 ></FormInputText>
               </Form.Group>
             </Row>
